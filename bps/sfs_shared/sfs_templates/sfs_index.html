@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spaceflight Simulator 演示页</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{url_for('sfs_bp.static',filename='css/style.css')}}">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- 光晕背景 -->
+  <div class="glow-bg glow1"></div>
+  <div class="glow-bg glow2"></div>
+
+  <!-- 顶部进度条 -->
+  <div id="progress-bar"></div>
+  <!-- 页码 -->
+  <div id="page-number">01 / 11</div>
+
+  <!-- 幻灯片容器 -->
+  <div id="slider">
+    <!-- 第1页 封面 -->
+    <div class="slide active">
+      <div class="ani-in d1" style="text-align:center;">
+        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100);">Spaceflight Simulator</h1>
+        <p class="desc" style="margin-top:2rem;font-size:1.6rem;">一款自由真实、奔赴星海的太空模拟沙盒游戏</p>
+      </div>
+    </div>
+
+    <!-- 第2页 游戏简介1 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">游戏简介</h2>
+      <p class="desc ani-in d2" style="text-align:center;">一款自由真实、奔赴星海的太空模拟沙盒游戏</p>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image1.png')}}" alt="核心定位" class="card-image">
+            <h3>核心定位</h3>
+          </div>
+          <p class="desc">Spaceflight Simulator（SFS）是一款物理还原度高、以太空探索为核心的轻量化建造类沙盒航天模拟游戏</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image2.png')}}" alt="起源初心" class="card-image">
+            <h3>起源初心</h3>
+          </div>
+          <p class="desc">SFS 由独立开发者牵头于 2018 年上线，由小众航天爱好者团队打造，秉持纯粹热爱、专注真实太空体验</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image3.png')}}" alt="迭代升级" class="card-image">
+            <h3>迭代升级</h3>
+          </div>
+          <p class="desc">近十年持续稳定版本更新，不断丰富天体、零件与航天组件，同时优化物理引擎，高度还原真实航天飞行原理</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第3页 核心优势 + 结论 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心优势</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image4.png')}}" alt="轻量" class="card-image">
+            <h3>轻量</h3>
+          </div>
+          <p class="desc">轻量化，不需要高性能电脑或手机，普通设备就能流畅运行</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image5.png')}}" alt="自由" class="card-image">
+            <h3>自由</h3>
+          </div>
+          <p class="desc">没有固定剧情、没有任务限制，你可以随心所欲地设计火箭</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image6.png')}}" alt="易上手" class="card-image">
+            <h3>易上手</h3>
+          </div>
+          <p class="desc">它还原了真实的天体物理轨道，但操作上又做了简化，哪怕是新手小白，也能快速上手</p>
+        </div>
+      </div>
+      <div class="gradient-banner ani-in d4" style="width:min(90%,650px);margin-top:4rem;">
+        Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏
+      </div>
+    </div>
+
+    <!-- 第4页 核心玩法1 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法一：自由建造，打造专属火箭</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image7.png')}}" alt="丰富的零件库" class="card-image">
+            <h3>丰富的零件库</h3>
+          </div>
+          <p class="desc">提供箭体外壳、燃料舱、引擎、导航舱、降落伞等多种功能各异的零件</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image8.png')}}" alt="完全自由的组装" class="card-image">
+            <h3>完全自由的组装</h3>
+          </div>
+          <p class="desc">玩家可根据任务需求（如发射卫星、登陆月球）自由搭配组合，创造独一无二的火箭</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image9.png')}}" alt="需考虑的建造细节" class="card-image">
+            <h3>需考虑的建造细节</h3>
+          </div>
+          <p class="desc">组装时需注意火箭重心平衡、燃料与引擎消耗匹配等问题，充满挑战与乐趣</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第5页 核心玩法2 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法二：真实探索，模拟完整航天任务</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image10.png')}}" alt="完整的航天流程" class="card-image">
+            <h3>完整的航天流程</h3>
+          </div>
+          <p class="desc">体验从点火发射、进入轨道、变轨、天体登陆到安全返回的全流程</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image11.png')}}" alt="关键的物理节点" class="card-image">
+            <h3>关键的物理节点</h3>
+          </div>
+          <p class="desc">需达到第一宇宙速度进入轨道，精准计算变轨角度与推力，真实还原航天原理</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image12.png')}}" alt="精准的操作要求" class="card-image">
+            <h3>精准的操作要求</h3>
+          </div>
+          <p class="desc">无论是变轨、登陆还是返回，都需要玩家精准控制，考验操作技巧</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第6页 核心玩法3 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法三：深度体验，探索宇宙无限可能</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image13.png')}}" alt="多样的隐藏玩法" class="card-image">
+            <h3>多样的隐藏玩法</h3>
+          </div>
+          <p class="desc">支持在太空轨道对接空间站、搭建太空基地、发射探测器进行深空探测等</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image14.png')}}" alt="真实的宇宙还原" class="card-image">
+            <h3>真实的宇宙还原</h3>
+          </div>
+          <p class="desc">游戏内天体均按真实比例和数据还原，如地球半径、地月距离、火星地貌等</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <div class="icon-title-group">
+            <img src="{{url_for('sfs_bp.static',filename='images/image15.png')}}" alt="纯粹的游戏乐趣" class="card-image">
+            <h3>纯粹的游戏乐趣</h3>
+          </div>
+          <p class="desc">无复杂规则，让玩家在自由创作和真实探索中，感受太空的魅力与宇宙的浩瀚</p>
+        </div>
+      </div>
+      <div class="gradient-banner ani-in d4" style="width:min(90%,650px);margin-top:4rem;">
+        自由建造火箭，真实探索宇宙
+      </div>
+    </div>
+
+    <!-- 第7页 分享理由1 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">分享理由一：它让星空梦想触手可及</h2>
+      <div class="glass-card ani-in d2" style="width:min(90%,750px);margin-top:3rem;">
+        <p class="desc" style="font-size:1.5rem;">
+          SFS 为我们提供了一个实现 “星空梦想” 的载体。它让儿时仰望星空、探索宇宙的遥远梦想，通过亲手建造火箭、发射升空的方式，变得触手可及，带来无与伦比的成就感。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第8页 分享理由2 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">分享理由二：它是纯粹的休闲与治愈</h2>
+      <div class="glass-card ani-in d2" style="width:min(90%,750px);margin-top:3rem;">
+        <p class="desc" style="font-size:1.5rem;">
+          在快节奏的生活中，SFS 提供了一个没有内卷、没有竞争的纯粹空间。玩家可以放下烦恼，专注于建造与探索，在反复尝试与成功中获得平静与专注，治愈内心的焦虑。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第9页 分享理由3 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">分享理由三：它传递着热爱与坚持</h2>
+      <div class="glass-card ani-in d2" style="width:min(90%,750px);margin-top:3rem;">
+        <p class="desc" style="font-size:1.5rem;">
+          SFS 作为一款由小型团队凭借热爱与坚持打造的独立游戏，其成功本身就是一种激励。它告诉我们，只要心怀热爱、坚持不懈，平凡的梦想也能绽放光芒
+        </p>
+      </div>
+    </div>
+
+    <!-- 第10页 图片展示页 -->
+    <div id="gallery-slide" class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;">游戏精彩瞬间</h2>
+      <div class="gallery-image-container">
+        <img id="gallery-image-1" src="{{url_for('sfs_bp.static',filename='images/1.png')}}" alt="游戏截图" class="gallery-image">
+        <img id="gallery-image-2" src="{{url_for('sfs_bp.static',filename='images/2.png')}}" alt="游戏截图" class="gallery-image" style="transform: translateY(100%);">
+      </div>
+      <p id="gallery-caption" class="gallery-caption">截图 1</p>
+      <div id="gallery-pagination" class="gallery-pagination">01 / 10</div>
+    </div>
+
+    <!-- 第11页 结尾 -->
+    <div class="slide">
+      <div class="ani-in d1" style="text-align:center;">
+        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100);">感谢观看</h1>
+        <p class="desc ani-in d2" style="margin-top:2rem;font-size:1.6rem;">感谢聆听本次 Spaceflight Simulator 分享</p>
+        <p class="desc ani-in d3" style="margin-top:1rem;font-size:1.6rem;">愿我们永远心怀热爱，奔赴星空</p>
+        <p class="desc ani-in d4" style="margin-top:1rem;font-size:1.6rem;">以梦为舟，探索浩瀚宇宙</p>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  // 图片画廊数据
+const imageGallery = [
+  { src: "{{url_for('sfs_bp.static',filename='images/1.png')}}", caption: '截图 1' },
+  { src: "{{url_for('sfs_bp.static',filename='images/2.png')}}", caption: '截图 2' },
+  { src: "{{url_for('sfs_bp.static',filename='images/3.jpg')}}", caption: '截图 3' },
+  { src: "{{url_for('sfs_bp.static',filename='images/4.jpg')}}", caption: '截图 4' },
+  { src: "{{url_for('sfs_bp.static',filename='images/5.jpg')}}", caption: '截图 5' },
+  { src: "{{url_for('sfs_bp.static',filename='images/6.png')}}", caption: '截图 6' },
+  { src: "{{url_for('sfs_bp.static',filename='images/7.png')}}", caption: '截图 7' },
+  { src: "{{url_for('sfs_bp.static',filename='images/8.png')}}", caption: '截图 8' },
+  { src: "{{url_for('sfs_bp.static',filename='images/9.jpg')}}", caption: '截图 9' },
+  { src: "{{url_for('sfs_bp.static',filename='images/10.jpg')}}", caption: '截图 10' },
+  // 在这里添加更多图片，页码会自动更新
+];
+</script>
+<script src="{{url_for('sfs_bp.static',filename='js/js.js')}}"></script>
+</html>

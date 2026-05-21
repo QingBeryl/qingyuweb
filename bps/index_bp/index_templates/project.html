@@ -1,0 +1,55 @@
+<!-- 文件路径：templates/index.html -->
+{% extends "base.html" %}
+
+<!-- 覆盖父模板的 title block -->
+{% block title %}清育 - 项目{% endblock %}
+
+<!-- 给当前页面的body添加唯一类名 -->
+{% block page_class %}project-page{% endblock %}
+
+<!-- 填充父模板的 content block -->
+{% block content %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('index_bp.static',filename='css/project.css')}}">
+<div class="project-container">
+    <div class="project-cards">
+        <!-- 考勤管理系统卡片 -->
+        <a href="/sfs" class="project-card attendance" target="_blank">
+            <img src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
+            <h2 class="card-title">SFS游戏分享</h2>
+            <p class="card-desc">Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏</p>
+        </a>
+
+        <!-- 考勤管理系统卡片 -->
+        <a href="/attendance/login" class="project-card attendance">
+            <h2 class="card-title">XXXXXX</h2>
+            <p class="card-desc">XXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+        </a>
+
+        <!-- 考勤管理系统卡片 -->
+        <a href="/attendance/login" class="project-card attendance">
+            <h2 class="card-title">XXXXXX</h2>
+            <p class="card-desc">XXXXXXXXXXXXXXXXXXXXXXXXX</p>
+        </a>
+
+        <!-- 考勤管理系统卡片 -->
+        <a href="/attendance/login" class="project-card attendance">
+            <h2 class="card-title">XXXXXX</h2>
+            <p class="card-desc">XXXXXXXXXXXXXXXXXXXXXX</p>
+        </a>
+
+        <!-- 考勤管理系统卡片 -->
+        <a href="/attendance/login" class="project-card attendance">
+            <h2 class="card-title">XXXXXX</h2>
+            <p class="card-desc">XXXXXXXXXXXXXXXXXXXXXXXXX</p>
+        </a>
+
+        <!-- 考勤管理系统卡片 -->
+        <a href="/attendance/login" class="project-card attendance">
+            <h2 class="card-title">XXXXXX</h2>
+            <p class="card-desc">XXXXXXXXXXXXXXXXXXXXXX</p>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

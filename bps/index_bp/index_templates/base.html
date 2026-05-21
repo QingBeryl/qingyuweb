@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}清育{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('index_bp.static',filename='css/base.css')}}">
+    <link rel="stylesheet" href="{{url_for('index_bp.static',filename='js/base.js')}}">
+</head>
+<body>
+    <!-- 导航条 -->
+     <div class="nav">
+        <ul class="navlist">
+            <li class="btli" id="index"><p class="qing">清育</p></li>
+            <li class="btli"><a href="{{url_for('index_bp.index')}}">首页</a></li>
+            <li class="btli"><a href="{{url_for('index_bp.project')}}">项目</a></li>
+            <li class="btli"><a href="{{url_for('index_bp.down')}}">下载</a></li>
+            <li class="btli"><a href="{{url_for('index_bp.about')}}">关于</a></li>
+            <li class="btli"><a href="{{url_for('index_bp.mine')}}">我的</a></li>
+        </ul>
+        {% if username %}
+            <a href="{{url_for('index_bp.logout')}}" class="bail">退出登录</a>
+            <span class="bail">欢迎您，{{ username }}</span>
+        {% else %}
+        <a href="{{url_for('index_bp.login')}}" class="bail">登录</a>
+        {% endif %}
+     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-overlay flash-{{ category }}" id="flashOverlay">
+                    <div class="flash-modal">
+                        <button class="flash-close" id="flashClose"></button>
+                        <div class="flash-icon">
+                            {% if category == 'success' %}✓{% endif %}
+                            {% if category == 'error' %}✕{% endif %}
+                            {% if category == 'warning' %}⚠{% endif %}
+                            {% if category == 'info' %}ℹ{% endif %}
+                        </div>
+                        <div class="flash-content">
+                            <div class="flash-title">
+                                {% if category == 'success' %}成功{% endif %}
+                                {% if category == 'error' %}失败{% endif %}
+                                {% if category == 'warning' %}警告{% endif %}
+                                {% if category == 'info' %}提示{% endif %}
+                            </div>
+                            <div class="flash-message">{{ message }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
+<script src="{{url_for('index_bp.static',filename='js/base.js')}}"></script>
+</html>

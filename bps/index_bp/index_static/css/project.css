@@ -1,0 +1,68 @@
+.project-container{
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: 100vh;
+    width: 100%;
+    height: auto;
+}
+
+.project-cards {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.project-card {
+    margin-top: 50px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),0 10px 10px rgba(0, 0, 0, 0.22);
+    width: 300px;
+    padding: 40px 25px;
+    text-align: center;
+    transition: all 0.35s ease;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+/* 考勤系统卡片颜色 */
+.project-card.attendance {
+    border-top: 5px solid #3182ce;
+}
+
+.project-card:hover {
+    background: #3182ce;
+    transform: translateY(-10px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.13);
+}
+
+.card-title {
+    font-size: 22px;
+    color: #2d3748;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+
+.card-desc {
+    font-size: 15px;
+    color: #718096;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/*@media (max-width: 768px) {*/
+/*    .main-title {*/
+/*        font-size: 32px;*/
+/*    }*/
+/*    .project-card {*/
+/*        width: 100%;*/
+/*        max-width: 320px;*/
+/*    }*/
+/*}*/

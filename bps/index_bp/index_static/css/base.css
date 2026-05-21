@@ -1,0 +1,221 @@
+/*导航栏样式*/
+.nav{
+    height: 40px;
+    background-color: #417dff;
+    /* 阴影 */
+    box-shadow: 0 1px 2px;
+}
+
+/* 去掉各种不必要 */
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+.btli{
+    float: left;
+    width: 100px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.bail{
+    float: right;
+    width: 200px;
+    line-height: 40px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.navlist a{
+    color: #ffffff;
+    font-size: 18px;
+    display: block;
+}
+
+.navlist a:hover{
+    background-color: #666;
+}
+
+.qing{
+    color: #ffffff;
+    font-size: 30px;
+    font-family: kaiti;
+}
+
+.nav a:hover{
+    background-color: #666;
+}
+
+/*@media (max-width: 768px) {*/
+/*    .btli{*/
+/*        float: left;*/
+/*        width: 50px;*/
+/*        line-height: 40px;*/
+/*        text-align: center;*/
+/*    }*/
+
+/*    .bail{*/
+/*        float: right;*/
+/*        width: 75px;*/
+/*        line-height: 40px;*/
+/*        text-align: center;*/
+/*        color: #ffffff;*/
+/*        font-size: 14px;*/
+/*    }*/
+/*}*/
+
+
+/*弹窗样式*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ==============================
+   Flash 弹窗核心样式
+   ============================== */
+.flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.flash-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.flash-modal {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    padding: 24px;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.flash-overlay.show .flash-modal {
+    transform: translateY(0);
+}
+
+.flash-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    padding: 0;
+}
+
+.flash-close:hover {
+    opacity: 1;
+}
+
+.flash-close::before,
+.flash-close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 2px;
+    background-color: #666;
+}
+
+.flash-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.flash-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.flash-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.flash-content {
+    text-align: center;
+}
+
+.flash-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.flash-message {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* 不同类型消息的颜色 */
+.flash-success .flash-icon {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash-success .flash-title {
+    color: #155724;
+}
+
+.flash-error .flash-icon {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flash-error .flash-title {
+    color: #721c24;
+}
+
+.flash-warning .flash-icon {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.flash-warning .flash-title {
+    color: #856404;
+}
+
+.flash-info .flash-icon {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.flash-info .flash-title {
+    color: #0c5460;
+}

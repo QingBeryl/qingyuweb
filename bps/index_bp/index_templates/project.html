@@ -11,13 +11,13 @@
 {% block content %}
 {{ super() }}
 <link rel="stylesheet" href="{{url_for('index_bp.static',filename='css/project.css')}}">
+<!--<link rel="stylesheet" href="{{url_for('index_bp.static',filename='js/project.js')}}">-->
 <div class="section_our_solution">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="our_solution_category">
         <div class="solution_cards_box">
-          <a href="#" target="_blank">
-            <div class="solution_card">
+          <div class="solution_card" onclick="goCardLink()">
             <div class="hover_color_bubble"></div>
             <div class="so_top_icon">
               <img class="sfs_img" src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
@@ -29,160 +29,17 @@
               <p>
                 Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏
               </p>
-              <button class="read_more_btn" type="button" onclick="window.location.href='/sfs'"><a href="/sfs"></a>了解更多</button>
+              <button class="read_more_btn" type="button" onclick="goBtnLink(event)">Read More</button>
             </div>
           </div>
-          </a>
-
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <a href="#" target="_blank">
-            <div class="solution_card">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="sfs_img" src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
-            </div>
-            <div class="solu_title">
-              <div>XXXXXX</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-              </p>
-              <button class="read_more_btn" type="button" onclick="window.location.href='#'"><a href="#"></a>了解更多</button>
-            </div>
-          </div>
-          </a>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <a href="#" target="_blank">
-            <div class="solution_card">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="sfs_img" src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
-            </div>
-            <div class="solu_title">
-              <div>XXXXXX</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-              </p>
-              <button class="read_more_btn" type="button" onclick="window.location.href='#'"><a href="#"></a>了解更多</button>
-            </div>
-          </div>
-          </a>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <a href="#" target="_blank">
-            <div class="solution_card">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="sfs_img" src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
-            </div>
-            <div class="solu_title">
-              <div>XXXXXX</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-              </p>
-              <button class="read_more_btn" type="button" onclick="window.location.href='#'"><a href="#"></a>了解更多</button>
-            </div>
-          </div>
-          </a>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <a href="#" target="_blank">
-            <div class="solution_card">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="sfs_img" src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
-            </div>
-            <div class="solu_title">
-              <div>XXXXXX</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-              </p>
-              <button class="read_more_btn" type="button" onclick="window.location.href='#'"><a href="#"></a>了解更多</button>
-            </div>
-          </div>
-          </a>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <a href="#" target="_blank">
-            <div class="solution_card">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="sfs_img" src="{{url_for('index_bp.static',filename='images/sfs.svg')}}">
-            </div>
-            <div class="solu_title">
-              <div>XXXXXX</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-              </p>
-              <button class="read_more_btn" type="button" onclick="window.location.href='#'"><a href="#"></a>了解更多</button>
-            </div>
-          </div>
-          </a>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+<script src="{{url_for('index_bp.static',filename='js/project.js')}}"></script>
+<script>
+const btnUrl = "{{ url_for('index_bp.index') }}";
+const cardUrl = "{{ url_for('sfs_bp.a') }}";
+</script>
 {% endblock %}

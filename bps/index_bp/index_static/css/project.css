@@ -1,5 +1,6 @@
 .section_our_solution .row {
   align-items: center;
+  margin-top: 50px;
 }
 .our_solution_category {
   display: flex;
@@ -116,6 +117,10 @@
 }
 
 .sfs_img{
+  transform: scale(3);transform-origin: center;
+}
+
+.attendance_img{
   transform: scale(3);transform-origin: center;
 }
 

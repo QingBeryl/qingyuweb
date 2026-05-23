@@ -7,41 +7,41 @@ index_bp = Blueprint('index_bp', __name__, static_folder='index_static', templat
 
 
 # 自动获取当前蓝图所在目录（跨系统通用）
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-bp_static_path = os.path.join(BASE_DIR, "index_static")
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# bp_static_path = os.path.join(BASE_DIR, "index_static")
 
 
 @index_bp.route('/')
 def index():
     if 'username' in session:
-        return render_template('index.html', username = session['username'])
+        return render_template('index/index.html', username = session['username'])
     else:
-        return render_template('index.html')
+        return render_template('index/index.html')
 @index_bp.route('/project')
 def project():
     if 'username' in session:
-        return render_template('project.html', username = session['username'])
+        return render_template('index/project.html', username = session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 
 @index_bp.route('/down')
 def down():
     if 'username' in session:
-        return render_template('down.html', username=session['username'])
+        return render_template('index/down.html', username=session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 
 @index_bp.route('/about')
 def about():
     if 'username' in session:
-        return render_template('about.html', username=session['username'])
+        return render_template('index/about.html', username=session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 
 @index_bp.route('/mine')
 def mine():
     if 'username' in session:
-        return render_template('mine.html', username=session['username'])
+        return render_template('index/mine.html', username=session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 @index_bp.route('/login', methods=['GET', 'POST'])
@@ -68,7 +68,7 @@ def login():
             flash('用户名不能为空！', 'error')
         return redirect(url_for('index_bp.login'))
     else:
-        return render_template('login.html')
+        return render_template('index/login.html')
 
 @index_bp.route('/logout')
 def logout():

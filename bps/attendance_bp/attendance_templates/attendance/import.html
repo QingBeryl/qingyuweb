@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- 文件路径：templates/index.html -->
+{% extends "attendance_base.html" %}
 
-</body>
-</html>
+<!-- 覆盖父模板的 title block -->
+{% block title %}考勤管理系统 - 导入{% endblock %}
+
+<!-- 填充父模板的 content block -->
+{% block content %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('attendance_bp.static',filename='css/import.css')}}">
+
+<div class="container">
+    <div class="import-form">
+        <h2>Excel考勤记录导入</h2>
+        <form method="post" action="/attendance/do_import" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">选择Excel文件（支持.xlsx格式）</label>
+                <input type="file" id="file" name="file" accept=".xlsx" required>
+            </div>
+            <div class="form-group">
+                <span class="warning">提示：Excel需包含字段：student_id（学生ID）、attend_date（考勤日期）、attend_type（考勤类型）、check_time（打卡时间，可选）、status（状态）</span>
+            </div>
+            <button type="submit" class="btn">开始导入</button>
+            {% if msg %}
+                <div class="msg">{{ msg }}</div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

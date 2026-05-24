@@ -30,7 +30,7 @@
   <!-- 顶部进度条 -->
   <div id="progress-bar"></div>
   <!-- 页码 -->
-  <div id="page-number">01 / 11</div>
+  <div id="page-number">01 / 12</div>
 
   <!-- 幻灯片容器 -->
   <div id="slider">
@@ -219,7 +219,16 @@
       </div>
     </div>
 
-    <!-- 第10页 图片展示页 -->
+    <!-- ====================== 【新增：第10页 视频展示页】 ====================== -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;" class="ani-in d1">游戏演示视频</h2>
+      <div class="video-container ani-in d2">
+        <video id="video-player" class="video-player" controls preload="auto"></video>
+      </div>
+      <div id="video-pagination" class="gallery-pagination ani-in d3">01 / 02</div>
+    </div>
+
+    <!-- 第11页 图片展示页 -->
     <div id="gallery-slide" class="slide">
       <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;">游戏精彩瞬间</h2>
       <div class="gallery-image-container">
@@ -230,7 +239,7 @@
       <div id="gallery-pagination" class="gallery-pagination">01 / 10</div>
     </div>
 
-    <!-- 第11页 结尾 -->
+    <!-- 第12页 结尾 -->
     <div class="slide">
       <div class="ani-in d1" style="text-align:center;">
         <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100);">感谢观看</h1>
@@ -241,6 +250,7 @@
     </div>
   </div>
 </body>
+
 <script>
   // 图片画廊数据
 const imageGallery = [
@@ -254,8 +264,21 @@ const imageGallery = [
   { src: "{{url_for('sfs_bp.static',filename='images/8.png')}}", caption: '截图 8' },
   { src: "{{url_for('sfs_bp.static',filename='images/9.jpg')}}", caption: '截图 9' },
   { src: "{{url_for('sfs_bp.static',filename='images/10.jpg')}}", caption: '截图 10' },
-  // 在这里添加更多图片，页码会自动更新
+];
+
+// ====================== 【新增：视频数据】 ======================
+const videoList = [
+  { src: "{{url_for('sfs_bp.static',filename='videos/航天模拟器1.6版本官方更新预告-4月1日正式上线！.mp4')}}" }, // 替换成你的视频
+  { src: "{{url_for('sfs_bp.static',filename='videos/SFS2预告片.mp4')}}" }, // 可无限添加
+  { src: "{{url_for('sfs_bp.static',filename='videos/SFS1.0-1.6更新史.mp4')}}" },
+  { src: "{{url_for('sfs_bp.static',filename='videos/2025仿圈航天模拟器SFS大佬排名.mp4')}}" },
+  { src: "{{url_for('sfs_bp.static',filename='videos/SFS里真的有升力吗.mp4')}}" },
+  { src: "{{url_for('sfs_bp.static',filename='videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" },
+  { src: "{{url_for('sfs_bp.static',filename='videos/如何利用奥伯特机动节省燃料.mp4')}}" },
+  { src: "{{url_for('sfs_bp.static',filename='videos/我在SFS中造出了二进制加减计算器.mp4')}}" },
+  { src: "{{url_for('sfs_bp.static',filename='videos/教你如何前往五个拉格朗日点.mp4')}}" },
 ];
 </script>
+
 <script src="{{url_for('sfs_bp.static',filename='js/js.js')}}"></script>
 </html>

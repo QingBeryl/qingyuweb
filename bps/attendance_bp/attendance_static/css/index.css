@@ -1,0 +1,40 @@
+.container {
+    padding: 20px;
+}
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.stat-item {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+}
+.normal {
+    background: #4CAF50;
+}
+.late {
+    background: #ff9800;
+}
+.leave {
+    background: #2196F3;
+}
+.absent {
+    background: #f44336;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background: #f2f2f2;
+}

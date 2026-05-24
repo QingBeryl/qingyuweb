@@ -119,3 +119,54 @@ gallerySlide.addEventListener('wheel', (e) => {
 });
 
 updateView();
+
+// ====================== 视频播放逻辑 ======================
+const videoPlayer = document.getElementById('video-player');
+const videoPagination = document.getElementById('video-pagination');
+let currentVideoIndex = 0;
+
+// 加载当前视频
+function loadCurrentVideo() {
+  if (!videoPlayer) return;
+  videoPlayer.src = videoList[currentVideoIndex].src;
+  videoPagination.textContent = `${String(currentVideoIndex + 1).padStart(2, '0')} / ${String(videoList.length).padStart(2, '0')}`;
+  videoPlayer.preload = "auto";
+  videoPlayer.load();
+}
+
+// 视频页切换上一个/下一个
+function switchVideo(direction) {
+  if (direction === 'next') {
+    currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+  } else {
+    currentVideoIndex = (currentVideoIndex - 1 + videoList.length) % videoList.length;
+  }
+  loadCurrentVideo();
+}
+
+// 进入视频页自动加载第一个视频
+const originalUpdateView = updateView;
+function newUpdateView() {
+  originalUpdateView();
+  // 视频页是倒数第三页
+  if (currentPage === slides.length - 3) {
+    if (videoPlayer && videoPlayer.src === '') {
+      loadCurrentVideo();
+    }
+  } else {
+    // 离开视频页暂停视频
+    if (videoPlayer) videoPlayer.pause();
+  }
+}
+updateView = newUpdateView;
+
+// 视频页滚轮切换
+document.querySelector('.slide:nth-last-child(3)').addEventListener('wheel', (e) => {
+  if (currentPage !== slides.length - 3) return;
+  e.preventDefault();
+  if (e.deltaY > 0) {
+    switchVideo('next');
+  } else {
+    switchVideo('prev');
+  }
+});

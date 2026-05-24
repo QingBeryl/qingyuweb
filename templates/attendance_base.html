@@ -7,11 +7,10 @@
 </head>
 <body>
     <div class="nav">
-        <a href="/attendance">首页</a>
+        <a href="{{url_for('attendance_bp.index')}}">首页</a>
         <a href="/attendance/query">考勤查询</a>
         <a href="/attendance/import">Excel导入</a>
-        <a href="/attendance/admin/users">用户管理</a>
-        <a href="/attendance/logout" class="right">退出登录</a>
+        <a href="{{url_for('index_bp.logout')}}" class="right">退出登录</a>
         <a class="right">欢迎您，{{ username }}</a>
     </div>
     {% block content %}{% endblock %}

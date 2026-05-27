@@ -7,7 +7,7 @@
 <!-- 填充父模板的 content block -->
 {% block content %}
 {{ super() }}
-<link rel="stylesheet" href="{{url_for('attendance_bp.static',filename='css/query.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='attendance_static/css/query.css')}}">
 
 <div class="container">
         <h2>考勤查询</h2>

@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint
 
 
-sfs_bp = Blueprint('sfs_bp', __name__, template_folder='sfs_templates', static_folder='sfs_static', url_prefix='/sfs')
+sfs_bp = Blueprint('sfs_bp', __name__, template_folder='sfs_templates', url_prefix='/sfs')
 
 import os
 

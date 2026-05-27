@@ -3,7 +3,7 @@ from bps.index_bp.service.user_service import get_user
 from bps.index_bp.utils.bcrypt_util import bcrypt_hash, bcrypt_verify
 from bps.index_bp.service.user_service import secret_key, update_status, add_user
 import os
-index_bp = Blueprint('index_bp', __name__, static_folder='index_static', template_folder='index_templates')
+index_bp = Blueprint('index_bp', __name__, template_folder='index_templates')
 
 
 # 自动获取当前蓝图所在目录（跨系统通用）

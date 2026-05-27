@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录注册</title>
-    <link rel="stylesheet" href="{{url_for('index_bp.static',filename='css/login.css')}}">
-    <link rel="stylesheet" href="{{url_for('index_bp.static',filename='js/login.js')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='index_static/css/login.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='index_static/js/login.js')}}">
 </head>
 <body>
     <div class="container" id="container">
@@ -74,5 +74,5 @@
         {% endif %}
     {% endwith %}
 </body>
-<script src="{{url_for('index_bp.static',filename='js/login.js')}}"></script>
+<script src="{{url_for('static',filename='index_static/js/login.js')}}"></script>
 </html>

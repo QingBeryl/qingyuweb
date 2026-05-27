@@ -7,12 +7,12 @@
 <!-- 填充父模板的 content block -->
 {% block content %}
 {{ super() }}
-<link rel="stylesheet" href="{{url_for('attendance_bp.static',filename='css/import.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='attendance_static/css/import.css')}}">
 
 <div class="container">
     <div class="import-form">
         <h2>Excel考勤记录导入</h2>
-        <form method="post" action="/attendance/do_import" enctype="multipart/form-data">
+        <form method="post" action="{{url_for('attendance_bp.do_import')}}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="file">选择Excel文件（支持.xlsx格式）</label>
                 <input type="file" id="file" name="file" accept=".xlsx" required>

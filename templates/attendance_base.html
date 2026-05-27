@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{url_for('attendance_bp.static',filename='css/base.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='attendance_static/css/base.css')}}">
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -15,8 +15,8 @@
 <body>
     <div class="nav">
         <a href="{{url_for('attendance_bp.index')}}">首页</a>
-        <a href="/attendance/query">考勤查询</a>
-        <a href="/attendance/import">Excel导入</a>
+        <a href="{{url_for('attendance_bp.query')}}">考勤查询</a>
+        <a href="{{url_for('attendance_bp.import_page')}}">Excel导入</a>
         <a href="{{url_for('index_bp.logout')}}" class="right">退出登录</a>
         <a class="right">欢迎您，{{ username }}</a>
     </div>

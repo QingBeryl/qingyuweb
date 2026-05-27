@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, redirect, url_for, reques
 from bps.attendance_bp.service.attendance_service import process_index_data, query_data
 from bps.attendance_bp.service.attendance_service import do_import as do_import_service
 
-attendance_bp = Blueprint('attendance_bp', __name__, template_folder='attendance_templates', static_folder='attendance_static', url_prefix='/attendance')
+attendance_bp = Blueprint('attendance_bp', __name__, template_folder='attendance_templates', url_prefix='/attendance')
 
 @attendance_bp.route('/index')
 def index():
@@ -37,13 +37,3 @@ def query():
         return render_template('attendance/query.html',**data, username = session['username'])
     else:
         return redirect(url_for('index_bp.login'))
-
-
-
-
-
-    user = auth_service.current_user()
-    return render_template('query.html', **data, user=user,
-                           has_data_shared=auth_service.has_data_shared(),
-                           has_query=auth_service.has_query(),
-                           has_import=auth_service.has_import())

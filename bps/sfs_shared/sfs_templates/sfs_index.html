@@ -6,7 +6,7 @@
   <title>Spaceflight Simulator 演示页</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{url_for('sfs_bp.static',filename='css/style.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='sfs_static/css/style.css')}}">
   <script>
     tailwind.config = {
       theme: {
@@ -49,21 +49,21 @@
       <div class="grid-3">
         <div class="glass-card ani-in d2">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image1.png')}}" alt="核心定位" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image1.png')}}" alt="核心定位" class="card-image">
             <h3>核心定位</h3>
           </div>
           <p class="desc">Spaceflight Simulator（SFS）是一款物理还原度高、以太空探索为核心的轻量化建造类沙盒航天模拟游戏</p>
         </div>
         <div class="glass-card ani-in d3">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image2.png')}}" alt="起源初心" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image2.png')}}" alt="起源初心" class="card-image">
             <h3>起源初心</h3>
           </div>
           <p class="desc">SFS 由独立开发者牵头于 2018 年上线，由小众航天爱好者团队打造，秉持纯粹热爱、专注真实太空体验</p>
         </div>
         <div class="glass-card ani-in d4">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image3.png')}}" alt="迭代升级" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image3.png')}}" alt="迭代升级" class="card-image">
             <h3>迭代升级</h3>
           </div>
           <p class="desc">近十年持续稳定版本更新，不断丰富天体、零件与航天组件，同时优化物理引擎，高度还原真实航天飞行原理</p>
@@ -77,21 +77,21 @@
       <div class="grid-3">
         <div class="glass-card ani-in d2">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image4.png')}}" alt="轻量" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image4.png')}}" alt="轻量" class="card-image">
             <h3>轻量</h3>
           </div>
           <p class="desc">轻量化，不需要高性能电脑或手机，普通设备就能流畅运行</p>
         </div>
         <div class="glass-card ani-in d3">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image5.png')}}" alt="自由" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image5.png')}}" alt="自由" class="card-image">
             <h3>自由</h3>
           </div>
           <p class="desc">没有固定剧情、没有任务限制，你可以随心所欲地设计火箭</p>
         </div>
         <div class="glass-card ani-in d4">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image6.png')}}" alt="易上手" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image6.png')}}" alt="易上手" class="card-image">
             <h3>易上手</h3>
           </div>
           <p class="desc">它还原了真实的天体物理轨道，但操作上又做了简化，哪怕是新手小白，也能快速上手</p>
@@ -108,21 +108,21 @@
       <div class="grid-3">
         <div class="glass-card ani-in d2">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image7.png')}}" alt="丰富的零件库" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image7.png')}}" alt="丰富的零件库" class="card-image">
             <h3>丰富的零件库</h3>
           </div>
           <p class="desc">提供箭体外壳、燃料舱、引擎、导航舱、降落伞等多种功能各异的零件</p>
         </div>
         <div class="glass-card ani-in d3">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image8.png')}}" alt="完全自由的组装" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image8.png')}}" alt="完全自由的组装" class="card-image">
             <h3>完全自由的组装</h3>
           </div>
           <p class="desc">玩家可根据任务需求（如发射卫星、登陆月球）自由搭配组合，创造独一无二的火箭</p>
         </div>
         <div class="glass-card ani-in d4">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image9.png')}}" alt="需考虑的建造细节" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image9.png')}}" alt="需考虑的建造细节" class="card-image">
             <h3>需考虑的建造细节</h3>
           </div>
           <p class="desc">组装时需注意火箭重心平衡、燃料与引擎消耗匹配等问题，充满挑战与乐趣</p>
@@ -136,21 +136,21 @@
       <div class="grid-3">
         <div class="glass-card ani-in d2">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image10.png')}}" alt="完整的航天流程" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image10.png')}}" alt="完整的航天流程" class="card-image">
             <h3>完整的航天流程</h3>
           </div>
           <p class="desc">体验从点火发射、进入轨道、变轨、天体登陆到安全返回的全流程</p>
         </div>
         <div class="glass-card ani-in d3">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image11.png')}}" alt="关键的物理节点" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image11.png')}}" alt="关键的物理节点" class="card-image">
             <h3>关键的物理节点</h3>
           </div>
           <p class="desc">需达到第一宇宙速度进入轨道，精准计算变轨角度与推力，真实还原航天原理</p>
         </div>
         <div class="glass-card ani-in d4">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image12.png')}}" alt="精准的操作要求" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image12.png')}}" alt="精准的操作要求" class="card-image">
             <h3>精准的操作要求</h3>
           </div>
           <p class="desc">无论是变轨、登陆还是返回，都需要玩家精准控制，考验操作技巧</p>
@@ -164,21 +164,21 @@
       <div class="grid-3">
         <div class="glass-card ani-in d2">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image13.png')}}" alt="多样的隐藏玩法" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image13.png')}}" alt="多样的隐藏玩法" class="card-image">
             <h3>多样的隐藏玩法</h3>
           </div>
           <p class="desc">支持在太空轨道对接空间站、搭建太空基地、发射探测器进行深空探测等</p>
         </div>
         <div class="glass-card ani-in d3">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image14.png')}}" alt="真实的宇宙还原" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image14.png')}}" alt="真实的宇宙还原" class="card-image">
             <h3>真实的宇宙还原</h3>
           </div>
           <p class="desc">游戏内天体均按真实比例和数据还原，如地球半径、地月距离、火星地貌等</p>
         </div>
         <div class="glass-card ani-in d4">
           <div class="icon-title-group">
-            <img src="{{url_for('sfs_bp.static',filename='images/image15.png')}}" alt="纯粹的游戏乐趣" class="card-image">
+            <img src="{{url_for('static',filename='sfs_static/images/image15.png')}}" alt="纯粹的游戏乐趣" class="card-image">
             <h3>纯粹的游戏乐趣</h3>
           </div>
           <p class="desc">无复杂规则，让玩家在自由创作和真实探索中，感受太空的魅力与宇宙的浩瀚</p>
@@ -232,8 +232,8 @@
     <div id="gallery-slide" class="slide">
       <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;">游戏精彩瞬间</h2>
       <div class="gallery-image-container">
-        <img id="gallery-image-1" src="{{url_for('sfs_bp.static',filename='images/1.png')}}" alt="游戏截图" class="gallery-image">
-        <img id="gallery-image-2" src="{{url_for('sfs_bp.static',filename='images/2.png')}}" alt="游戏截图" class="gallery-image" style="transform: translateY(100%);">
+        <img id="gallery-image-1" src="{{url_for('static',filename='sfs_static/images/1.png')}}" alt="游戏截图" class="gallery-image">
+        <img id="gallery-image-2" src="{{url_for('static',filename='sfs_static/images/2.png')}}" alt="游戏截图" class="gallery-image" style="transform: translateY(100%);">
       </div>
       <p id="gallery-caption" class="gallery-caption">截图 1</p>
       <div id="gallery-pagination" class="gallery-pagination">01 / 10</div>
@@ -254,31 +254,31 @@
 <script>
   // 图片画廊数据
 const imageGallery = [
-  { src: "{{url_for('sfs_bp.static',filename='images/1.png')}}", caption: '截图 1' },
-  { src: "{{url_for('sfs_bp.static',filename='images/2.png')}}", caption: '截图 2' },
-  { src: "{{url_for('sfs_bp.static',filename='images/3.jpg')}}", caption: '截图 3' },
-  { src: "{{url_for('sfs_bp.static',filename='images/4.jpg')}}", caption: '截图 4' },
-  { src: "{{url_for('sfs_bp.static',filename='images/5.jpg')}}", caption: '截图 5' },
-  { src: "{{url_for('sfs_bp.static',filename='images/6.png')}}", caption: '截图 6' },
-  { src: "{{url_for('sfs_bp.static',filename='images/7.png')}}", caption: '截图 7' },
-  { src: "{{url_for('sfs_bp.static',filename='images/8.png')}}", caption: '截图 8' },
-  { src: "{{url_for('sfs_bp.static',filename='images/9.jpg')}}", caption: '截图 9' },
-  { src: "{{url_for('sfs_bp.static',filename='images/10.jpg')}}", caption: '截图 10' },
+  { src: "{{url_for('static',filename='sfs_static/images/1.png')}}", caption: '截图 1' },
+  { src: "{{url_for('static',filename='sfs_static/images/2.png')}}", caption: '截图 2' },
+  { src: "{{url_for('static',filename='sfs_static/images/3.jpg')}}", caption: '截图 3' },
+  { src: "{{url_for('static',filename='sfs_static/images/4.jpg')}}", caption: '截图 4' },
+  { src: "{{url_for('static',filename='sfs_static/images/5.jpg')}}", caption: '截图 5' },
+  { src: "{{url_for('static',filename='sfs_static/images/6.png')}}", caption: '截图 6' },
+  { src: "{{url_for('static',filename='sfs_static/images/7.png')}}", caption: '截图 7' },
+  { src: "{{url_for('static',filename='sfs_static/images/8.png')}}", caption: '截图 8' },
+  { src: "{{url_for('static',filename='sfs_static/images/9.jpg')}}", caption: '截图 9' },
+  { src: "{{url_for('static',filename='sfs_static/images/10.jpg')}}", caption: '截图 10' },
 ];
 
 // ====================== 【新增：视频数据】 ======================
 const videoList = [
-  { src: "{{url_for('sfs_bp.static',filename='videos/航天模拟器1.6版本官方更新预告-4月1日正式上线！.mp4')}}" }, // 替换成你的视频
-  { src: "{{url_for('sfs_bp.static',filename='videos/SFS2预告片.mp4')}}" }, // 可无限添加
-  { src: "{{url_for('sfs_bp.static',filename='videos/SFS1.0-1.6更新史.mp4')}}" },
-  { src: "{{url_for('sfs_bp.static',filename='videos/2025仿圈航天模拟器SFS大佬排名.mp4')}}" },
-  { src: "{{url_for('sfs_bp.static',filename='videos/SFS里真的有升力吗.mp4')}}" },
-  { src: "{{url_for('sfs_bp.static',filename='videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" },
-  { src: "{{url_for('sfs_bp.static',filename='videos/如何利用奥伯特机动节省燃料.mp4')}}" },
-  { src: "{{url_for('sfs_bp.static',filename='videos/我在SFS中造出了二进制加减计算器.mp4')}}" },
-  { src: "{{url_for('sfs_bp.static',filename='videos/教你如何前往五个拉格朗日点.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" }, // 替换成你的视频
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS2预告片.mp4')}}" }, // 可无限添加
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS1.0-1.6更新史.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/2025仿圈航天模拟器SFS大佬排名.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS里真的有升力吗.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/航天模拟器1.6版本官方更新预告-4月1日正式上线！.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/如何利用奥伯特机动节省燃料.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/我在SFS中造出了二进制加减计算器.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/教你如何前往五个拉格朗日点.mp4')}}" },
 ];
 </script>
 
-<script src="{{url_for('sfs_bp.static',filename='js/js.js')}}"></script>
+<script src="{{url_for('static',filename='sfs_static/js/js.js')}}"></script>
 </html>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}清育{% endblock %}</title>
-    <link rel="stylesheet" href="{{url_for('index_bp.static',filename='css/base.css')}}">
-    <link rel="stylesheet" href="{{url_for('index_bp.static',filename='js/base.js')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='index_static/css/base.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='index_static/js/base.js')}}">
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -60,5 +60,5 @@
     {% endwith %}
     {% block content %}{% endblock %}
 </body>
-<script src="{{url_for('index_bp.static',filename='js/base.js')}}"></script>
+<script src="{{url_for('static',filename='index_static/js/base.js')}}"></script>
 </html>

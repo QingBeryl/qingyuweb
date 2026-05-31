@@ -12,7 +12,291 @@
         extend: {}
       }
     }
+
+  //   网站数据统计
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wv0cmxakpg");
   </script>
+  <style>
+:root {
+  --primary-100: #019b98;
+  --primary-200: #55ccc9;
+  --primary-300: #c1ffff;
+  --accent-100: #dd0025;
+  --accent-200: #ffbfab;
+  --text-100: #014e60;
+  --text-200: #3f7a8d;
+  --bg-100: #fbfbfb;
+  --bg-200: #f1f1f1;
+  --bg-300: #c8c8c8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-100);
+  color: var(--text-100);
+  /* 网格底纹 */
+  background-image:
+    linear-gradient(rgba(1,78,96,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(1,78,96,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* 光晕背景 */
+.glow-bg {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+  z-index: -1;
+}
+.glow1 {
+  width: 600px;
+  height: 600px;
+  background: var(--primary-200);
+  top: -150px;
+  left: -250px;
+}
+.glow2 {
+  width: 700px;
+  height: 700px;
+  background: var(--accent-200);
+  bottom: -250px;
+  right: -250px;
+  opacity: 0.2;
+}
+
+/* 增强版毛玻璃卡片 - 青白色渐变 */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,255,255,0.75) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 24px;
+  padding: 2.5rem;
+  text-align: center;
+  /* 多层立体阴影 */
+  box-shadow:
+    0 12px 48px rgba(1, 78, 96, 0.15),
+    0 4px 16px rgba(1, 78, 96, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 卡片光泽效果 */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 60%
+  );
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+/* 卡片hover交互 - 更强悬浮感 */
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 24px 64px rgba(1, 78, 96, 0.2),
+    0 8px 24px rgba(1, 78, 96, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  border-color: rgba(1, 155, 152, 0.3);
+}
+
+.glass-card:hover::before {
+  transform: rotate(45deg) translateX(100%);
+}
+
+/* 单卡片容器 */
+.single-card {
+  width: min(90%, 850px);
+  margin-top: 3rem;
+}
+
+/* 图片页面容器 - 加深阴影 */
+.image-page {
+  width: 85%;
+  height: 75vh;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 2rem;
+  box-shadow: 0 16px 56px rgba(1, 78, 96, 0.15);
+}
+.image-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 渐变横幅 - 增强阴影 */
+.gradient-banner {
+  background: linear-gradient(90deg, var(--primary-100), var(--primary-200));
+  color: #fff;
+  border-radius: 16px;
+  padding: 1.8rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  box-shadow: 0 12px 32px rgba(1, 155, 152, 0.25);
+}
+
+/* 幻灯片容器 */
+#slider {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 关键修复：强制隐藏非活动页面 */
+.slide:not(.active) {
+  display: none !important;
+}
+
+/* 进度条 - 改为渐变 */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-100), var(--primary-200));
+  z-index: 50;
+  transition: width 0.3s ease;
+}
+
+/* 页码 - 调整背景和阴影 */
+#page-number {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(245,255,255,0.8);
+  backdrop-filter: blur(12px);
+  font-weight: 600;
+  color: var(--text-100);
+  box-shadow: 0 4px 12px rgba(1, 78, 96, 0.15);
+}
+
+/* 入场动画 */
+.ani-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease forwards;
+}
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.d1 { animation-delay: 0.1s; }
+.d2 { animation-delay: 0.2s; }
+.d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.4s; }
+.d5 { animation-delay: 0.5s; }
+
+/* 布局辅助 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 4rem;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 4rem;
+}
+h2 {
+  line-height: 1.2;
+  text-shadow: 0 4px 8px rgba(1, 155, 152, 0.15);
+}
+h3 {
+  font-size: 1.7rem;
+  margin: 0 0 1rem 0;
+  color: var(--primary-100);
+  font-weight: 600;
+}
+p.desc { color: var(--text-200); line-height: 1.8; font-size: 1.3rem; }
+.formula {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-100);
+  margin: 1.5rem 0;
+  font-family: 'Times New Roman', serif;
+  text-shadow: 0 3px 6px rgba(1, 155, 152, 0.15);
+}
+
+/* 视频容器 - 增强立体阴影 */
+.video-container {
+  width: 92%;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 64px rgba(1, 78, 96, 0.2);
+}
+.video-player {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  outline: none;
+  border-radius: 16px;
+  preload: auto;
+}
+.video-pagination {
+  margin-top: 1rem;
+  background: rgba(245,255,255,0.8);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(1, 78, 96, 0.15);
+}
+  </style>
 </head>
 <body>
   <!-- 光晕背景 -->
@@ -289,6 +573,91 @@ const videoList = [
   { src: "{{url_for('static',filename='sfs_static/videos/我在SFS中造出了二进制加减计算器.mp4')}}" },
   { src: "{{url_for('static',filename='sfs_static/videos/教你如何前往五个拉格朗日点.mp4')}}" },
 ];
+
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progress-bar');
+const pageNumber = document.getElementById('page-number');
+let currentPage = 0;
+const totalPages = slides.length;
+
+// 更新视图
+function updateView() {
+  slides.forEach((s, idx) => {
+    s.classList.toggle('active', idx === currentPage);
+  });
+  // 进度条
+  progressBar.style.width = `${((currentPage+1)/totalPages)*100}%`;
+  // 页码
+  pageNumber.innerText = `${String(currentPage+1).padStart(2,'0')} / ${totalPages}`;
+
+  // 如果是视频页，自动加载视频
+  if (currentPage === slides.length - 2) {
+    if (videoPlayer && videoPlayer.src === '') {
+      loadCurrentVideo();
+    }
+  } else {
+    // 离开视频页暂停视频
+    if (videoPlayer) videoPlayer.pause();
+  }
+}
+
+// 下一页
+function nextPage() {
+  if(currentPage < totalPages - 1) {
+    currentPage++;
+    updateView();
+  }
+}
+// 上一页
+function prevPage() {
+  if(currentPage > 0) {
+    currentPage--;
+    updateView();
+  }
+}
+
+// 键盘监听
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' ') nextPage();
+  if(e.key === 'ArrowLeft') prevPage();
+});
+
+// ====================== 视频播放逻辑 ======================
+const videoPlayer = document.getElementById('video-player');
+const videoPagination = document.getElementById('video-pagination');
+let currentVideoIndex = 0;
+
+// 加载当前视频
+function loadCurrentVideo() {
+  if (!videoPlayer) return;
+  videoPlayer.src = videoList[currentVideoIndex].src;
+  videoPagination.textContent = `${String(currentVideoIndex + 1).padStart(2, '0')} / ${String(videoList.length).padStart(2, '0')}`;
+  videoPlayer.preload = "auto";
+  videoPlayer.load();
+}
+
+// 视频页切换上一个/下一个
+function switchVideo(direction) {
+  if (direction === 'next') {
+    currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+  } else {
+    currentVideoIndex = (currentVideoIndex - 1 + videoList.length) % videoList.length;
+  }
+  loadCurrentVideo();
+}
+
+// 视频页滚轮切换
+document.querySelector('.slide:nth-last-child(2)').addEventListener('wheel', (e) => {
+  if (currentPage !== slides.length - 2) return;
+  e.preventDefault();
+  if (e.deltaY > 0) {
+    switchVideo('next');
+  } else {
+    switchVideo('prev');
+  }
+});
+
+updateView();
 </script>
 </body>
 </html>

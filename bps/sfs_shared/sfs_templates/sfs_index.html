@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Spaceflight Simulator 演示页</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{url_for('static',filename='sfs_static/css/style.css')}}">
   <script>
     tailwind.config = {
@@ -13,13 +12,6 @@
         extend: {}
       }
     }
-
-  //   网站数据统计
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wv0cmxakpg");
   </script>
 </head>
 <body>
@@ -30,246 +22,265 @@
   <!-- 顶部进度条 -->
   <div id="progress-bar"></div>
   <!-- 页码 -->
-  <div id="page-number">01 / 12</div>
+  <div id="page-number">01 / 17</div>
 
   <!-- 幻灯片容器 -->
   <div id="slider">
     <!-- 第1页 封面 -->
     <div class="slide active">
       <div class="ani-in d1" style="text-align:center;">
-        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100);">Spaceflight Simulator</h1>
+        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100); text-shadow: 0 6px 12px rgba(1, 155, 152, 0.25);">Spaceflight Simulator</h1>
         <p class="desc" style="margin-top:2rem;font-size:1.6rem;">一款自由真实、奔赴星海的太空模拟沙盒游戏</p>
       </div>
     </div>
 
-    <!-- 第2页 游戏简介1 -->
+    <!-- 第2页 游戏简介 -->
     <div class="slide">
       <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">游戏简介</h2>
-      <p class="desc ani-in d2" style="text-align:center;">一款自由真实、奔赴星海的太空模拟沙盒游戏</p>
-      <div class="grid-3">
+      <div class="grid-2">
         <div class="glass-card ani-in d2">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image1.png')}}" alt="核心定位" class="card-image">
-            <h3>核心定位</h3>
-          </div>
-          <p class="desc">Spaceflight Simulator（SFS）是一款物理还原度高、以太空探索为核心的轻量化建造类沙盒航天模拟游戏</p>
+          <h3>开发商与平台</h3>
+          <p class="desc">Team Curiosity 独立开发<br>全面支持手机/PC多平台</p>
         </div>
         <div class="glass-card ani-in d3">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image2.png')}}" alt="起源初心" class="card-image">
-            <h3>起源初心</h3>
-          </div>
-          <p class="desc">SFS 由独立开发者牵头于 2018 年上线，由小众航天爱好者团队打造，秉持纯粹热爱、专注真实太空体验</p>
+          <h3>核心定位</h3>
+          <p class="desc">轻量化硬核航天沙盒模拟器<br>兼顾娱乐性与航天科普价值<br>主打火箭建造与太阳系探索</p>
         </div>
-        <div class="glass-card ani-in d4">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image3.png')}}" alt="迭代升级" class="card-image">
-            <h3>迭代升级</h3>
-          </div>
-          <p class="desc">近十年持续稳定版本更新，不断丰富天体、零件与航天组件，同时优化物理引擎，高度还原真实航天飞行原理</p>
+        <div class="glass-card ani-in d4" style="grid-column: span 2;">
+          <h3>最大特色</h3>
+          <p class="desc">物理规则高度写实，零件组装自由度极高，跨平台兼容性好、配置要求极低，画风简洁干净，玩法纯粹无冗余</p>
         </div>
       </div>
     </div>
 
-    <!-- 第3页 核心优势 + 结论 -->
+    <!-- 第3页 核心玩法1：自由组装航天器 -->
     <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心优势</h2>
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法一：自由组装航天器</h2>
       <div class="grid-3">
         <div class="glass-card ani-in d2">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image4.png')}}" alt="轻量" class="card-image">
-            <h3>轻量</h3>
-          </div>
-          <p class="desc">轻量化，不需要高性能电脑或手机，普通设备就能流畅运行</p>
+          <h3>海量模块化部件</h3>
+          <p class="desc">提供箭体、燃料舱、引擎、导航舱、降落伞等数百种功能部件，拖拽即可拼接</p>
         </div>
         <div class="glass-card ani-in d3">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image5.png')}}" alt="自由" class="card-image">
-            <h3>自由</h3>
-          </div>
-          <p class="desc">没有固定剧情、没有任务限制，你可以随心所欲地设计火箭</p>
+          <h3>无固定配方限制</h3>
+          <p class="desc">没有预设的火箭模板，完全凭借玩家创意设计，任何脑洞都能变成现实</p>
         </div>
         <div class="glass-card ani-in d4">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image6.png')}}" alt="易上手" class="card-image">
-            <h3>易上手</h3>
-          </div>
-          <p class="desc">它还原了真实的天体物理轨道，但操作上又做了简化，哪怕是新手小白，也能快速上手</p>
-        </div>
-      </div>
-      <div class="gradient-banner ani-in d4" style="width:min(90%,650px);margin-top:4rem;">
-        Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏
-      </div>
-    </div>
-
-    <!-- 第4页 核心玩法1 -->
-    <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法一：自由建造，打造专属火箭</h2>
-      <div class="grid-3">
-        <div class="glass-card ani-in d2">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image7.png')}}" alt="丰富的零件库" class="card-image">
-            <h3>丰富的零件库</h3>
-          </div>
-          <p class="desc">提供箭体外壳、燃料舱、引擎、导航舱、降落伞等多种功能各异的零件</p>
-        </div>
-        <div class="glass-card ani-in d3">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image8.png')}}" alt="完全自由的组装" class="card-image">
-            <h3>完全自由的组装</h3>
-          </div>
-          <p class="desc">玩家可根据任务需求（如发射卫星、登陆月球）自由搭配组合，创造独一无二的火箭</p>
-        </div>
-        <div class="glass-card ani-in d4">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image9.png')}}" alt="需考虑的建造细节" class="card-image">
-            <h3>需考虑的建造细节</h3>
-          </div>
-          <p class="desc">组装时需注意火箭重心平衡、燃料与引擎消耗匹配等问题，充满挑战与乐趣</p>
+          <h3>贴合现实工程逻辑</h3>
+          <p class="desc">设计规则完全遵循现实航天工程原理，重心、推力、燃料配比都会影响飞行结果</p>
         </div>
       </div>
     </div>
 
-    <!-- 第5页 核心玩法2 -->
+    <!-- 第4页 核心玩法2：真实航天全流程操控 -->
     <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法二：真实探索，模拟完整航天任务</h2>
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法二：真实航天全流程操控</h2>
       <div class="grid-3">
         <div class="glass-card ani-in d2">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image10.png')}}" alt="完整的航天流程" class="card-image">
-            <h3>完整的航天流程</h3>
-          </div>
-          <p class="desc">体验从点火发射、进入轨道、变轨、天体登陆到安全返回的全流程</p>
+          <h3>完整任务链路</h3>
+          <p class="desc">还原从点火发射、入轨、变轨、天体登陆到安全返回地球的完整航天流程</p>
         </div>
         <div class="glass-card ani-in d3">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image11.png')}}" alt="关键的物理节点" class="card-image">
-            <h3>关键的物理节点</h3>
-          </div>
-          <p class="desc">需达到第一宇宙速度进入轨道，精准计算变轨角度与推力，真实还原航天原理</p>
+          <h3>精准物理复刻</h3>
+          <p class="desc">1:1复刻轨道力学、Delta-V速度增量、引力弹弓效应等真实航天物理规则</p>
         </div>
         <div class="glass-card ani-in d4">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image12.png')}}" alt="精准的操作要求" class="card-image">
-            <h3>精准的操作要求</h3>
-          </div>
-          <p class="desc">无论是变轨、登陆还是返回，都需要玩家精准控制，考验操作技巧</p>
+          <h3>全程手动操控</h3>
+          <p class="desc">所有操作完全手动完成，点火时机、变轨角度、着陆速度，成败全在细节</p>
         </div>
       </div>
     </div>
 
-    <!-- 第6页 核心玩法3 -->
+    <!-- 第5页 核心玩法3：全域太阳系探索 -->
     <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法三：深度体验，探索宇宙无限可能</h2>
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法三：全域太阳系探索</h2>
       <div class="grid-3">
         <div class="glass-card ani-in d2">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image13.png')}}" alt="多样的隐藏玩法" class="card-image">
-            <h3>多样的隐藏玩法</h3>
-          </div>
-          <p class="desc">支持在太空轨道对接空间站、搭建太空基地、发射探测器进行深空探测等</p>
+          <h3>开放无边界地图</h3>
+          <p class="desc">整个太阳系完全开放，没有空气墙限制，你可以飞往任何你想去的地方</p>
         </div>
         <div class="glass-card ani-in d3">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image14.png')}}" alt="真实的宇宙还原" class="card-image">
-            <h3>真实的宇宙还原</h3>
-          </div>
-          <p class="desc">游戏内天体均按真实比例和数据还原，如地球半径、地月距离、火星地貌等</p>
+          <h3>真实天体体系</h3>
+          <p class="desc">包含八大行星及其卫星体系，每个天体都有独特的引力、大气和地表环境</p>
         </div>
         <div class="glass-card ani-in d4">
-          <div class="icon-title-group">
-            <img src="{{url_for('static',filename='sfs_static/images/image15.png')}}" alt="纯粹的游戏乐趣" class="card-image">
-            <h3>纯粹的游戏乐趣</h3>
-          </div>
-          <p class="desc">无复杂规则，让玩家在自由创作和真实探索中，感受太空的魅力与宇宙的浩瀚</p>
+          <h3>丰富拓展玩法</h3>
+          <p class="desc">支持天体登陆、建立永久基地、组建空间站、发射深空探测器等多种玩法</p>
         </div>
-      </div>
-      <div class="gradient-banner ani-in d4" style="width:min(90%,650px);margin-top:4rem;">
-        自由建造火箭，真实探索宇宙
       </div>
     </div>
 
-    <!-- 第7页 分享理由1 -->
+    <!-- 第6页 核心玩法4：复刻与创意创作 -->
     <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">分享理由一：它让星空梦想触手可及</h2>
-      <div class="glass-card ani-in d2" style="width:min(90%,750px);margin-top:3rem;">
-        <p class="desc" style="font-size:1.5rem;">
-          SFS 为我们提供了一个实现 “星空梦想” 的载体。它让儿时仰望星空、探索宇宙的遥远梦想，通过亲手建造火箭、发射升空的方式，变得触手可及，带来无与伦比的成就感。
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法四：复刻与创意创作</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>复刻经典航天任务</h3>
+          <p class="desc">精准复刻阿波罗登月、火星探测、空间站对接等人类历史上的经典航天任务</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>打造科幻星际舰队</h3>
+          <p class="desc">发挥想象力，建造星际战舰、殖民飞船、戴森球等科幻级别的航天器</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>科普与娱乐兼具</h3>
+          <p class="desc">在游戏中学习航天知识，在创作中感受科技魅力，寓教于乐两不误</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第7页 为什么分享1：极致自由 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">为什么分享一：极致自由，玩法永无止境</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          没有强制任务枷锁，没有等级成长限制，没有氪金逼氪机制。新手可以体验简单的发射乐趣，老手可以挑战高难度的星际航行。每一次设计、每一次发射、每一次探索，都是独一无二的全新体验。
         </p>
       </div>
     </div>
 
-    <!-- 第8页 分享理由2 -->
+    <!-- 第8页 为什么分享2：纯粹治愈 -->
     <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">分享理由二：它是纯粹的休闲与治愈</h2>
-      <div class="glass-card ani-in d2" style="width:min(90%,750px);margin-top:3rem;">
-        <p class="desc" style="font-size:1.5rem;">
-          在快节奏的生活中，SFS 提供了一个没有内卷、没有竞争的纯粹空间。玩家可以放下烦恼，专注于建造与探索，在反复尝试与成功中获得平静与专注，治愈内心的焦虑。
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">为什么分享二：纯粹治愈的太空浪漫</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          简约干净的画面搭配静谧深邃的太空氛围，带来沉浸式的感官体验。从一枚零件开始，亲手打造出能够飞往星海的火箭，这种从零到一的成就感无可替代。远离尘世浮躁，在浩瀚宇宙中获得内心的平静与治愈。
         </p>
       </div>
     </div>
 
-    <!-- 第9页 分享理由3 -->
+    <!-- 第9页 玩法举例：燃料计算教程 -->
     <div class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">分享理由三：它传递着热爱与坚持</h2>
-      <div class="glass-card ani-in d2" style="width:min(90%,750px);margin-top:3rem;">
-        <p class="desc" style="font-size:1.5rem;">
-          SFS 作为一款由小型团队凭借热爱与坚持打造的独立游戏，其成功本身就是一种激励。它告诉我们，只要心怀热爱、坚持不懈，平凡的梦想也能绽放光芒
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">进阶玩法：基于航天物理的火箭燃料计算</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          掌握Delta-V地图、干质比、发动机比冲三大核心概念，运用齐奥尔科夫斯基火箭方程，精准计算不同任务所需的燃料量。告别盲目堆燃料，打造高效、轻量化的专业级火箭，挑战更远的星际航行。
         </p>
       </div>
     </div>
 
-    <!-- ====================== 【新增：第10页 视频展示页】 ====================== -->
+    <!-- 第10页 Delta V地图 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1rem;" class="ani-in d1">太阳系 Delta-V 地图</h2>
+      <div class="image-page ani-in d2">
+        <img src="{{url_for('static',filename='sfs_static/images/delta-v-map.png')}}" alt="太阳系Delta-V地图">
+      </div>
+    </div>
+
+    <!-- 第11页 干质比 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心概念一：干质比</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left;">
+          <strong>定义：</strong>干质比是指火箭发射前满载推进剂时的总质量（湿重）与推进剂耗尽后剩余质量（干重）的比值。干重包括箭体结构、发动机、电子设备和有效载荷等所有非燃料部分。
+        </p>
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left; margin-top: 1.5rem;">
+          <strong>意义：</strong>干质比越大，意味着火箭能用更少的结构重量携带更多的推进剂，从而获得更高的速度增量与运载能力。现代运载火箭的干质比通常在10-20之间。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第12页 发动机比冲 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心概念二：发动机比冲</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left;">
+          <strong>定义：</strong>比冲量（简称比冲）是指单位质量推进剂所产生的冲量，单位为秒（s）。它是衡量火箭发动机效率的核心物理参数。
+        </p>
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left; margin-top: 1.5rem;">
+          <strong>意义：</strong>比冲大小与推进剂化学能、燃烧效率和喷管设计直接相关。发动机比冲越高，相同质量的推进剂能产生的速度增量就越大，发动机效率也就越高。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第13页 齐奥尔科夫斯基火箭方程 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">航天核心：齐奥尔科夫斯基火箭方程</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left;">
+          <strong>提出者：</strong>俄国航天之父 康斯坦丁·齐奥尔科夫斯基（1903年）
+        </p>
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left; margin-top: 1rem;">
+          <strong>核心意义：</strong>这是现代航天学的基石公式，它精确描述了火箭在理想情况下，通过喷射推进剂能够获得的最大速度增量。所有火箭设计都必须基于这个方程进行计算。
+        </p>
+        <div class="formula ani-in d3">
+          Δv = I<sub>sp</sub> × g₀ × ln(m₀/m₁)
+        </div>
+      </div>
+    </div>
+
+    <!-- 第14页 方程详解（上） -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1rem;" class="ani-in d1">齐奥尔科夫斯基火箭方程详解（上）</h2>
+      <div class="grid-2" style="max-width: 1100px; margin-top: 2rem;">
+        <div class="glass-card ani-in d2">
+          <h3>Δv（Delta-v，速度增量）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>单位：</strong>米/秒（m/s）<br><br>
+            <strong>物理意义：</strong>火箭在整个推进过程中能够获得的总速度变化量，是衡量火箭运载能力的核心指标，决定了火箭能够完成的轨道任务（如入轨、变轨、行星际转移等）。<br><br>
+            <strong>说明：</strong>这是理想条件下的最大速度增量，实际飞行中会因重力损失、空气阻力损失、转向损失等而减小。
+          </p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>I<sub>sp</sub>（Specific Impulse，比冲）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>单位：</strong>秒（s）（工程中最常用的单位）<br><br>
+            <strong>物理意义：</strong>衡量火箭发动机推进效率的核心参数，表示每消耗1千克推进剂能够产生的冲量（力×时间）。<br><br>
+            <strong>常见数值：</strong>化学火箭200-450秒（液氧煤油约300秒，液氢液氧约450秒），离子推进器1000-5000秒。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第15页 方程详解（下） -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1rem;" class="ani-in d1">齐奥尔科夫斯基火箭方程详解（下）</h2>
+      <div class="grid-2" style="max-width: 1100px; margin-top: 2rem;">
+        <div class="glass-card ani-in d2">
+          <h3>g₀（标准重力加速度）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>单位：</strong>米/秒²（m/s²）<br><br>
+            <strong>数值：</strong>国际标准值9.80665 m/s²，工程计算常近似为9.81 m/s²<br><br>
+            <strong>物理意义：</strong>仅为单位转换系数，与火箭实际飞行环境的重力加速度无关。<br><br>
+            <strong>说明：</strong>两者关系：v<sub>e</sub> = I<sub>sp</sub> × g₀（v<sub>e</sub>为有效排气速度）
+          </p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>ln(m₀/m₁)（质量比的自然对数）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>m₀（初始总质量）：</strong>火箭点火前的全部质量，包括箭体结构、全部推进剂、有效载荷及其他设备。<br><br>
+            <strong>m₁（最终干质量）：</strong>推进剂完全燃烧后火箭的剩余质量（不含任何推进剂）。<br><br>
+            <strong>说明：</strong>速度增量与质量比呈对数关系，这是单级火箭难以入轨、必须采用多级火箭的根本原因。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第16页 演示视频 -->
     <div class="slide">
       <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;" class="ani-in d1">游戏演示视频</h2>
       <div class="video-container ani-in d2">
         <video id="video-player" class="video-player" controls preload="auto"></video>
       </div>
-      <div id="video-pagination" class="gallery-pagination ani-in d3">01 / 02</div>
+      <div id="video-pagination" class="video-pagination ani-in d3">01 / 09</div>
     </div>
 
-    <!-- 第11页 图片展示页 -->
-    <div id="gallery-slide" class="slide">
-      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;">游戏精彩瞬间</h2>
-      <div class="gallery-image-container">
-        <img id="gallery-image-1" src="{{url_for('static',filename='sfs_static/images/1.png')}}" alt="游戏截图" class="gallery-image">
-        <img id="gallery-image-2" src="{{url_for('static',filename='sfs_static/images/2.png')}}" alt="游戏截图" class="gallery-image" style="transform: translateY(100%);">
-      </div>
-      <p id="gallery-caption" class="gallery-caption">截图 1</p>
-      <div id="gallery-pagination" class="gallery-pagination">01 / 10</div>
-    </div>
-
-    <!-- 第12页 结尾 -->
+    <!-- 第17页 结尾 -->
     <div class="slide">
       <div class="ani-in d1" style="text-align:center;">
-        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100);">感谢观看</h1>
+        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100); text-shadow: 0 6px 12px rgba(1, 155, 152, 0.25);">感谢观看</h1>
         <p class="desc ani-in d2" style="margin-top:2rem;font-size:1.6rem;">感谢聆听本次 Spaceflight Simulator 分享</p>
         <p class="desc ani-in d3" style="margin-top:1rem;font-size:1.6rem;">愿我们永远心怀热爱，奔赴星空</p>
         <p class="desc ani-in d4" style="margin-top:1rem;font-size:1.6rem;">以梦为舟，探索浩瀚宇宙</p>
       </div>
     </div>
   </div>
-</body>
 
 <script>
-  // 图片画廊数据
-const imageGallery = [
-  { src: "{{url_for('static',filename='sfs_static/images/1.png')}}", caption: '截图 1' },
-  { src: "{{url_for('static',filename='sfs_static/images/2.png')}}", caption: '截图 2' },
-  { src: "{{url_for('static',filename='sfs_static/images/3.jpg')}}", caption: '截图 3' },
-  { src: "{{url_for('static',filename='sfs_static/images/4.jpg')}}", caption: '截图 4' },
-  { src: "{{url_for('static',filename='sfs_static/images/5.jpg')}}", caption: '截图 5' },
-  { src: "{{url_for('static',filename='sfs_static/images/6.png')}}", caption: '截图 6' },
-  { src: "{{url_for('static',filename='sfs_static/images/7.png')}}", caption: '截图 7' },
-  { src: "{{url_for('static',filename='sfs_static/images/8.png')}}", caption: '截图 8' },
-  { src: "{{url_for('static',filename='sfs_static/images/9.jpg')}}", caption: '截图 9' },
-  { src: "{{url_for('static',filename='sfs_static/images/10.jpg')}}", caption: '截图 10' },
-];
-
-// ====================== 【新增：视频数据】 ======================
+// 视频数据
 const videoList = [
-  { src: "{{url_for('static',filename='sfs_static/videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" }, // 替换成你的视频
-  { src: "{{url_for('static',filename='sfs_static/videos/SFS2预告片.mp4')}}" }, // 可无限添加
+  { src: "{{url_for('static',filename='sfs_static/videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS2预告片.mp4')}}" },
   { src: "{{url_for('static',filename='sfs_static/videos/SFS1.0-1.6更新史.mp4')}}" },
   { src: "{{url_for('static',filename='sfs_static/videos/2025仿圈航天模拟器SFS大佬排名.mp4')}}" },
   { src: "{{url_for('static',filename='sfs_static/videos/SFS里真的有升力吗.mp4')}}" },
@@ -279,6 +290,5 @@ const videoList = [
   { src: "{{url_for('static',filename='sfs_static/videos/教你如何前往五个拉格朗日点.mp4')}}" },
 ];
 </script>
-
-<script src="{{url_for('static',filename='sfs_static/js/js.js')}}"></script>
+</body>
 </html>

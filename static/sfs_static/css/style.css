@@ -34,52 +34,99 @@ body {
 .glow-bg {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.3;
+  filter: blur(120px);
+  opacity: 0.25;
   z-index: -1;
 }
 .glow1 {
-  width: 500px;
-  height: 500px;
-  background: var(--primary-200);
-  top: -100px;
-  left: -200px;
-}
-.glow2 {
   width: 600px;
   height: 600px;
+  background: var(--primary-200);
+  top: -150px;
+  left: -250px;
+}
+.glow2 {
+  width: 700px;
+  height: 700px;
   background: var(--accent-200);
-  bottom: -200px;
-  right: -200px;
+  bottom: -250px;
+  right: -250px;
+  opacity: 0.2;
 }
 
-/* 毛玻璃卡片 */
+/* 增强版毛玻璃卡片 - 青白色渐变 */
 .glass-card {
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,255,255,0.75) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 24px;
   padding: 2.5rem;
   text-align: center;
+  /* 多层立体阴影 */
+  box-shadow:
+    0 12px 48px rgba(1, 78, 96, 0.15),
+    0 4px 16px rgba(1, 78, 96, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
 }
 
-/* 图片和标题组合样式 */
-.icon-title-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
+/* 卡片光泽效果 */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 60%
+  );
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
 }
 
-/* 卡片图片样式 */
-.card-image {
-  width: 60px;
-  height: 60px;
+/* 卡片hover交互 - 更强悬浮感 */
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 24px 64px rgba(1, 78, 96, 0.2),
+    0 8px 24px rgba(1, 78, 96, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  border-color: rgba(1, 155, 152, 0.3);
+}
+
+.glass-card:hover::before {
+  transform: rotate(45deg) translateX(100%);
+}
+
+/* 单卡片容器 */
+.single-card {
+  width: min(90%, 850px);
+  margin-top: 3rem;
+}
+
+/* 图片页面容器 - 加深阴影 */
+.image-page {
+  width: 85%;
+  height: 75vh;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 2rem;
+  box-shadow: 0 16px 56px rgba(1, 78, 96, 0.15);
+}
+.image-page img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  margin-right: 1rem; /* 图片和标题之间的间距 */
 }
 
-/* 渐变横幅 */
+/* 渐变横幅 - 增强阴影 */
 .gradient-banner {
   background: linear-gradient(90deg, var(--primary-100), var(--primary-200));
   color: #fff;
@@ -88,6 +135,7 @@ body {
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
+  box-shadow: 0 12px 32px rgba(1, 155, 152, 0.25);
 }
 
 /* 幻灯片容器 */
@@ -103,7 +151,7 @@ body {
   width: 100vw;
   height: 100vh;
   padding: 4rem 2rem;
-  display: flex; /* 默认显示，由 .active 控制 */
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -114,18 +162,18 @@ body {
   display: none !important;
 }
 
-/* 进度条 */
+/* 进度条 - 改为渐变 */
 #progress-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 4px;
-  background: var(--primary-100);
+  background: linear-gradient(90deg, var(--primary-100), var(--primary-200));
   z-index: 50;
   transition: width 0.3s ease;
 }
 
-/* 页码 */
+/* 页码 - 调整背景和阴影 */
 #page-number {
   position: fixed;
   top: 1.5rem;
@@ -133,10 +181,11 @@ body {
   z-index: 50;
   padding: 0.5rem 1.2rem;
   border-radius: 999px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(245,255,255,0.8);
+  backdrop-filter: blur(12px);
   font-weight: 600;
   color: var(--text-100);
+  box-shadow: 0 4px 12px rgba(1, 78, 96, 0.15);
 }
 
 /* 入场动画 */
@@ -155,8 +204,17 @@ body {
 .d2 { animation-delay: 0.2s; }
 .d3 { animation-delay: 0.3s; }
 .d4 { animation-delay: 0.4s; }
+.d5 { animation-delay: 0.5s; }
 
 /* 布局辅助 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 4rem;
+}
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -165,51 +223,27 @@ body {
   max-width: 1200px;
   margin-top: 4rem;
 }
-h3 { font-size: 1.7rem; margin: 0; } /* 移除了默认的margin */
-p.desc { color: var(--text-200); line-height: 1.7; font-size: 1.3rem; }
-
-/* 图片画廊样式 */
-.gallery-slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+h2 {
+  line-height: 1.2;
+  text-shadow: 0 4px 8px rgba(1, 155, 152, 0.15);
 }
-.gallery-image-container {
-  position: relative;
-  width: 80%;
-  height: 70vh;
-  overflow: hidden;
-  border-radius: 16px;
-}
-.gallery-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.5s ease;
-}
-.gallery-image.slide-up {
-  transform: translateY(-100%);
-}
-.gallery-image.slide-down {
-  transform: translateY(100%);
-}
-.gallery-caption {
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
-  color: var(--text-200);
-}
-.gallery-pagination {
-  margin-top: 1rem;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
+h3 {
+  font-size: 1.7rem;
+  margin: 0 0 1rem 0;
+  color: var(--primary-100);
   font-weight: 600;
 }
+p.desc { color: var(--text-200); line-height: 1.8; font-size: 1.3rem; }
+.formula {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-100);
+  margin: 1.5rem 0;
+  font-family: 'Times New Roman', serif;
+  text-shadow: 0 3px 6px rgba(1, 155, 152, 0.15);
+}
+
+/* 视频容器 - 增强立体阴影 */
 .video-container {
   width: 92%;
   height: 85vh;
@@ -218,6 +252,7 @@ p.desc { color: var(--text-200); line-height: 1.7; font-size: 1.3rem; }
   justify-content: center;
   border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 20px 64px rgba(1, 78, 96, 0.2);
 }
 .video-player {
   max-width: 100%;
@@ -227,6 +262,14 @@ p.desc { color: var(--text-200); line-height: 1.7; font-size: 1.3rem; }
   object-fit: contain;
   outline: none;
   border-radius: 16px;
-  /* 开启流式加载缓冲 */
   preload: auto;
+}
+.video-pagination {
+  margin-top: 1rem;
+  background: rgba(245,255,255,0.8);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(1, 78, 96, 0.15);
 }

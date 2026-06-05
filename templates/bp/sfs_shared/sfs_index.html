@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spaceflight Simulator 演示页</title>
+  <script src="/static/bp/sfs_shared/js/tailwindcss.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+  <style>
+:root {
+  --primary-100: #019b98;
+  --primary-200: #55ccc9;
+  --primary-300: #c1ffff;
+  --accent-100: #dd0025;
+  --accent-200: #ffbfab;
+  --text-100: #014e60;
+  --text-200: #3f7a8d;
+  --bg-100: #fbfbfb;
+  --bg-200: #f1f1f1;
+  --bg-300: #c8c8c8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-100);
+  color: var(--text-100);
+  /* 网格底纹 */
+  background-image:
+    linear-gradient(rgba(1,78,96,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(1,78,96,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* 光晕背景 */
+.glow-bg {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+  z-index: -1;
+}
+.glow1 {
+  width: 600px;
+  height: 600px;
+  background: var(--primary-200);
+  top: -150px;
+  left: -250px;
+}
+.glow2 {
+  width: 700px;
+  height: 700px;
+  background: var(--accent-200);
+  bottom: -250px;
+  right: -250px;
+  opacity: 0.2;
+}
+
+/* 增强版毛玻璃卡片 - 青白色渐变 */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,255,255,0.75) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 24px;
+  padding: 2.5rem;
+  text-align: center;
+  /* 多层立体阴影 */
+  box-shadow:
+    0 12px 48px rgba(1, 78, 96, 0.15),
+    0 4px 16px rgba(1, 78, 96, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 卡片光泽效果 */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 60%
+  );
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+/* 卡片hover交互 - 更强悬浮感 */
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 24px 64px rgba(1, 78, 96, 0.2),
+    0 8px 24px rgba(1, 78, 96, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  border-color: rgba(1, 155, 152, 0.3);
+}
+
+.glass-card:hover::before {
+  transform: rotate(45deg) translateX(100%);
+}
+
+/* 单卡片容器 */
+.single-card {
+  width: min(90%, 850px);
+  margin-top: 3rem;
+}
+
+/* 图片页面容器 - 加深阴影 */
+.image-page {
+  width: 85%;
+  height: 75vh;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 2rem;
+  box-shadow: 0 16px 56px rgba(1, 78, 96, 0.15);
+}
+.image-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 渐变横幅 - 增强阴影 */
+.gradient-banner {
+  background: linear-gradient(90deg, var(--primary-100), var(--primary-200));
+  color: #fff;
+  border-radius: 16px;
+  padding: 1.8rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  box-shadow: 0 12px 32px rgba(1, 155, 152, 0.25);
+}
+
+/* 幻灯片容器 */
+#slider {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 关键修复：强制隐藏非活动页面 */
+.slide:not(.active) {
+  display: none !important;
+}
+
+/* 进度条 - 改为渐变 */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-100), var(--primary-200));
+  z-index: 50;
+  transition: width 0.3s ease;
+}
+
+/* 页码 - 调整背景和阴影 */
+#page-number {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(245,255,255,0.8);
+  backdrop-filter: blur(12px);
+  font-weight: 600;
+  color: var(--text-100);
+  box-shadow: 0 4px 12px rgba(1, 78, 96, 0.15);
+}
+
+/* 入场动画 */
+.ani-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease forwards;
+}
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.d1 { animation-delay: 0.1s; }
+.d2 { animation-delay: 0.2s; }
+.d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.4s; }
+.d5 { animation-delay: 0.5s; }
+
+/* 布局辅助 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 4rem;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 4rem;
+}
+h2 {
+  line-height: 1.2;
+  text-shadow: 0 4px 8px rgba(1, 155, 152, 0.15);
+}
+h3 {
+  font-size: 1.7rem;
+  margin: 0 0 1rem 0;
+  color: var(--primary-100);
+  font-weight: 600;
+}
+p.desc { color: var(--text-200); line-height: 1.8; font-size: 1.3rem; }
+.formula {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-100);
+  margin: 1.5rem 0;
+  font-family: 'Times New Roman', serif;
+  text-shadow: 0 3px 6px rgba(1, 155, 152, 0.15);
+}
+
+/* 视频容器 - 增强立体阴影 */
+.video-container {
+  width: 92%;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 64px rgba(1, 78, 96, 0.2);
+}
+.video-player {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  outline: none;
+  border-radius: 16px;
+  preload: auto;
+}
+.video-pagination {
+  margin-top: 1rem;
+  background: rgba(245,255,255,0.8);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(1, 78, 96, 0.15);
+}
+  </style>
+</head>
+<body>
+  <!-- 光晕背景 -->
+  <div class="glow-bg glow1"></div>
+  <div class="glow-bg glow2"></div>
+
+  <!-- 顶部进度条 -->
+  <div id="progress-bar"></div>
+  <!-- 页码 -->
+  <div id="page-number">01 / 23</div>
+
+  <!-- 幻灯片容器 -->
+  <div id="slider">
+    <!-- 第1页 封面 -->
+    <div class="slide active">
+      <div class="ani-in d1" style="text-align:center;">
+        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100); text-shadow: 0 6px 12px rgba(1, 155, 152, 0.25);">Spaceflight Simulator</h1>
+        <p class="desc ani-in d2" style="margin-top:2rem;font-size:1.6rem;">一款自由真实、奔赴星海的太空模拟沙盒游戏</p>
+        <div class="ani-in d3" style="margin-top: 6rem; color: var(--text-200); font-size: 1.4rem;">
+          <p>分享人：肖清育</p>
+          <p style="margin-top: 0.8rem;">2026年6月4日</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第2页 游戏简介 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">游戏简介</h2>
+      <div class="grid-2">
+        <div class="glass-card ani-in d2">
+          <h3>开发商与平台</h3>
+          <p class="desc">Team Curiosity 独立开发<br>全面支持手机/PC多平台</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>核心定位</h3>
+          <p class="desc">轻量化硬核航天沙盒模拟器<br>兼顾娱乐性与航天科普价值<br>主打火箭建造与太阳系探索</p>
+        </div>
+        <div class="glass-card ani-in d4" style="grid-column: span 2;">
+          <h3>最大特色</h3>
+          <p class="desc">物理规则高度写实，零件组装自由度极高，跨平台兼容性好、配置要求极低，画风简洁干净，玩法纯粹无冗余</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第3页 核心玩法1：自由组装航天器 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法一：自由组装航天器</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>海量模块化部件</h3>
+          <p class="desc">提供箭体、燃料舱、引擎、导航舱、降落伞等数百种功能部件，拖拽即可拼接</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>无固定配方限制</h3>
+          <p class="desc">没有预设的火箭模板，完全凭借玩家创意设计，任何脑洞都能变成现实</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>贴合现实工程逻辑</h3>
+          <p class="desc">设计规则完全遵循现实航天工程原理，重心、推力、燃料配比都会影响飞行结果</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第4页 核心玩法2：真实航天全流程操控 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法二：真实航天全流程操控</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>完整任务链路</h3>
+          <p class="desc">还原从点火发射、入轨、变轨、天体登陆到安全返回地球的完整航天流程</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>精准物理复刻</h3>
+          <p class="desc">1:1复刻轨道力学、Delta-V速度增量、引力弹弓效应等真实航天物理规则</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>全程手动操控</h3>
+          <p class="desc">所有操作完全手动完成，点火时机、变轨角度、着陆速度，成败全在细节</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第5页 核心玩法3：全域太阳系探索 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法三：全域太阳系探索</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>开放无边界地图</h3>
+          <p class="desc">整个太阳系完全开放，没有空气墙限制，你可以飞往任何你想去的地方</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>真实天体体系</h3>
+          <p class="desc">包含八大行星及其卫星体系，每个天体都有独特的引力、大气和地表环境</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>丰富拓展玩法</h3>
+          <p class="desc">支持天体登陆、建立永久基地、组建空间站、发射深空探测器等多种玩法</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第6页 核心玩法4：复刻与创意创作 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心玩法四：复刻与创意创作</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>复刻经典航天任务</h3>
+          <p class="desc">精准复刻阿波罗登月、火星探测、空间站对接等人类历史上的经典航天任务</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>打造科幻星际舰队</h3>
+          <p class="desc">发挥想象力，建造星际战舰、殖民飞船、戴森球等科幻级别的航天器</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>科普与娱乐兼具</h3>
+          <p class="desc">在游戏中学习航天知识，在创作中感受科技魅力，寓教于乐两不误</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第7页 官方扩展包【已改成宏观描述，去掉细分包】 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">官方付费扩展内容</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          游戏推出多款官方正版拓展内容，整体围绕天体拓展、专属部件、任务体系、基地建造四大方向扩容，在原版框架之上丰富天体种类、专属航天零件与特色玩法模块，按需选购即可解锁更多游戏内容，进一步拓宽建造与探索边界。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第8页 社区蓝图分享 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">全球社区蓝图生态</h2>
+      <div class="grid-2">
+        <div class="glass-card ani-in d2">
+          <h3>一键导入导出</h3>
+          <p class="desc" style="text-align: left; font-size: 1.3rem;">
+            游戏内置蓝图系统，支持将自己设计的火箭、空间站、基地保存为蓝图文件，也可以一键导入其他玩家分享的优秀作品，无需手动重新搭建。
+          </p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>海量优质内容</h3>
+          <p class="desc" style="text-align: left; font-size: 1.3rem;">
+            全球数百万玩家贡献了数十万份优质蓝图，从简单的探空火箭到复杂的星际战舰，从历史经典航天器到科幻未来载具，应有尽有。
+          </p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>跨平台全兼容</h3>
+          <p class="desc" style="text-align: left; font-size: 1.3rem;">
+            蓝图文件完全跨平台兼容，手机、PC、平板之间可以无缝共享，无论你使用什么设备，都能体验到全球玩家的创意成果。
+          </p>
+        </div>
+        <div class="glass-card ani-in d5">
+          <h3>活跃交流社区</h3>
+          <p class="desc" style="text-align: left; font-size: 1.3rem;">
+            拥有Discord、Reddit、B站、贴吧等多个活跃社区，玩家在这里分享作品、交流技巧、发起挑战，形成了浓厚的创作氛围。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 新增第9页：三种游戏难度模式：正常/困难/真实 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">三大游玩难度模式</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>正常模式</h3>
+          <p class="desc">新手友好入门难度，适度简化大气阻力、重力损耗，容错空间充足，适合初次上手，轻松体验造箭升空、探索近地空间的乐趣。</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>困难模式</h3>
+          <p class="desc">贴近现实基础物理规则，完整保留大气阻力、重力损失，火箭结构更容易失控倾斜，需要合理配平质量与推力，适合有一定基础的玩家进阶练习。</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>真实模式</h3>
+          <p class="desc">极致还原真实航天物理，严苛复刻气动损耗、引力损耗、箭体结构限制，对标现实航天工程标准，容错极低，硬核玩家专用。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 原Mod页变为第10页，宏观概括Mod -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">丰富的第三方Mod生态</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          游戏拥有成熟开放的第三方模组生态圈，玩家社群自主开发海量拓展Mod，从零件扩充、物理规则改动、宇宙版图扩容到画质优化、辅助工具开发全覆盖，借助Mod可以自由自定义游戏内容，大幅拓展游戏上限与可玩性，同时配套完善的Mod管理方案方便安装与切换。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第11页 为什么分享1：极致自由 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">为什么分享一：极致自由，玩法永无止境</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          没有强制任务枷锁，没有等级成长限制，没有氪金逼氪机制。新手可以体验简单的发射乐趣，老手可以挑战高难度的星际航行。每一次设计、每一次发射、每一次探索，都是独一无二的全新体验。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第12页 为什么分享2：纯粹治愈【已修复引号bug】 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">为什么分享二：纯粹治愈的太空浪漫</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          简约干净的画面搭配静谧深邃的太空氛围，带来沉浸式的感官体验。从一枚零件开始，亲手打造出能够飞往星海的火箭，这种从零到一的成就感无可替代。远离尘世浮躁，在浩瀚宇宙中获得内心的平静与治愈。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第13页 玩法举例：燃料计算教程 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">进阶玩法：基于航天物理的火箭燃料计算</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          掌握Delta-V地图、干质比、发动机比冲三大核心概念，运用齐奥尔科夫斯基火箭方程，精准计算不同任务所需的燃料量。告别盲目堆燃料，打造高效、轻量化的专业级火箭，挑战更远的星际航行。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第14页 Delta V地图 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1rem;" class="ani-in d1">太阳系 Delta-V 地图</h2>
+      <div class="image-page ani-in d2">
+        <img src="/static/bp/sfs_shared/images/delta-v-map.png" alt="太阳系Delta-V地图">
+      </div>
+    </div>
+
+    <!-- 第15页 干质比 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心概念一：干质比</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left;">
+          <strong>定义：</strong>干质比是指火箭发射前满载推进剂时的总质量（湿重）与推进剂耗尽后剩余质量（干重）的比值。干重包括箭体结构、发动机、电子设备和有效载荷等所有非燃料部分。
+        </p>
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left; margin-top: 1.5rem;">
+          <strong>意义：</strong>干质比越大，意味着火箭能用更少的结构重量携带更多的推进剂，从而获得更高的速度增量与运载能力。现代运载火箭的干质比通常在10-20之间。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第16页 发动机比冲 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">核心概念二：发动机比冲</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left;">
+          <strong>定义：</strong>比冲量（简称比冲）是指单位质量推进剂所产生的冲量，单位为秒（s）。它是衡量火箭发动机效率的核心物理参数。
+        </p>
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left; margin-top: 1.5rem;">
+          <strong>意义：</strong>比冲大小与推进剂化学能、燃烧效率和喷管设计直接相关。发动机比冲越高，相同质量的推进剂能产生的速度增量就越大，发动机效率也就越高。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第17页 齐奥尔科夫斯基火箭方程 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">航天核心：齐奥尔科夫斯基火箭方程</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left;">
+          <strong>提出者：</strong>俄国航天之父 康斯坦丁·齐奥尔科夫斯基（1903年）
+        </p>
+        <p class="desc" style="font-size:1.4rem; line-height: 1.8; text-align: left; margin-top: 1rem;">
+          <strong>核心意义：</strong>这是现代航天学的基石公式，它精确描述了火箭在理想情况下，通过喷射推进剂能够获得的最大速度增量。所有火箭设计都必须基于这个方程进行计算。
+        </p>
+        <div class="formula ani-in d3">
+          Δv = I<sub>sp</sub> × g₀ × ln(m₀/m₁)
+        </div>
+      </div>
+    </div>
+
+    <!-- 第18页 方程详解（上） -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1rem;" class="ani-in d1">齐奥尔科夫斯基火箭方程详解（上）</h2>
+      <div class="grid-2" style="max-width: 1100px; margin-top: 2rem;">
+        <div class="glass-card ani-in d2">
+          <h3>Δv（Delta-v，速度增量）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>单位：</strong>米/秒（m/s）<br><br>
+            <strong>物理意义：</strong>火箭在整个推进过程中能够获得的总速度变化量，是衡量火箭运载能力的核心指标，决定了火箭能够完成的轨道任务（如入轨、变轨、行星际转移等）。<br><br>
+            <strong>说明：</strong>这是理想条件下的最大速度增量，实际飞行中会因重力损失、空气阻力损失、转向损失等而减小。
+          </p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>I<sub>sp</sub>（Specific Impulse，比冲）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>单位：</strong>秒（s）（工程中最常用的单位）<br><br>
+            <strong>物理意义：</strong>衡量火箭发动机推进效率的核心参数，表示每消耗1千克推进剂能够产生的冲量（力×时间）。<br><br>
+            <strong>常见数值：</strong>化学火箭200-450秒（液氧煤油约300秒，液氢液氧约450秒），离子推进器1000-5000秒。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第19页 方程详解（下） -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1rem;" class="ani-in d1">齐奥尔科夫斯基火箭方程详解（下）</h2>
+      <div class="grid-2" style="max-width: 1100px; margin-top: 2rem;">
+        <div class="glass-card ani-in d2">
+          <h3>g₀（标准重力加速度）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>单位：</strong>米/秒²（m/s²）<br><br>
+            <strong>数值：</strong>国际标准值9.80665 m/s²，工程计算常近似为9.81 m/s²<br><br>
+            <strong>物理意义：</strong>仅为单位转换系数，与火箭实际飞行环境的重力加速度无关。<br><br>
+            <strong>说明：</strong>两者关系：v<sub>e</sub> = I<sub>sp</sub> × g₀（v<sub>e</sub>为有效排气速度）
+          </p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>ln(m₀/m₁)（质量比的自然对数）</h3>
+          <p class="desc" style="text-align: left; font-size: 1.25rem;">
+            <strong>m₀（初始总质量）：</strong>火箭点火前的全部质量，包括箭体结构、全部推进剂、有效载荷及其他设备。<br><br>
+            <strong>m₁（最终干质量）：</strong>推进剂完全燃烧后火箭的剩余质量（不含任何推进剂）。<br><br>
+            <strong>说明：</strong>速度增量与质量比呈对数关系，这是单级火箭难以入轨、必须采用多级火箭的根本原因。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第20页 续作：Spaceflight Simulator 2 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">续作：Spaceflight Simulator 2</h2>
+      <div class="glass-card single-card ani-in d2">
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9;">
+          2025年，Team Curiosity 推出了万众期待的续作《Spaceflight Simulator 2》。游戏采用全新的3D引擎打造，在完整保留原版核心玩法与自由精神的基础上，对画质、物理、内容、玩法进行了全方位的升级，为玩家带来了更加真实、更加震撼的太空探索体验。
+        </p>
+        <p class="desc" style="font-size:1.5rem; line-height: 1.9; margin-top: 1.5rem;">
+          SFS2 延续了原版轻量化、高自由度的特点，同时加入了生涯模式、多人联机、可破坏系统等众多玩家期待已久的功能，将太空模拟游戏的体验提升到了一个全新的高度。
+        </p>
+      </div>
+    </div>
+
+    <!-- 第21页 SFS2 核心升级 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 1.5rem;" class="ani-in d1">SFS2 核心全面升级</h2>
+      <div class="grid-3">
+        <div class="glass-card ani-in d2">
+          <h3>次世代3D画质</h3>
+          <p class="desc">全新3D引擎打造，支持PBR材质、实时光影、体积云与大气散射，画面表现力大幅提升</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>更真实的物理</h3>
+          <p class="desc">加入结构应力、部件断裂、空气动力学、热效应与再入烧蚀等真实物理效果</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>完整生涯模式</h3>
+          <p class="desc">从小型探空火箭开始，逐步解锁技术、建立航天公司、完成合同任务，发展自己的航天帝国</p>
+        </div>
+        <div class="glass-card ani-in d2">
+          <h3>多人联机模式</h3>
+          <p class="desc">支持多人联机合作，与朋友一起建造空间站、执行联合任务、共同探索宇宙</p>
+        </div>
+        <div class="glass-card ani-in d3">
+          <h3>动态宇宙环境</h3>
+          <p class="desc">加入动态天气、昼夜循环、行星地质活动、小行星撞击等随机宇宙事件</p>
+        </div>
+        <div class="glass-card ani-in d4">
+          <h3>更大的宇宙</h3>
+          <p class="desc">不仅包含完整的太阳系，还加入了多个恒星系统与系外行星，支持星际航行</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第22页 演示视频 -->
+    <div class="slide">
+      <h2 style="font-size: clamp(3rem, 7vw, 4.5rem); color: var(--primary-100); text-align: center; margin-bottom: 2rem;" class="ani-in d1">游戏演示视频</h2>
+      <div class="video-container ani-in d2">
+        <video id="video-player" class="video-player" controls preload="auto"></video>
+      </div>
+      <div id="video-pagination" class="video-pagination ani-in d3">01 / 09</div>
+    </div>
+
+    <!-- 第23页 结尾 -->
+    <div class="slide">
+      <div class="ani-in d1" style="text-align:center;">
+        <h1 style="font-size: clamp(4rem, 10vw, 6rem); color: var(--primary-100); text-shadow: 0 6px 12px rgba(1, 155, 152, 0.25);">感谢观看</h1>
+        <p class="desc ani-in d2" style="margin-top:2rem;font-size:1.6rem;">感谢聆听本次 Spaceflight Simulator 分享</p>
+        <p class="desc ani-in d3" style="margin-top:1rem;font-size:1.6rem;">愿我们永远心怀热爱，奔赴星空</p>
+        <p class="desc ani-in d4" style="margin-top:1rem;font-size:1.6rem;">以梦为舟，探索浩瀚宇宙</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+// 视频数据
+const videoList = [
+  { src: "{{url_for('static',filename='sfs_static/videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS2预告片.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS1.0-1.6更新史.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/2025仿圈航天模拟器SFS大佬排名.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/SFS里真的有升力吗.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/航天模拟器1.6版本官方更新预告-4月1日正式上线！.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/如何利用奥伯特机动节省燃料.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/我在SFS中造出了二进制加减计算器.mp4')}}" },
+  { src: "{{url_for('static',filename='sfs_static/videos/教你如何前往五个拉格朗日点.mp4')}}" },
+];
+
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progress-bar');
+const pageNumber = document.getElementById('page-number');
+let currentPage = 0;
+const totalPages = slides.length;
+
+// 更新视图
+function updateView() {
+  slides.forEach((s, idx) => {
+    s.classList.toggle('active', idx === currentPage);
+  });
+  // 进度条
+  progressBar.style.width = `${((currentPage+1)/totalPages)*100}%`;
+  // 页码
+  pageNumber.innerText = `${String(currentPage+1).padStart(2,'0')} / ${totalPages}`;
+
+  // 如果是视频页，自动加载视频
+  if (currentPage === slides.length - 2) {
+    if (videoPlayer && videoPlayer.src === '') {
+      loadCurrentVideo();
+    }
+  } else {
+    // 离开视频页暂停视频
+    if (videoPlayer) videoPlayer.pause();
+  }
+}
+
+// 下一页
+function nextPage() {
+  if(currentPage < totalPages - 1) {
+    currentPage++;
+    updateView();
+  }
+}
+// 上一页
+function prevPage() {
+  if(currentPage > 0) {
+    currentPage--;
+    updateView();
+  }
+}
+
+// 键盘监听
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' ') nextPage();
+  if(e.key === 'ArrowLeft') prevPage();
+});
+
+// ====================== 视频播放逻辑 ======================
+const videoPlayer = document.getElementById('video-player');
+const videoPagination = document.getElementById('video-pagination');
+let currentVideoIndex = 0;
+
+// 加载当前视频
+function loadCurrentVideo() {
+  if (!videoPlayer) return;
+  videoPlayer.src = videoList[currentVideoIndex].src;
+  videoPagination.textContent = `${String(currentVideoIndex + 1).padStart(2, '0')} / ${String(videoList.length).padStart(2, '0')}`;
+  videoPlayer.preload = "auto";
+  videoPlayer.load();
+}
+
+// 视频页切换上一个/下一个
+function switchVideo(direction) {
+  if (direction === 'next') {
+    currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+  } else {
+    currentVideoIndex = (currentVideoIndex - 1 + videoList.length) % videoList.length;
+  }
+  loadCurrentVideo();
+}
+
+// 视频页滚轮切换
+document.querySelector('.slide:nth-last-child(2)').addEventListener('wheel', (e) => {
+  if (currentPage !== slides.length - 2) return;
+  e.preventDefault();
+  if (e.deltaY > 0) {
+    switchVideo('next');
+  } else {
+    switchVideo('prev');
+  }
+});
+
+updateView();
+</script>
+</body>
+</html>

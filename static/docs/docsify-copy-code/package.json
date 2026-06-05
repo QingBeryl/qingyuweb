@@ -1,0 +1,43 @@
+{
+  "name": "docsify-copy-code",
+  "version": "3.0.2",
+  "description": "A docsify plugin that copies a markdown code block to your clipboard",
+  "author": "JP Erasmus <jperasmus11@gmail.com>",
+  "contributors": [
+    "John Hildenbiddle <john@hildenbiddle.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jperasmus/docsify-copy-code",
+  "repository": "git@github.com:jperasmus/docsify-copy-code.git",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/docsify-copy-code.js",
+  "unpkg": "dist/docsify-copy-code.min.js",
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf dist/*",
+    "dev": "node server.js & npm run start",
+    "start": "npm run build -- -w"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-eslint": "^9.0.4",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "autoprefixer": "^10.4.14",
+    "browser-sync": "^2.29.3",
+    "compression": "^1.7.4",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "lodash.merge": "^4.6.2",
+    "prettier": "3.0.2",
+    "rimraf": "^5.0.1",
+    "rollup": "^3.28.0",
+    "rollup-plugin-postcss": "^4.0.2"
+  }
+}

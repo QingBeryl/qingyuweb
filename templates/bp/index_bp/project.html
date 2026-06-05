@@ -1,0 +1,104 @@
+<!-- 文件路径：templates/index.html -->
+{% extends "base/index_base.html" %}
+
+<!-- 覆盖父模板的 title block -->
+{% block title %}清育 - 项目{% endblock %}
+
+<!-- 给当前页面的body添加唯一类名 -->
+{% block page_class %}project-page{% endblock %}
+
+<!-- 填充父模板的 content block -->
+{% block content %}
+{{ super() }}
+<link rel="stylesheet" href="/static/bp/index_bp/css/project.css">
+
+<!--SFS游戏分享-->
+<div class="section_our_solution">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="our_solution_category">
+        <div class="solution_cards_box">
+          <div class="solution_card" onclick="sfsCardLink()" target="_blank">
+            <div class="hover_color_bubble"></div>
+            <div class="so_top_icon">
+              <img class="sfs_img" src="/static/bp/index_bp/images/sfs.svg">
+            </div>
+            <div class="solu_title">
+              <div>SFS游戏分享</div>
+            </div>
+            <div class="solu_description">
+              <p>
+                Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏
+              </p>
+              <button class="read_more_btn" type="button" onclick="sfsBtnLink(event)" target="_blank">了解更多</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--考勤管理系统-->
+<div class="section_our_solution">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="our_solution_category">
+        <div class="solution_cards_box">
+          <div class="solution_card" onclick="attCardLink()" target="_blank">
+            <div class="hover_color_bubble"></div>
+            <div class="so_top_icon">
+              <img class="attendance_img" src="/static/bp/index_bp/images/attendance.svg">
+            </div>
+            <div class="solu_title">
+              <div>考勤管理系统</div>
+            </div>
+            <div class="solu_description">
+              <p>
+                便捷的考勤打卡、数据统计与管理，提升考勤效率
+              </p>
+              <button class="read_more_btn" type="button" onclick="attBtnLink(event)" target="_blank">了解更多</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section_our_solution">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="our_solution_category">
+        <div class="solution_cards_box">
+          <div class="solution_card" onclick="window.open('/docs/docs1', '_blank')" style="cursor: pointer;">
+            <div class="hover_color_bubble"></div>
+            <div class="so_top_icon">
+              <img class="attendance_img" src="/static/bp/index_bp/images/attendance.svg">
+            </div>
+            <div class="solu_title">
+              <div>Python Flask Web项目部署教程</div>
+            </div>
+            <div class="solu_description">
+              <p>
+                详细介绍如何在Linux系统下部署Python Flask Web，包含Python解释器、Gunicorn、 Nginx、MySQL和Fail2ban的安装和使用
+              </p>
+              <button class="read_more_btn" type="button" onclick="attBtnLink(event)" target="_blank">了解更多</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/bp/index_bp/js/project.js"></script>
+<script>
+const sfsbtnUrl = "{{ url_for('index_bp.index') }}";
+const sfscardUrl = "{{ url_for('sfs_bp.a') }}";
+
+
+const attbtnUrl = "{{ url_for('index_bp.index') }}";
+const attcardUrl = "{{ url_for('attendance_bp.index') }}";
+</script>
+{% endblock %}

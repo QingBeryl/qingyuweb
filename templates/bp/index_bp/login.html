@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录注册</title>
+    <link rel="stylesheet" href="/static/bp/index_bp/css/login.css">
+    <link rel="stylesheet" href="/static/bp/index_bp/js/login.js">
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <!-- 注册 -->
+             <form action="/register" method="post">
+                <h1>用户注册</h1>
+                <input type="text" name="username" placeholder="请输入用户名">
+                <input type="password" name="password1" placeholder="请输入密码">
+                <input type="password" name="password2" placeholder="请再次输入密码">
+                <input type="password" name="passkey" placeholder="请输入密钥">
+                <button>立即注册</button>
+
+             </form>
+        </div>
+        <div class="form-container sing-in-container">
+            <!-- 登录 -->
+            <form action="" method="post">
+                <h1>用户登录</h1>
+                <input type="text" name="username" placeholder="请输入用户名">
+                <input type="password" name="password" placeholder="请输入密码">
+                <a href="#">忘记密码？</a>
+                <button>立即登录</button>
+            </form>
+        </div>
+        <!-- 侧边栏内容 -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-pannel overlay-left">
+                    <h1>已有账号？</h1>
+                    <p>点我进行登录吧！</p>
+                    <button class="ghost" id="signIn">去登录</button>
+                </div>
+                <div class="overlay-pannel overlay-right">
+                    <h1>没有账号？</h1>
+                    <p>点我进行注册吧！</p>
+                    <button class="ghost" id="signUp">去注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-overlay flash-{{ category }}" id="flashOverlay">
+                    <div class="flash-modal">
+                        <button class="flash-close" id="flashClose"></button>
+                        <div class="flash-icon">
+                            {% if category == 'success' %}✓{% endif %}
+                            {% if category == 'error' %}✕{% endif %}
+                            {% if category == 'warning' %}⚠{% endif %}
+                            {% if category == 'info' %}ℹ{% endif %}
+                        </div>
+                        <div class="flash-content">
+                            <div class="flash-title">
+                                {% if category == 'success' %}成功{% endif %}
+                                {% if category == 'error' %}失败{% endif %}
+                                {% if category == 'warning' %}警告{% endif %}
+                                {% if category == 'info' %}提示{% endif %}
+                            </div>
+                            <div class="flash-message">{{ message }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+<script src="/static/bp/index_bp/js/login.js"></script>
+</html>

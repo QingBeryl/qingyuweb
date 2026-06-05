@@ -8,7 +8,7 @@ attendance_bp = Blueprint('attendance_bp', __name__, template_folder='attendance
 def index():
     if 'username' in session:
         records = process_index_data()
-        return render_template('attendance/index.html',records = records, username = session['username'])
+        return render_template('bp/attendance_bp/index.html',records = records, username = session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 
@@ -16,7 +16,7 @@ def index():
 @attendance_bp.route('/import')
 def import_page():
     if 'username' in session:
-        return render_template('attendance/import.html', username = session['username'])
+        return render_template('bp/attendance_bp/import.html', username = session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 
@@ -25,7 +25,7 @@ def import_page():
 def do_import():
     if 'username' in session:
         msg = do_import_service(request, session['username'])
-        return render_template('attendance/import.html',msg = msg, username = session['username'])
+        return render_template('bp/attendance_bp/import.html',msg = msg, username = session['username'])
     else:
         return redirect(url_for('index_bp.login'))
 
@@ -34,6 +34,6 @@ def do_import():
 def query():
     if 'username' in session:
         data = query_data(request)
-        return render_template('attendance/query.html',**data, username = session['username'])
+        return render_template('bp/attendance_bp/query.html',**data, username = session['username'])
     else:
         return redirect(url_for('index_bp.login'))

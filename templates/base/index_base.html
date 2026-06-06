@@ -1,30 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}清育{% endblock %}</title>
     <link rel="stylesheet" href="/static/bp/index_bp/css/base.css">
-    <link rel="stylesheet" href="/static/bp/index_bp/js/base.js">
 </head>
 <body>
     <!-- 导航条 -->
-     <div class="nav">
-        <ul class="navlist">
-            <li class="btli" id="index"><p class="qing">清育</p></li>
-            <li class="btli"><a href="{{url_for('index_bp.index')}}">首页</a></li>
-            <li class="btli"><a href="{{url_for('index_bp.project')}}">项目</a></li>
-            <li class="btli"><a href="{{url_for('index_bp.down')}}">下载</a></li>
-            <li class="btli"><a href="{{url_for('index_bp.about')}}">关于</a></li>
-            <li class="btli"><a href="{{url_for('index_bp.mine')}}">我的</a></li>
-        </ul>
-        {% if username %}
-            <a href="{{url_for('index_bp.logout')}}" class="bail">退出登录</a>
-            <span class="bail">欢迎您，{{ username }}</span>
-        {% else %}
-        <a href="{{url_for('index_bp.login')}}" class="bail">登录</a>
-        {% endif %}
-     </div>
+    <div class="nav">
+        <div class="nav-container">
+            <!-- 左侧Logo -->
+            <div class="nav-logo">
+                <p class="qing">清育</p>
+            </div>
+
+            <!-- 桌面端导航 -->
+            <ul class="navlist desktop-nav">
+                <li class="btli"><a href="{{url_for('index_bp.index')}}">首页</a></li>
+                <li class="btli"><a href="{{url_for('index_bp.project')}}">项目</a></li>
+                <li class="btli"><a href="{{url_for('index_bp.down')}}">下载</a></li>
+                <li class="btli"><a href="{{url_for('index_bp.about')}}">关于</a></li>
+                <li class="btli"><a href="{{url_for('index_bp.mine')}}">我的</a></li>
+            </ul>
+
+            <!-- 桌面端用户信息 -->
+            <div class="desktop-user">
+                {% if username %}
+                    <a href="{{url_for('index_bp.logout')}}" class="bail">退出登录</a>
+                    <span class="bail">欢迎您，{{ username }}</span>
+                {% else %}
+                    <a href="{{url_for('index_bp.login')}}" class="bail">登录</a>
+                {% endif %}
+            </div>
+
+            <!-- 移动端汉堡按钮 -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- 移动端菜单抽屉 -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-navlist">
+                <li><a href="{{url_for('index_bp.index')}}">首页</a></li>
+                <li><a href="{{url_for('index_bp.project')}}">项目</a></li>
+                <li><a href="{{url_for('index_bp.down')}}">下载</a></li>
+                <li><a href="{{url_for('index_bp.about')}}">关于</a></li>
+                <li><a href="{{url_for('index_bp.mine')}}">我的</a></li>
+            </ul>
+
+            <!-- 移动端用户信息 -->
+            <div class="mobile-user">
+                {% if username %}
+                    <span class="mobile-welcome">欢迎您，{{ username }}</span>
+                    <a href="{{url_for('index_bp.logout')}}" class="mobile-logout">退出登录</a>
+                {% else %}
+                    <a href="{{url_for('index_bp.login')}}" class="mobile-login">登录</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -51,7 +90,9 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+
     {% block content %}{% endblock %}
+
+    <script src="/static/bp/index_bp/js/base.js"></script>
 </body>
-<script src="/static/bp/index_bp/js/base.js"></script>
 </html>

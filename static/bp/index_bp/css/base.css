@@ -1,80 +1,211 @@
-/*导航栏样式*/
-.nav{
-    height: 40px;
-    background-color: #417dff;
-    /* 阴影 */
-    box-shadow: 0 1px 2px;
-}
-
-/* 去掉各种不必要 */
-*{
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    list-style: none;
-}
-
-.btli{
-    float: left;
-    width: 100px;
-    line-height: 40px;
-    text-align: center;
-}
-
-.bail{
-    float: right;
-    width: 200px;
-    line-height: 40px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 18px;
-}
-
-.navlist a{
-    color: #ffffff;
-    font-size: 18px;
-    display: block;
-}
-
-.navlist a:hover{
-    background-color: #666;
-}
-
-.qing{
-    color: #ffffff;
-    font-size: 30px;
-    font-family: kaiti;
-}
-
-.nav a:hover{
-    background-color: #666;
-}
-
-/*@media (max-width: 768px) {*/
-/*    .btli{*/
-/*        float: left;*/
-/*        width: 50px;*/
-/*        line-height: 40px;*/
-/*        text-align: center;*/
-/*    }*/
-
-/*    .bail{*/
-/*        float: right;*/
-/*        width: 75px;*/
-/*        line-height: 40px;*/
-/*        text-align: center;*/
-/*        color: #ffffff;*/
-/*        font-size: 14px;*/
-/*    }*/
-/*}*/
-
-
-/*弹窗样式*/
+/* 全局重置 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ==============================
+   导航栏容器（桌面端）
+   ============================== */
+.nav {
+    background-color: #417dff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+/* 左侧Logo */
+.nav-logo {
+    flex-shrink: 0;
+}
+
+.qing {
+    color: #ffffff;
+    font-size: 30px;
+    font-family: kaiti, "楷体", serif;
+    line-height: 40px;
+}
+
+/* 桌面端导航 */
+.desktop-nav {
+    display: flex;
+    height: 100%;
+}
+
+.btli {
+    width: 100px;
+    height: 100%;
+    line-height: 40px;
+    text-align: center;
+}
+
+.desktop-nav a {
+    color: #ffffff;
+    font-size: 18px;
+    display: block;
+    height: 100%;
+    transition: background-color 0.2s ease;
+}
+
+.desktop-nav a:hover {
+    background-color: #666;
+}
+
+/* 桌面端用户信息 */
+.desktop-user {
+    display: flex;
+    align-items: center;
+}
+
+.bail {
+    margin-left: 20px;
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 40px;
+    transition: opacity 0.2s ease;
+}
+
+.bail:hover {
+    opacity: 0.8;
+}
+
+/* ==============================
+   移动端汉堡菜单
+   ============================== */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #ffffff;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+}
+
+/* 汉堡按钮激活状态（变成叉号） */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* 移动端菜单抽屉 */
+.mobile-menu {
+    position: fixed;
+    top: 40px;
+    right: -100%;
+    width: 70%;
+    max-width: 280px;
+    height: calc(100vh - 40px);
+    background-color: #ffffff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+/* 移动端导航列表 */
+.mobile-navlist {
+    padding: 20px 0;
+}
+
+.mobile-navlist li {
+    width: 100%;
+}
+
+.mobile-navlist a {
+    display: block;
+    padding: 15px 25px;
+    color: #333;
+    font-size: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.mobile-navlist a:hover {
+    background-color: #f5f5f5;
+}
+
+/* 移动端用户信息 */
+.mobile-user {
+    padding: 20px 25px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.mobile-welcome {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.mobile-login, .mobile-logout {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    background-color: #417dff;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.mobile-login:hover, .mobile-logout:hover {
+    background-color: #3366cc;
+}
+
+/* 菜单遮罩层 */
+.menu-overlay {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 40px);
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ==============================
@@ -218,4 +349,87 @@
 
 .flash-info .flash-title {
     color: #0c5460;
+}
+
+/* ==============================
+   响应式断点
+   ============================== */
+/* 平板：768px以下 */
+@media (max-width: 768px) {
+    .btli {
+        width: 80px;
+    }
+
+    .desktop-nav a {
+        font-size: 16px;
+    }
+
+    .bail {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+}
+
+/* 手机：480px以下 - 显示汉堡菜单 */
+@media (max-width: 480px) {
+    .desktop-nav, .desktop-user {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-container {
+        padding: 0 15px;
+    }
+
+    .qing {
+        font-size: 24px;
+    }
+
+    /* 弹窗移动端优化 */
+    .flash-modal {
+        max-width: 95%;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .flash-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .flash-title {
+        font-size: 16px;
+    }
+
+    .flash-message {
+        font-size: 13px;
+    }
+
+    .flash-close {
+        top: 12px;
+        right: 12px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .flash-close::before,
+    .flash-close::after {
+        width: 14px;
+    }
+}
+
+/* 超小屏幕：360px以下 */
+@media (max-width: 360px) {
+    .qing {
+        font-size: 22px;
+    }
+
+    .mobile-menu {
+        width: 80%;
+    }
 }

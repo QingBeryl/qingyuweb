@@ -443,12 +443,20 @@
 
 .footer-links {
     margin-bottom: 20px;
+    /* 手机端自动换行 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .footer-links a {
     color: #a0aec0;
     margin: 0 15px;
     transition: color 0.2s ease;
+    /* 解决手机点击区域太小 */
+    display: inline-block;
+    padding: 5px 0;
 }
 
 .footer-links a:hover {
@@ -457,6 +465,28 @@
 
 .copyright {
     font-size: 14px;
+}
+
+/* ======================
+   手机端适配（核心代码）
+====================== */
+@media (max-width: 768px) {
+    .footer {
+        /* 手机端减少内边距 */
+        padding: 30px 15px;
+    }
+
+    .footer-links a {
+        /* 手机端链接间距缩小 */
+        margin: 0 8px;
+        font-size: 14px;
+    }
+
+    .copyright {
+        /* 手机端版权文字缩小 */
+        font-size: 12px;
+        line-height: 1.5;
+    }
 }
 
 /* 导航栏Logo图片样式 */

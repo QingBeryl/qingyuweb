@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}清育{% endblock %}</title>
+    <title>{% block title %}清玉{% endblock %}</title>
     <link rel="stylesheet" href="/static/bp/index_bp/css/base.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/global/favicon_io/favicon_io_blue/favicon-32x32.png">
 </head>
 <body>
     <!-- 导航条 -->
@@ -12,7 +13,11 @@
         <div class="nav-container">
             <!-- 左侧Logo -->
             <div class="nav-logo">
-                <p class="qing">清育</p>
+                <!-- 左边Logo + 右边 清育 -->
+                <a href="{{url_for('index_bp.index')}}" style="display:flex; align-items:center; gap:8px; text-decoration:none;">
+                    <img src="/static/global/favicon_io/favicon_io_white/favicon.ico" alt="清育" class="nav-logo-img">
+                    <span class="qing">清玉</span>
+                </a>
             </div>
 
             <!-- 桌面端导航 -->
@@ -102,7 +107,7 @@
             <a href="{{url_for('index_bp.mine')}}">我的</a>
         </div>
         <div class="copyright">
-            © 2026 清育. All rights reserved.
+            © 2026 清玉. All rights reserved.
         </div>
     </footer>
 

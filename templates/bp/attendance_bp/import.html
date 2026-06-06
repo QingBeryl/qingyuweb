@@ -9,20 +9,67 @@
 {{ super() }}
 <link rel="stylesheet" href="/static/bp/attendance_bp/css/import.css">
 
+<!-- 新增：下拉框专属样式（与原有风格完全一致） -->
+<style>
+    .form-group select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: #fff;
+        transition: border-color 0.2s ease;
+    }
+
+    .form-group select:focus {
+        outline: none;
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+    }
+
+    .form-group select:required:invalid {
+        color: #999;
+    }
+
+    .form-group select option {
+        color: #333;
+    }
+</style>
+
 <div class="container">
     <div class="import-form">
-        <h2>Excel考勤记录导入</h2>
+        <h2>考勤记录批量导入</h2>
         <form method="post" action="{{url_for('attendance_bp.do_import')}}" enctype="multipart/form-data">
+            <!-- 新增：班级选择下拉框（放在文件选择之前） -->
             <div class="form-group">
-                <label for="file">选择Excel文件（支持.xlsx格式）</label>
-                <input type="file" id="file" name="file" accept=".xlsx" required>
+                <label for="student_class">选择班级 <span style="color: #e74c3c;">*</span></label>
+                <select id="student_class" name="student_class" required>
+                    <option value="" disabled selected>-- 请选择班级 --</option>
+                    {% for class_name in classes %}
+                    <option value="{{ class_name }}">{{ class_name }}</option>
+                    {% endfor %}
+                </select>
             </div>
+
+            <!-- 原有文件选择部分（完全不变） -->
             <div class="form-group">
-                <span class="warning">提示：Excel需包含字段：student_id（学生ID）、attend_date（考勤日期）、attend_type（考勤类型）、check_time（打卡时间，可选）、status（状态）</span>
+                <label for="file">选择考勤文件（支持多选）</label>
+                <input type="file" id="file" name="file[]" accept=".xlsx,.csv,.xls" required multiple>
+            </div>
+
+            <!-- 更新后的提示信息 -->
+            <div class="form-group">
+                <span class="warning">
+                    提示：支持两种格式的文件<br>
+                    1. 原始CSV文件（直接从考勤系统导出）：需包含 姓名、记录时间、状态<br>
+                    2. 标准Excel文件：需包含 姓名、考勤日期、考勤类型、打卡时间(可选)、状态<br>
+                    <strong>注意：文件中不需要填写班级列，系统将自动使用上方选择的班级</strong>
+                </span>
             </div>
             <button type="submit" class="btn">开始导入</button>
             {% if msg %}
-                <div class="msg">{{ msg }}</div>
+                <!-- 原有消息处理（完全不变） -->
+                <div class="msg">{{ msg|replace('\n', '<br>')|safe }}</div>
             {% endif %}
         </form>
     </div>

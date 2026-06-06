@@ -73,3 +73,31 @@ def by_student(sid, status):
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
+def get_all_students_name_id(class_name):
+    conn = None
+    try:
+        # 从连接池中获取一个连接
+        conn = db()
+        with conn.cursor() as cursor:
+            # 执行查询语句
+            cursor.execute("SELECT name, student_id FROM students_name_id where `class`=%s",(class_name))
+            # 获取查询结果
+            data = cursor.fetchall()
+            return data
+    except Exception as e:
+        print(f"查询数据时出现错误: {e}")
+
+# 添加到你的dao.py文件中
+def get_all_classes():
+    conn = None
+    try:
+        conn = db()
+        with conn.cursor() as cursor:
+            # 查询所有不重复的班级并按名称排序
+            cursor.execute("SELECT DISTINCT `class` FROM students_name_id ORDER BY `class`")
+            data = cursor.fetchall()
+            # 提取班级名称返回列表
+            return [row['class'] for row in data]
+    except Exception as e:
+        print(f"查询班级列表时出现错误: {e}")
+        return []

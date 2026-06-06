@@ -1,10 +1,137 @@
-<!-- 文件路径：templates/index.html -->
 {% extends "base/index_base.html" %}
 
-<!-- 覆盖父模板的 title block -->
-{% block title %}清育 - 首页{% endblock %}
+{% block title %}清育 - 个人项目与工具集合{% endblock %}
 
-<!-- 填充父模板的 content block -->
 {% block content %}
-    <p>这是首页</p>
+{{ super() }}
+<link rel="stylesheet" href="/static/bp/index_bp/css/index.css">
+
+<!-- 英雄区 -->
+<section class="hero">
+    <h1 class="hero-title">清育</h1>
+    <p class="hero-subtitle">
+        一个专注于实用工具和项目分享的个人网站<br>
+        提供考勤管理、文件处理、游戏辅助等多种实用工具
+    </p>
+    <div class="hero-buttons">
+        <a href="{{url_for('index_bp.project')}}" class="btn-primary">查看项目</a>
+        <a href="{{url_for('index_bp.down')}}" class="btn-secondary">下载工具</a>
+    </div>
+</section>
+
+<!-- 功能介绍区 -->
+<section class="section features-section">
+    <h2 class="section-title">核心功能</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3 class="feature-title">考勤管理系统</h3>
+            <p class="feature-desc">
+                支持Excel/CSV批量导入，自动识别考勤系统导出格式，
+                智能匹配学生信息，快速生成考勤记录
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📁</div>
+            <h3 class="feature-title">文件处理工具</h3>
+            <p class="feature-desc">
+                提供多种文件格式转换和处理工具，
+                包括Excel转CSV、批量重命名、数据清洗等功能
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3 class="feature-title">游戏辅助工具</h3>
+            <p class="feature-desc">
+                为《航天模拟器》等游戏提供实用辅助工具，
+                包括轨道计算、火箭设计、数据导出等功能
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">响应式设计</h3>
+            <p class="feature-desc">
+                所有页面都采用响应式设计，
+                在电脑、平板和手机上都能完美显示和使用
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3 class="feature-title">安全可靠</h3>
+            <p class="feature-desc">
+                所有数据都在本地处理或加密存储，
+                保护你的隐私和数据安全
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3 class="feature-title">持续更新</h3>
+            <p class="feature-desc">
+                不断添加新功能和改进现有工具，
+                根据用户反馈持续优化使用体验
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- 项目展示区 -->
+<section class="section projects-section">
+    <h2 class="section-title">精选项目</h2>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-image">📋</div>
+            <div class="project-content">
+                <h3 class="project-title">考勤管理系统</h3>
+                <p class="project-desc">
+                    专为班级设计的考勤管理系统，支持批量导入考勤记录，
+                    自动统计出勤率，生成详细的考勤报表。
+                </p>
+                <a href="{{url_for('attendance_bp.import_page')}}" class="project-link">立即使用 →</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-image">🚀</div>
+            <div class="project-content">
+                <h3 class="project-title">航天模拟器工具</h3>
+                <p class="project-desc">
+                    为《Spaceflight Simulator》玩家打造的实用工具集，
+                    包含轨道计算、Delta-V计算、火箭设计指南等功能。
+                </p>
+                <a href="{{url_for('index_bp.project')}}" class="project-link">了解更多 →</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-image">📦</div>
+            <div class="project-content">
+                <h3 class="project-title">文件批量处理工具</h3>
+                <p class="project-desc">
+                    一键处理大量文件，支持批量重命名、格式转换、
+                    数据提取和清洗，大幅提高工作效率。
+                </p>
+                <a href="{{url_for('index_bp.down')}}" class="project-link">下载使用 →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 下载引导区 -->
+<section class="section download-section">
+    <div class="download-card">
+        <h2 class="download-title">开始使用</h2>
+        <p class="download-desc">
+            所有工具都可以免费下载和使用，无需注册登录。
+            如果你有任何问题或建议，欢迎通过"关于"页面联系我。
+        </p>
+        <a href="{{url_for('index_bp.down')}}" class="btn-primary">下载所有工具</a>
+    </div>
+</section>
+
+
 {% endblock %}

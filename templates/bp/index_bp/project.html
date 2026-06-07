@@ -1,104 +1,116 @@
-<!-- 文件路径：templates/index.html -->
 {% extends "base/index_base.html" %}
 
-<!-- 覆盖父模板的 title block -->
-{% block title %}清玉 - 项目{% endblock %}
+{% block title %}清玉 - 项目中心{% endblock %}
 
-<!-- 给当前页面的body添加唯一类名 -->
-{% block page_class %}project-page{% endblock %}
-
-<!-- 填充父模板的 content block -->
 {% block content %}
 {{ super() }}
 <link rel="stylesheet" href="/static/bp/index_bp/css/project.css">
-
-<!--SFS游戏分享-->
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <div class="solution_card" onclick="sfsCardLink()" target="_blank">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="sfs_img" src="/static/bp/index_bp/images/sfs.svg">
-            </div>
-            <div class="solu_title">
-              <div>SFS游戏分享</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏
-              </p>
-              <button class="read_more_btn" type="button" onclick="sfsBtnLink(event)" target="_blank">了解更多</button>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- 项目页主容器 -->
+<section class="project-page">
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <h1 class="page-title">项目中心</h1>
+        <p class="page-subtitle">探索所有开源项目与工具，持续更新中</p>
     </div>
-  </div>
-</div>
 
-
-<!--考勤管理系统-->
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <div class="solution_card" onclick="attCardLink()" target="_blank">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="attendance_img" src="/static/bp/index_bp/images/attendance.svg">
-            </div>
-            <div class="solu_title">
-              <div>考勤管理系统</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                便捷的考勤打卡、数据统计与管理，提升考勤效率
-              </p>
-              <button class="read_more_btn" type="button" onclick="attBtnLink(event)" target="_blank">了解更多</button>
-            </div>
-          </div>
+    <!-- 搜索与筛选区 -->
+    <div class="filter-bar">
+        <!-- 搜索框 + 搜索按钮（修改点） -->
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+                type="text"
+                id="projectSearch"
+                placeholder="搜索项目名称、简介或标签..."
+                autocomplete="off"
+            >
+            <!-- 新增搜索按钮 -->
+            <button class="search-btn" id="searchBtn">搜索</button>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="section_our_solution">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="our_solution_category">
-        <div class="solution_cards_box">
-          <div class="solution_card" onclick="window.open('/docs/docs1', '_blank')" style="cursor: pointer;">
-            <div class="hover_color_bubble"></div>
-            <div class="so_top_icon">
-              <img class="attendance_img" src="/static/bp/index_bp/images/attendance.svg">
-            </div>
-            <div class="solu_title">
-              <div>Python Flask Web项目部署教程</div>
-            </div>
-            <div class="solu_description">
-              <p>
-                详细介绍如何在Linux系统下部署Python Flask Web，包含Python解释器、Gunicorn、 Nginx、MySQL和Fail2ban的安装和使用
-              </p>
-              <button class="read_more_btn" type="button" onclick="attBtnLink(event)" target="_blank">了解更多</button>
-            </div>
-          </div>
+        <!-- 分类标签 -->
+        <div class="category-tags" id="categoryTags">
+            <button class="tag active" data-category="all">全部</button>
+            <button class="tag" data-category="web">Web开发教程</button>
+            <button class="tag" data-category="tool">工具软件</button>
+            <button class="tag" data-category="game">游戏相关</button>
+            <button class="tag" data-category="ai">其它</button>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+
+    <!-- 项目网格（不变） -->
+    <div class="project-grid" id="projectGrid">
+        <!-- 项目卡片1 -->
+        <a class="project-card" href="{{url_for('attendance_bp.index')}}" target="_blank" data-category="tool">
+            <div class="card-image">
+                <img src="/static/bp/index_bp/images/attendance.svg" alt="清玉管理系统">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">考勤管理系统</h3>
+                <p class="card-desc">便捷的考勤打卡、数据统计与管理，提升考勤效率。</p>
+                <div class="card-tags">
+                    <span class="tag-small">Web开发</span>
+                    <span class="tag-small">Flask</span>
+                    <span class="tag-small">工具软件</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 项目卡片2 -->
+        <a class="project-card" href="{{url_for('sfs_bp.a')}}" target="_blank" data-category="game">
+            <div class="card-image">
+                <img src="/static/bp/index_bp/images/sfs.svg" alt="SFS游戏分享">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">SFS游戏分享</h3>
+                <p class="card-desc">Spaceflight Simulator 是一款轻量、自由且新手友好的太空模拟游戏。</p>
+                <div class="card-tags">
+                    <span class="tag-small">游戏相关</span>
+                    <span class="tag-small">游戏分享</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 项目卡片3 -->
+        <a class="project-card" href="/docs/docs1" target="_blank" data-category="web">
+            <div class="card-image">
+                <img src="/static/bp/index_bp/images/docs1.svg" alt="教程分享">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Python Flask Web项目部署教程</h3>
+                <p class="card-desc">从零开始，部署生产级Flask应用。</p>
+                <div class="card-tags">
+                    <span class="tag-small">Flask</span>
+                    <span class="tag-small">教程分享</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 项目卡片4 -->
+        <a class="project-card" href="https://你的项目链接4" target="_blank" data-category="ai">
+            <div class="card-image">
+                <img src="/static/global/project/demo4.jpg" alt="敬请期待">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">敬请期待</h3>
+                <p class="card-desc">敬请期待</p>
+                <div class="card-tags">
+                    <span class="tag-small"></span>
+                    <span class="tag-small"></span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- 加载更多按钮 -->
+    <div class="load-more-container">
+        <button class="load-more-btn" id="loadMoreBtn">加载更多项目</button>
+    </div>
+</section>
+
+<!-- 引入JS（不变） -->
 <script src="/static/bp/index_bp/js/project.js"></script>
-<script>
-const sfsbtnUrl = "{{ url_for('index_bp.index') }}";
-const sfscardUrl = "{{ url_for('sfs_bp.a') }}";
-
-
-const attbtnUrl = "{{ url_for('index_bp.index') }}";
-const attcardUrl = "{{ url_for('attendance_bp.index') }}";
-</script>
 {% endblock %}

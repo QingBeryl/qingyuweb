@@ -1,138 +1,292 @@
-.section_our_solution .row {
-  align-items: center;
-  margin-top: 50px;
-}
-.our_solution_category {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.our_solution_category .solution_cards_box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.solution_cards_box .solution_card {
-  flex: 0 50%;
-  background: #fff;
-  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),0 5px 15px 0 rgba(37, 44, 97, 0.15);
-  border-radius: 15px;
-  margin: 8px;
-  padding: 10px 15px;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  min-height: 265px;
-  transition: 0.7s;
-  cursor: pointer;
-}
-.solution_cards_box .solution_card:hover {
-  background: #309df0;
-  color: #fff;
-  transform: scale(1.1);
-  z-index: 9;
-}
-.solution_cards_box .solution_card:hover::before {
-  background: rgb(85 108 214 / 10%);
-}
-.solution_cards_box .solution_card:hover .solu_title h3,
-.solution_cards_box .solution_card:hover .solu_description p {
-  color: #fff;
-}
-.solution_cards_box .solution_card:before {
-  content: "";
-  position: absolute;
-  background: rgb(85 108 214 / 5%);
-  width: 170px;
-  height: 400px;
-  z-index: -1;
-  transform: rotate(42deg);
-  right: -56px;
-  top: -23px;
-  border-radius: 35px;
-}
-.solution_cards_box .solution_card:hover .solu_description button {
-  background: #fff !important;
-  color: #309df0;
-}
-.solution_card .so_top_icon {}
-.solution_card .solu_title div {
-  color: #212121;
-  font-size: 1.3rem;
-  margin-top: 13px;
-  margin-bottom: 13px;
-}
-.solution_card .solu_description p {
-  font-size: 15px;
-  margin-bottom: 15px;
-}
-.solution_card .solu_description button {
-  border: 0;
-  border-radius: 15px;
-  background: linear-gradient(140deg,#42c3ca 0%,#42c3ca 50%,#42c3cac7 75%) !important;
-  color: #fff;
-  font-weight: 500;
-  font-size: 1rem;
-  padding: 5px 16px;
-  cursor: pointer;
-  position:relative;
-  z-index:2;
-}
-.our_solution_content div {
-  text-transform: capitalize;
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-}
-.hover_color_bubble {
-  position: absolute;
-  background: rgb(54 81 207 / 15%);
-  width: 100rem;
-  height: 100rem;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  top: 16rem;
-  border-radius: 50%;
-  transform: rotate(-36deg);
-  left: -18rem;
-  transition: 0.7s;
-}
-.solution_cards_box .solution_card:hover .hover_color_bubble {
-  top: 0rem;
-}
-.solution_cards_box .solution_card .so_top_icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #fff;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.solution_cards_box .solution_card .so_top_icon img {
-  width: 40px;
-  height: 50px;
-  object-fit: contain;
+/* ==============================
+   项目中心专属样式（与导航栏#417dff完美适配）
+   ============================== */
+.project-page {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: calc(100vh - 340px);
 }
 
-.sfs_img{
-  transform: scale(3);transform-origin: center;
+/* 页面头部 */
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.attendance_img{
-  transform: scale(3);transform-origin: center;
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
 }
 
-@media screen and (min-width: 320px) {
-  .sol_card_top_3 {position: relative;top: 0;}
-  .our_solution_category {width: 100%;margin: 0 auto;}
-  .our_solution_category .solution_cards_box {flex: auto;}
+.page-subtitle {
+    font-size: 16px;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
 }
-@media only screen and (min-width: 768px) {
-  .our_solution_category .solution_cards_box {flex: 1;}
+
+/* 搜索与筛选栏 */
+.filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
 }
-@media only screen and (min-width: 1024px) {
-  .sol_card_top_3 {position: relative;top: -3rem;}
-  .our_solution_category {width: 80%;margin: 0 auto;}
+
+/* 搜索框设计 */
+.search-container {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+#projectSearch {
+    width: 100%;
+    padding: 14px 20px 14px 50px;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 16px;
+    background-color: #f8fafc;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#projectSearch:focus {
+    border-color: #417dff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(65, 125, 255, 0.1);
+}
+
+/* 分类标签 */
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tag {
+    padding: 8px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tag:hover {
+    border-color: #417dff;
+    color: #417dff;
+}
+
+.tag.active {
+    background-color: #417dff;
+    border-color: #417dff;
+    color: #ffffff;
+}
+
+/* 项目网格布局（核心：自动适配列数） */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+/* 项目卡片设计（独特渐变+微动效） */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(65, 125, 255, 0.05);
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(65, 125, 255, 0.12);
+    border-color: #bfdbfe;
+}
+
+/* 🔥 图片自动适配核心代码（任何图片都完美显示） */
+.card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 统一16:9标准封面比例 */
+    overflow: hidden;
+    position: relative;
+}
+
+.card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 自动裁剪填充，不变形 */
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .card-image img {
+    transform: scale(1.08);
+}
+
+/* 卡片内容 */
+.card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-desc {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 卡片小标签 */
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-small {
+    padding: 4px 10px;
+    background-color: #eff6ff;
+    color: #3b82f6;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* 加载更多按钮 */
+.load-more-container {
+    text-align: center;
+}
+
+.load-more-btn {
+    padding: 12px 32px;
+    background-color: #ffffff;
+    border: 2px solid #417dff;
+    color: #417dff;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.load-more-btn:hover {
+    background-color: #417dff;
+    color: #ffffff;
+}
+
+/* ==============================
+   响应式适配（全端完美显示）
+   ============================== */
+@media (max-width: 768px) {
+    .project-page {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
+    .page-title {
+        font-size: 26px;
+    }
+
+    .page-subtitle {
+        font-size: 14px;
+    }
+
+    .filter-bar {
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .card-content {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tag {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+    .card-title {
+        font-size: 17px;
+    }
+
+    .card-desc {
+        font-size: 13px;
+    }
+}
+
+/* 搜索按钮样式 */
+.search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 16px;
+    background-color: #417dff;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+.search-btn:hover {
+    background-color: #3366cc;
 }

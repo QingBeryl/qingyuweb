@@ -2,6 +2,10 @@ from bps.index_bp.dao.user_dao import get_user_data
 from bps.index_bp.dao.user_dao import secret_key as user_secret_key
 from bps.index_bp.dao.user_dao import update_status as user_update_status
 from bps.index_bp.dao.user_dao import add_user as user_add_user
+from bps.index_bp.dao.user_dao import update_signature
+from bps.index_bp.dao.user_dao import update_username
+from bps.index_bp.dao.user_dao import update_password
+
 
 def get_user(username):
     return get_user_data(username)
@@ -23,3 +27,12 @@ def update_status(passkey):
 
 def add_user(username, password):
     user_add_user(username, password)
+
+def updata_signature_service(username, signature):
+    update_signature(username, signature)
+
+def update_username_service(username, new_username):
+    update_username(username, new_username)
+
+def update_password_service(username, new_password):
+    update_password(username, new_password)

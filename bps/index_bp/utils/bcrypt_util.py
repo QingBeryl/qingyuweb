@@ -20,7 +20,6 @@ def bcrypt_hash(password: str, rounds: int = 13) -> str:
     # 转换为字符串返回
     return hashed_bytes.decode('utf-8')
 
-
 def bcrypt_verify(password: str, hashed_password: str) -> bool:
     """
     验证密码是否匹配

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, g, flash
 from bps.index_bp.service.user_service import get_user
 from bps.index_bp.utils.bcrypt_util import bcrypt_hash, bcrypt_verify
-from bps.index_bp.service.user_service import secret_key, update_status, add_user
+from bps.index_bp.service.user_service import secret_key, update_status, add_user, updata_signature_service, update_username_service, update_password_service
 import os
 index_bp = Blueprint('index_bp', __name__)
 
@@ -16,7 +16,7 @@ def index():
     if 'username' in session:
         return render_template('bp/index_bp/index.html', username = session['username'])
     else:
-        return render_template('bp/index_bp//index.html')
+        return render_template('bp/index_bp/index.html')
 @index_bp.route('/project')
 def project():
     if 'username' in session:
@@ -41,7 +41,8 @@ def about():
 @index_bp.route('/mine')
 def mine():
     if 'username' in session:
-        return render_template('bp/index_bp/mine.html', username=session['username'])
+        user = get_user(session['username'])
+        return render_template('bp/index_bp/mine.html', username=session['username'], user=user)
     else:
         return redirect(url_for('index_bp.login'))
 @index_bp.route('/login', methods=['GET', 'POST'])
@@ -113,3 +114,81 @@ def register_user():
     else:
         flash('用户名不能为空！', 'error')
     return redirect(url_for('index_bp.login'))
+
+@index_bp.route('/update-signature', methods=['POST'])
+def update_signature():
+    if 'username' in session:
+        new_signature = request.form['signature']
+        if len(new_signature) > 255:
+            flash('签名长度不能超过255个字符！', 'error')
+            return redirect(url_for('index_bp.mine'))
+        else:
+            updata_signature_service(session['username'], new_signature)
+            flash('修改成功，请刷新！', 'success')
+            return redirect(url_for('index_bp.mine'))
+    else:
+        return redirect(url_for('index_bp.login'))
+
+@index_bp.route('/update-username', methods=['POST'])
+def update_username():
+    if 'username' in session:
+        new_username = request.form['username']
+        if new_username:
+            if len(new_username) > 255:
+                flash('用户名长度不能超过255个字符！', 'error')
+                return redirect(url_for('index_bp.mine'))
+            else:
+                update_username_service(session['username'], new_username)
+                flash('修改成功，请重新登录！', 'success')
+                return redirect(url_for('index_bp.logout'))
+        else:
+            flash('用户名不能为空！', 'error')
+    else:
+        return redirect(url_for('index_bp.login'))
+
+@index_bp.route('/update-password', methods=['POST'])
+def update_password():
+    if 'username' in session:
+        raw_password = request.form['raw_password']
+        new_password1 = request.form['new_password1']
+        new_password2 = request.form['new_password2']
+        user = get_user(session['username'])
+        if raw_password:
+            if new_password1:
+                if new_password2:
+                    if bcrypt_verify(raw_password, user['password']):
+                        if new_password1 != raw_password:
+                            if len(new_password1) <= 20 and len(new_password2) <= 20:
+                                if new_password1 == new_password2:
+                                    print(session['username'])
+                                    print(bcrypt_hash(new_password1))
+                                    update_password_service(session['username'], bcrypt_hash(new_password1))
+                                    flash('修改成功，请重新登录！', 'success')
+                                    return redirect(url_for('index_bp.logout'))
+                                else:
+                                    flash('两次密码不相等，请重新输入！', 'error')
+                                    return redirect(url_for('index_bp.mine'))
+                            else:
+                                flash('新密码长度不能超过20个字符，请重新输入！', 'error')
+                                return redirect(url_for('index_bp.mine'))
+                        else:
+                            flash('新密码与旧密码重复，请重新输入！', 'error')
+                            return redirect(url_for('index_bp.mine'))
+                    else:
+                        flash('旧密码错误，请重新输入！', 'error')
+                        return redirect(url_for('index_bp.mine'))
+                else:
+                    flash('密码不能为空，请重新输入！', 'error')
+                    return redirect(url_for('index_bp.mine'))
+            else:
+                flash('密码不能为空，请重新输入！', 'error')
+                return redirect(url_for('index_bp.mine'))
+        else:
+            flash('密码不能为空，请重新输入！', 'error')
+            return redirect(url_for('index_bp.mine'))
+    else:
+        return redirect(url_for('index_bp.login'))
+
+
+
+

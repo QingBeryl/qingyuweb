@@ -673,15 +673,15 @@ p.desc { color: var(--text-200); line-height: 1.8; font-size: 1.3rem; }
 <script>
 // 视频数据
 const videoList = [
-  { src: "{{url_for('static',filename='sfs_static/videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/SFS2预告片.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/SFS1.0-1.6更新史.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/2025仿圈航天模拟器SFS大佬排名.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/SFS里真的有升力吗.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/航天模拟器1.6版本官方更新预告-4月1日正式上线！.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/如何利用奥伯特机动节省燃料.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/我在SFS中造出了二进制加减计算器.mp4')}}" },
-  { src: "{{url_for('static',filename='sfs_static/videos/教你如何前往五个拉格朗日点.mp4')}}" },
+  { src: "/static/bp/sfs_shared/videos/一个视频教会你为登月火箭计算燃料量！SFS进阶登月教程.mp4" },
+  { src: "/static/bp/sfs_shared/videos/SFS2预告片.mp4" },
+  { src: "/static/bp/sfs_shared/videos/SFS1.0-1.6更新史.mp4" },
+  { src: "/static/bp/sfs_shared/videos/2025仿圈航天模拟器SFS大佬排名.mp4" },
+  { src: "/static/bp/sfs_shared/videos/SFS里真的有升力吗.mp4" },
+  { src: "/static/bp/sfs_shared/videos/航天模拟器1.6版本官方更新预告-4月1日正式上线！.mp4" },
+  { src: "/static/bp/sfs_shared/videos/如何利用奥伯特机动节省燃料.mp4" },
+  { src: "/static/bp/sfs_shared/videos/我在SFS中造出了二进制加减计算器.mp4" },
+  { src: "/static/bp/sfs_shared/videos/教你如何前往五个拉格朗日点.mp4" },
 ];
 
 const slides = document.querySelectorAll('.slide');
@@ -731,6 +731,19 @@ document.addEventListener('keydown', e => {
   if(e.key === 'ArrowRight' || e.key === ' ') nextPage();
   if(e.key === 'ArrowLeft') prevPage();
 });
+
+// ====================== 手机端点击任意地方翻页（新增）======================
+function isMobile() {
+  return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+if (isMobile()) {
+  document.body.addEventListener('click', function (e) {
+    // 如果点的是视频，不触发翻页
+    if (e.target.tagName === 'VIDEO') return;
+    nextPage();
+  });
+}
 
 // ====================== 视频播放逻辑 ======================
 const videoPlayer = document.getElementById('video-player');

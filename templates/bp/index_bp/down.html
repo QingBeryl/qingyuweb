@@ -1,28 +1,801 @@
-<!-- 文件路径：templates/index.html -->
+<!-- 文件路径：templates/bp/index_bp/down.html -->
 {% extends "base/index_base.html" %}
 
 <!-- 覆盖父模板的 title block -->
-{% block title %}清玉 - 我的{% endblock %}
+{% block title %}清玉 - 下载中心{% endblock %}
 
 <!-- 填充父模板的 content block -->
 {% block content %}
-<style>
-    .empty-page-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: calc(100vh - 64px); /* 减去导航栏高度 */
-        padding: 20px;
-    }
 
-    .empty-page-image {
-        max-width: 100%;
-        max-height: 60vh;
-        object-fit: contain;
+<!-- 强制内联所有样式 -->
+<style>
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+    line-height: 1.5;
+}
+
+/* 强制限制所有SVG图标大小 */
+svg {
+    width: 20px !important;
+    height: 20px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+
+/* 页面容器 */
+.page-container {
+    min-height: 100vh;
+    padding-top: 64px;
+    padding-bottom: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+    .page-container {
+        padding-left: 24px;
+        padding-right: 24px;
     }
+}
+
+@media (min-width: 1024px) {
+    .page-container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* 页面标题 */
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.page-subtitle {
+    margin-top: 8px;
+    color: #4b5563;
+}
+
+/* 面包屑导航 */
+.breadcrumbs {
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    color: #9ca3af;
+    margin: 0 4px;
+}
+
+.breadcrumb-current {
+    color: #374151;
+    font-weight: 500;
+}
+
+/* 错误提示 */
+.error-alert {
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.error-icon {
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 8px;
+    color: #ef4444;
+}
+
+.error-text {
+    color: #b91c1c;
+}
+
+/* 文件管理器卡片 */
+.file-manager {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+/* 工具栏 */
+.toolbar {
+    background-color: #f3f4f6;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toolbar-title {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-title-text {
+    font-weight: 500;
+    color: #374151;
+}
+
+.toolbar-count {
+    margin-left: 8px;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.refresh-btn {
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #374151;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.refresh-btn:hover {
+    background-color: #f9fafb;
+}
+
+.refresh-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 4px;
+}
+
+/* 表头 */
+.table-header {
+    background-color: #f9fafb;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.header-name {
+    grid-column: span 6;
+}
+
+.header-size {
+    grid-column: span 3;
+    text-align: right;
+}
+
+.header-time {
+    grid-column: span 3;
+    text-align: right;
+    display: none;
+}
+
+.header-actions {
+    grid-column: span 3;
+    text-align: right;
+}
+
+@media (min-width: 640px) {
+    .header-name {
+        grid-column: span 5;
+    }
+    .header-time {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .header-name {
+        grid-column: span 6;
+    }
+    .header-size {
+        grid-column: span 2;
+    }
+    .header-time {
+        grid-column: span 2;
+    }
+    .header-actions {
+        grid-column: span 2;
+    }
+}
+
+/* 文件列表 */
+.file-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.file-item, .folder-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.file-item:hover, .folder-item:hover {
+    background-color: #eff6ff;
+}
+
+.folder-item {
+    background-color: #f0fdf4;
+}
+
+.folder-item:hover {
+    background-color: #dcfce7;
+}
+
+.file-info {
+    grid-column: span 6;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.file-icon, .folder-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-right: 12px;
+}
+
+.folder-icon {
+    background-color: #fef3c7;
+}
+
+.file-icon svg {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.folder-icon svg {
+    width: 32px !important;
+    height: 32px !important;
+    color: #f59e0b;
+}
+
+.file-name, .folder-name {
+    color: #1f2937;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+}
+
+.folder-name {
+    font-weight: 500;
+}
+
+.file-size {
+    grid-column: span 3;
+    text-align: right;
+    color: #4b5563;
+    font-size: 0.875rem;
+}
+
+.folder-size {
+    grid-column: span 3;
+    text-align: right;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.file-time, .folder-time {
+    grid-column: span 3;
+    text-align: right;
+    color: #6b7280;
+    font-size: 0.875rem;
+    display: none;
+}
+
+.file-actions, .folder-actions {
+    grid-column: span 3;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+@media (min-width: 640px) {
+    .file-info {
+        grid-column: span 5;
+    }
+    .file-time, .folder-time {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .file-info {
+        grid-column: span 6;
+    }
+    .file-size, .folder-size {
+        grid-column: span 2;
+    }
+    .file-time, .folder-time {
+        grid-column: span 2;
+    }
+    .file-actions, .folder-actions {
+        grid-column: span 2;
+    }
+}
+
+/* 操作按钮 */
+.action-btn {
+    padding: 4px 8px;
+    color: #2563eb;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.action-btn:hover {
+    background-color: #dbeafe;
+}
+
+.action-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* 空状态 */
+.empty-state {
+    padding: 64px 16px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 64px !important;
+    height: 64px !important;
+    margin: 0 auto 16px;
+    color: #d1d5db;
+}
+
+.empty-title {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.empty-subtitle {
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+/* 图片预览模态框 */
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 1024px;
+    max-height: 100%;
+}
+
+.modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #d1d5db;
+}
+
+.modal-close svg {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.modal-download {
+    position: absolute;
+    top: -40px;
+    right: 48px;
+    color: white;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+
+.modal-download:hover {
+    color: #d1d5db;
+}
+
+.modal-download svg {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-title {
+    color: white;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 1.125rem;
+}
+
+/* 图标颜色 */
+.icon-image { color: #22c55e; }
+.icon-archive { color: #eab308; }
+.icon-pdf { color: #ef4444; }
+.icon-word { color: #2563eb; }
+.icon-excel { color: #16a34a; }
+.icon-powerpoint { color: #f97316; }
+.icon-text { color: #6b7280; }
+.icon-executable { color: #a855f7; }
+.icon-audio { color: #ec4899; }
+.icon-video { color: #6366f1; }
+.icon-default { color: #9ca3af; }
 </style>
 
-<div class="empty-page-container">
-    <img src="/static/bp/index_bp/images/页面内容为空.png" alt="页面内容为空" class="empty-page-image">
+<!-- 页面主体容器 -->
+<div class="page-container">
+    <div class="container">
+        <!-- 页面标题 -->
+        <div class="page-header">
+            <h1 class="page-title">下载中心</h1>
+            <p class="page-subtitle">浏览并下载服务器上的文件</p>
+        </div>
+
+        <!-- 面包屑导航 -->
+        <div class="breadcrumbs">
+            <div class="breadcrumb-item">
+                <a href="{{ url_for('index_bp.down') }}">根目录</a>
+            </div>
+            {% for crumb in breadcrumbs %}
+            <div class="breadcrumb-separator">/</div>
+            <div class="breadcrumb-item">
+                {% if loop.last %}
+                <span class="breadcrumb-current">{{ crumb.name }}</span>
+                {% else %}
+                <a href="{{ crumb.url }}">{{ crumb.name }}</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 错误提示 -->
+        {% if error_msg %}
+        <div class="error-alert">
+            <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="error-text">{{ error_msg }}</span>
+        </div>
+        {% endif %}
+
+        <!-- 文件管理器卡片 -->
+        <div class="file-manager">
+            <!-- 工具栏 -->
+            <div class="toolbar">
+                <div class="toolbar-title">
+                    <span class="toolbar-title-text">文件列表</span>
+                    <span class="toolbar-count">(共 {{ folders|length + files|length }} 项)</span>
+                </div>
+                <div>
+                    <button id="refreshBtn" class="refresh-btn">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        刷新
+                    </button>
+                </div>
+            </div>
+
+            <!-- 文件列表表头 -->
+            <div class="table-header">
+                <div class="header-name">名称</div>
+                <div class="header-size">大小</div>
+                <div class="header-time">修改时间</div>
+                <div class="header-actions">操作</div>
+            </div>
+
+            <!-- 文件列表 -->
+            <div class="file-list">
+                <!-- 文件夹列表 -->
+                {% for folder in folders %}
+                <div class="folder-item">
+                    <!-- 文件夹名和图标 -->
+                    <div class="file-info">
+                        <div class="folder-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                            </svg>
+                        </div>
+                        <a href="{{ folder.url }}" class="folder-name" title="{{ folder.name }}">{{ folder.name }}</a>
+                    </div>
+
+                    <!-- 文件夹大小（显示"-"） -->
+                    <div class="folder-size">-</div>
+
+                    <!-- 修改时间 -->
+                    <div class="folder-time">{{ folder.mtime_str }}</div>
+
+                    <!-- 操作按钮 -->
+                    <div class="folder-actions">
+                        <a
+                            href="{{ folder.url }}"
+                            class="action-btn"
+                            title="进入文件夹"
+                        >
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- 文件列表 -->
+                {% for file in files %}
+                <div class="file-item">
+                    <!-- 文件名和图标 -->
+                    <div class="file-info">
+                        <!-- 文件图标 -->
+                        <div class="file-icon">
+                            {% if file.icon_type == 'image' %}
+                            <svg class="icon-image" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            {% elif file.icon_type == 'archive' %}
+                            <svg class="icon-archive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                            </svg>
+                            {% elif file.icon_type == 'pdf' %}
+                            <svg class="icon-pdf" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            {% elif file.icon_type == 'word' %}
+                            <svg class="icon-word" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            {% elif file.icon_type == 'excel' %}
+                            <svg class="icon-excel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            {% elif file.icon_type == 'powerpoint' %}
+                            <svg class="icon-powerpoint" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                            </svg>
+                            {% elif file.icon_type == 'text' %}
+                            <svg class="icon-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            {% elif file.icon_type == 'executable' %}
+                            <svg class="icon-executable" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            {% elif file.icon_type == 'audio' %}
+                            <svg class="icon-audio" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                            {% elif file.icon_type == 'video' %}
+                            <svg class="icon-video" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            {% else %}
+                            <svg class="icon-default" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            {% endif %}
+                        </div>
+                        <!-- 文件名 -->
+                        <span class="file-name" title="{{ file.name }}">{{ file.name }}</span>
+                    </div>
+
+                    <!-- 文件大小 -->
+                    <div class="file-size">
+                        {{ file.size_str }}
+                    </div>
+
+                    <!-- 修改时间 -->
+                    <div class="file-time">
+                        {{ file.mtime_str }}
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="file-actions">
+                        {% if file.is_image %}
+                        <button
+                            class="action-btn preview-btn"
+                            data-url="{{ file.url }}"
+                            data-name="{{ file.name }}"
+                            title="预览"
+                        >
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </button>
+                        {% endif %}
+                        <a
+                            href="{{ file.url }}"
+                            download="{{ file.name }}"
+                            class="action-btn"
+                            title="下载"
+                        >
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- 空状态 -->
+                {% if folders|length == 0 and files|length == 0 %}
+                <div class="empty-state">
+                    <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="empty-title">此目录为空</p>
+                    <p class="empty-subtitle">上传文件或文件夹到服务器后将显示在这里</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- 图片预览模态框 -->
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <!-- 关闭按钮 -->
+        <button id="closeModal" class="modal-close">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- 下载按钮 -->
+        <a id="modalDownload" href="" download="" class="modal-download">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+        </a>
+
+        <!-- 图片 -->
+        <img id="modalImage" src="" alt="" class="modal-image">
+
+        <!-- 图片标题 -->
+        <p id="modalTitle" class="modal-title"></p>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // 刷新按钮
+    document.getElementById('refreshBtn').addEventListener('click', function() {
+        window.location.reload();
+    });
+
+    // 图片预览功能
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDownload = document.getElementById('modalDownload');
+    const closeModal = document.getElementById('closeModal');
+
+    // 所有预览按钮
+    document.querySelectorAll('.preview-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const url = this.getAttribute('data-url');
+            const name = this.getAttribute('data-name');
+
+            modalImage.src = url;
+            modalTitle.textContent = name;
+            modalDownload.href = url;
+            modalDownload.download = name;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // 关闭模态框
+    function closeImageModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeModal.addEventListener('click', closeImageModal);
+
+    // 点击模态框背景关闭
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeImageModal();
+        }
+    });
+
+    // 按ESC键关闭
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeImageModal();
+        }
+    });
+</script>
 {% endblock %}

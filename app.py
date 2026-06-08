@@ -8,6 +8,5 @@ app.secret_key = "2d2e7199-21c8-476e-a744-8951946a37c0"
 app.register_blueprint(index_bp)
 app.register_blueprint(sfs_bp)
 app.register_blueprint(attendance_bp)
-
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)

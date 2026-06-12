@@ -12,11 +12,20 @@
 <!-- 英雄区 -->
 <section class="about-hero">
     <div class="about-hero-content">
-        <div class="about-avatar" style="width:160px; height:160px; border-radius:20px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-            <img src="/static/global/images/avatar.jpg" style="width:100%; height:100%; object-fit:cover;">
+        <!-- 三人头像并排展示 -->
+        <div class="about-avatars-container">
+            <div class="about-avatar">
+                <img src="/static/global/images/avatar.jpg" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="about-avatar avatar-yu">
+                <span>玉</span>
+            </div>
+            <div class="about-avatar avatar-fang">
+                <span>芳</span>
+            </div>
         </div>
-        <h1 class="about-title">清玉</h1>
-        <p class="about-subtitle">代码是我的画笔，互联网是我的画布</p>
+        <h1 class="about-title">清玉芳</h1>
+        <p class="about-subtitle">代码是我们的画笔，互联网是我们的画布</p>
         <div class="about-tags">
             <span class="about-tag">全栈开发者</span>
             <span class="about-tag">工具控</span>
@@ -29,41 +38,10 @@
 <!-- 斜角分隔线 -->
 <div class="diagonal-divider"></div>
 
-<!-- 个人介绍区 -->
-<section class="content-section">
-    <h2 class="section-heading">关于我</h2>
-    <div class="intro-card">
-        <div class="intro-content">
-            <div class="intro-text">
-                <p>
-                    你好！我是清玉，一名正在成长中的学生开发者。我相信每一行代码都有它的价值，
-                    每一个工具都能改变我们的生活方式。
-                </p>
-                <p>
-                    我喜欢解决实际问题，从班级考勤管理到游戏辅助工具，
-                    我开发的每一个项目都源于我自己或身边人的真实需求。
-                </p>
-                <p>
-                    我热爱学习新技术，也乐于分享我的知识和经验。
-                    这个网站就是我分享的平台，希望我的作品能对你有所帮助。
-                </p>
-                <div class="intro-highlight">
-                    <p>
-                        "简单的事情重复做，你就是专家；重复的事情用心做，你就是赢家。"
-                    </p>
-                </div>
-            </div>
-            <div class="intro-image">
-                <!-- 这里可以放一张个人照片 -->
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- 技能专长区 -->
 <section class="skills-section">
     <div class="skills-container">
-        <h2 class="section-heading">我能做什么</h2>
+        <h2 class="section-heading">我们能做什么</h2>
         <div class="skills-grid">
             <div class="skill-card">
                 <div class="skill-icon">🌐</div>
@@ -112,97 +90,159 @@
     </div>
 </section>
 
-<!-- 成长历程区 -->
-<section class="timeline-section">
-    <div class="timeline-container">
-        <h2 class="section-heading">我的成长之路</h2>
-
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2025年6月</div>
-                <h3 class="timeline-title">初识编程</h3>
-                <p class="timeline-desc">
-                    第一次接触Python，被它的简洁和强大所吸引，从此踏上了编程之路。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
+<!-- 标签页切换区域 -->
+<section class="content-section">
+    <div class="tabs-container">
+        <!-- 三个切换按钮 -->
+        <div class="tabs-buttons">
+            <button class="tab-btn active" data-tab="tab-qing">清</button>
+            <button class="tab-btn" data-tab="tab-yu">玉</button>
+            <button class="tab-btn" data-tab="tab-fang">芳</button>
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2025年8月</div>
-                <h3 class="timeline-title">第一个工具</h3>
-                <p class="timeline-desc">
-                    开发了文件批量重命名工具，解决了自己整理学习资料的烦恼。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
-        </div>
+        <!-- 标签页内容容器 -->
+        <div class="tabs-content-wrapper">
+            <!-- 清的页面（默认） -->
+            <div class="tab-content active" id="tab-qing">
+                <!-- 个人介绍区 -->
+                <div class="intro-card">
+                    <div class="intro-content">
+                        <div class="intro-text">
+                            <p>
+                                你好！我是清，一名正在成长中的学生开发者。我相信每一行代码都有它的价值，
+                                每一个工具都能改变我们的生活方式。
+                            </p>
+                            <p>
+                                我喜欢解决实际问题，从班级考勤管理到游戏辅助工具，
+                                我开发的每一个项目都源于我自己或身边人的真实需求。
+                            </p>
+                            <p>
+                                我热爱学习新技术，也乐于分享我的知识和经验。
+                                这个网站就是我分享的平台，希望我的作品能对你有所帮助。
+                            </p>
+                            <div class="intro-highlight">
+                                <p>
+                                    "简单的事情重复做，你就是专家；重复的事情用心做，你就是赢家。"
+                                </p>
+                            </div>
+                        </div>
+                        <div class="intro-image">
+                            <!-- 这里可以放一张个人照片 -->
+                        </div>
+                    </div>
+                </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2025年10月</div>
-                <h3 class="timeline-title">学习Python爬虫</h3>
-                <p class="timeline-desc">
-                    学习 Python 爬虫技术，实现网页数据抓取、清洗与整理。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
-        </div>
+                <!-- 成长历程区 -->
+                <div class="timeline-container">
+                    <h2 class="section-heading">我的成长之路</h2>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2025年12月</div>
-                <h3 class="timeline-title">学习Linux</h3>
-                <p class="timeline-desc">
-                    系统学习 Linux 操作系统，能够完成服务器环境部署与日常运维管理。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
-        </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025年6月</div>
+                            <h3 class="timeline-title">初识编程</h3>
+                            <p class="timeline-desc">
+                                第一次接触Python，被它的简洁和强大所吸引，从此踏上了编程之路。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2026年1月</div>
-                <h3 class="timeline-title">学习MySQL数据库</h3>
-                <p class="timeline-desc">
-                    学习数据库原理，熟练建库建表、SQL 编写，实现爬虫数据落地存储。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
-        </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025年8月</div>
+                            <h3 class="timeline-title">第一个工具</h3>
+                            <p class="timeline-desc">
+                                开发了文件批量重命名工具，解决了自己整理学习资料的烦恼。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2026年3月</div>
-                <h3 class="timeline-title">考勤系统诞生</h3>
-                <p class="timeline-desc">
-                    为班级开发的考勤管理系统上线，让考勤工作变得轻松高效。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
-        </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025年10月</div>
+                            <h3 class="timeline-title">学习Python爬虫</h3>
+                            <p class="timeline-desc">
+                                学习 Python 爬虫技术，实现网页数据抓取、清洗与整理。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2026年5月</div>
-                <h3 class="timeline-title">建站教程分享</h3>
-                <p class="timeline-desc">
-                    从零开始，部署生产级Flask应用。
-                </p>
-            </div>
-            <div class="timeline-dot"></div>
-        </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025年12月</div>
+                            <h3 class="timeline-title">学习Linux</h3>
+                            <p class="timeline-desc">
+                                系统学习 Linux 操作系统，能够完成服务器环境部署与日常运维管理。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <div class="timeline-date">2026年6月</div>
-                <h3 class="timeline-title">个人网站上线</h3>
-                <p class="timeline-desc">
-                    经过精心打磨，我的个人网站终于和大家见面了。
-                </p>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2026年1月</div>
+                            <h3 class="timeline-title">学习MySQL数据库</h3>
+                            <p class="timeline-desc">
+                                学习数据库原理，熟练建库建表、SQL 编写，实现爬虫数据落地存储。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2026年3月</div>
+                            <h3 class="timeline-title">考勤系统诞生</h3>
+                            <p class="timeline-desc">
+                                为班级开发的考勤管理系统上线，让考勤工作变得轻松高效。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2026年5月</div>
+                            <h3 class="timeline-title">建站教程分享</h3>
+                            <p class="timeline-desc">
+                                从零开始，部署生产级Flask应用。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2026年6月</div>
+                            <h3 class="timeline-title">个人网站上线</h3>
+                            <p class="timeline-desc">
+                                经过精心打磨，我们的个人网站终于和大家见面了。
+                            </p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
             </div>
-            <div class="timeline-dot"></div>
+
+            <!-- 玉的页面 -->
+            <div class="tab-content" id="tab-yu">
+                <div class="coming-soon">
+                    <div class="coming-soon-icon">🌸</div>
+                    <h2>敬请期待</h2>
+                    <p>玉的个人介绍正在准备中，敬请期待...</p>
+                </div>
+            </div>
+
+            <!-- 芳的页面 -->
+            <div class="tab-content" id="tab-fang">
+                <div class="coming-soon">
+                    <div class="coming-soon-icon">💜</div>
+                    <h2>敬请期待</h2>
+                    <p>芳的个人介绍正在准备中，敬请期待...</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -211,20 +251,21 @@
 <section class="contact-section">
     <div class="contact-container">
         <div class="contact-card">
-            <h2 class="contact-title">联系我</h2>
+            <h2 class="contact-title">联系我们</h2>
             <p class="contact-desc">
                 如果你有任何问题、建议或者只是想打个招呼，
-                都欢迎通过以下方式联系我。我很期待与你交流！
+                都欢迎通过以下方式联系我们。我们很期待与你交流！
             </p>
             <div class="contact-buttons">
                 <a href="https://github.com/QingYu-Nook" class="contact-btn github" target="_blank">
                     <span>📦</span> GitHub
                 </a>
-                <a href="2045660167@qq.com" class="contact-btn email">
+                <a href="mailto:2045660167@qq.com" class="contact-btn email">
                     <span>📧</span> 邮箱
                 </a>
             </div>
         </div>
     </div>
 </section>
+<script src="/static/bp/index_bp/js/about.js"></script>
 {% endblock %}

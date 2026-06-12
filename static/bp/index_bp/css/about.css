@@ -1,3 +1,153 @@
+/* 全局修复：禁止横向滚动 */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* 新增样式 */
+
+/* 三人头像容器 */
+.about-avatars-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 0 auto 25px;
+    flex-wrap: wrap;
+}
+
+.about-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transform: rotate(3deg);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.about-avatar.avatar-yu {
+    background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+    transform: rotate(-2deg);
+}
+
+.about-avatar.avatar-fang {
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    transform: rotate(2deg);
+}
+
+.about-avatar span {
+    font-size: 48px;
+    color: white;
+}
+
+.about-avatars-container .about-avatar:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 10;
+}
+
+/* 标签页样式 */
+.tabs-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.tabs-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 45px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 35px;
+    border: 2px solid #1e3a8a;
+    background: transparent;
+    color: #1e3a8a;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.tab-btn:hover {
+    background: rgba(30, 58, 138, 0.1);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
+}
+
+/* 标签页内容容器 - 实现左右切换动画 */
+.tabs-content-wrapper {
+    position: relative;
+    overflow: hidden;
+    min-height: 1200px;
+    width: 100%;
+}
+
+.tab-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+    box-sizing: border-box;
+}
+
+.tab-content.active {
+    opacity: 1;
+    transform: translateX(0);
+    visibility: visible;
+    position: relative;
+}
+
+.tab-content.prev {
+    transform: translateX(-100%);
+}
+
+/* 敬请期待样式 */
+.coming-soon {
+    text-align: center;
+    padding: 100px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(30, 58, 138, 0.1);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.coming-soon-icon {
+    font-size: 80px;
+    margin-bottom: 30px;
+}
+
+.coming-soon h2 {
+    font-size: 36px;
+    color: #1e3a8a;
+    margin-bottom: 20px;
+}
+
+.coming-soon p {
+    font-size: 18px;
+    color: #64748b;
+}
+
+/* 原有CSS保持不变，但添加box-sizing和宽度限制 */
 /* 关于页独特风格 - 深蓝系，与导航栏协调但区别于首页 */
 * {
     margin: 0;
@@ -12,6 +162,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .about-hero::before {
@@ -33,25 +184,7 @@
 .about-hero-content {
     position: relative;
     z-index: 1;
-}
-
-.about-avatar {
-    width: 160px;
-    height: 160px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 72px;
-    margin: 0 auto 25px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    transform: rotate(3deg);
-    transition: transform 0.3s ease;
-}
-
-.about-avatar:hover {
-    transform: rotate(0deg) scale(1.05);
+    max-width: 100%;
 }
 
 .about-title {
@@ -73,6 +206,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    max-width: 100%;
 }
 
 .about-tag {
@@ -82,6 +216,7 @@
     font-size: 13px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
 }
 
 /* 斜角分隔线 */
@@ -90,6 +225,7 @@
     height: 80px;
     background: white;
     margin-top: -1px;
+    width: 100%;
 }
 
 .diagonal-divider::before {
@@ -108,6 +244,7 @@
     padding: 70px 20px;
     max-width: 1100px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .section-heading {
@@ -117,6 +254,7 @@
     color: #1e3a8a;
     text-align: center;
     position: relative;
+    word-wrap: break-word;
 }
 
 .section-heading::after {
@@ -138,6 +276,8 @@
     margin-bottom: 80px;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .intro-card::before {
@@ -155,6 +295,7 @@
     grid-template-columns: 2fr 1fr;
     gap: 50px;
     align-items: center;
+    width: 100%;
 }
 
 .intro-text p {
@@ -162,6 +303,7 @@
     line-height: 1.8;
     margin-bottom: 18px;
     font-size: 16px;
+    word-wrap: break-word;
 }
 
 .intro-highlight {
@@ -169,6 +311,7 @@
     padding: 20px;
     border-radius: 12px;
     border-left: 4px solid #3b82f6;
+    box-sizing: border-box;
 }
 
 .intro-highlight p {
@@ -181,17 +324,20 @@
 .skills-section {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     padding: 70px 20px;
+    width: 100%;
 }
 
 .skills-container {
     max-width: 1100px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 30px;
+    width: 100%;
 }
 
 .skill-card {
@@ -202,6 +348,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     border-bottom: 3px solid transparent;
+    box-sizing: border-box;
 }
 
 .skill-card:hover {
@@ -240,6 +387,7 @@
     padding: 5px 0;
     color: #64748b;
     font-size: 14px;
+    word-wrap: break-word;
 }
 
 /* 时间轴 - 居中布局，文字两侧交替 */
@@ -251,6 +399,7 @@
     max-width: 900px;
     margin: 0 auto;
     position: relative;
+    width: 100%;
 }
 
 .timeline-container::before {
@@ -269,6 +418,7 @@
     display: flex;
     margin-bottom: 50px;
     position: relative;
+    width: 100%;
 }
 
 .timeline-item:nth-child(odd) {
@@ -286,6 +436,7 @@
     padding: 25px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .timeline-content:hover {
@@ -315,6 +466,7 @@
     font-size: 13px;
     font-weight: 600;
     margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .timeline-title {
@@ -322,11 +474,13 @@
     font-weight: 600;
     margin-bottom: 10px;
     color: #1e3a8a;
+    word-wrap: break-word;
 }
 
 .timeline-desc {
     color: #64748b;
     line-height: 1.6;
+    word-wrap: break-word;
 }
 
 /* 联系区域 - 玻璃拟态效果 */
@@ -337,6 +491,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .contact-section::before {
@@ -355,6 +510,7 @@
     z-index: 1;
     max-width: 600px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .contact-card {
@@ -363,6 +519,8 @@
     border-radius: 20px;
     padding: 40px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .contact-title {
@@ -376,6 +534,7 @@
     opacity: 0.9;
     margin-bottom: 30px;
     line-height: 1.6;
+    word-wrap: break-word;
 }
 
 .contact-buttons {
@@ -383,6 +542,7 @@
     gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    max-width: 100%;
 }
 
 .contact-btn {
@@ -395,6 +555,7 @@
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .contact-btn.github {
@@ -419,17 +580,22 @@
     color: #94a3b8;
     padding: 25px 20px;
     text-align: center;
+    width: 100%;
 }
 
 .footer-links {
     margin-bottom: 12px;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }
 
 .footer-links a {
     color: #94a3b8;
-    margin: 0 12px;
     transition: color 0.2s ease;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
 .footer-links a:hover {
@@ -438,18 +604,26 @@
 
 .copyright {
     font-size: 13px;
+    word-wrap: break-word;
 }
 
-/* 移动端适配 */
+/* 移动端适配 - 彻底解决横向滚动 */
 @media (max-width: 768px) {
     .about-hero {
-        padding: 70px 20px;
+        padding: 70px 15px;
+    }
+
+    .about-avatars-container {
+        gap: 10px;
     }
 
     .about-avatar {
-        width: 130px;
-        height: 130px;
-        font-size: 56px;
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .about-avatar span {
+        font-size: 40px !important;
     }
 
     .about-title {
@@ -496,9 +670,56 @@
     .contact-card {
         padding: 30px 20px;
     }
+
+    .tabs-buttons {
+        gap: 10px;
+    }
+
+    .tab-btn {
+        padding: 10px 30px;
+        font-size: 16px;
+    }
+
+    .tabs-content-wrapper {
+        min-height: 1500px;
+    }
+
+    .coming-soon {
+        padding: 60px 20px;
+    }
+
+    .coming-soon-icon {
+        font-size: 60px;
+    }
+
+    .coming-soon h2 {
+        font-size: 28px;
+    }
 }
 
 @media (max-width: 480px) {
+    .about-avatars-container {
+        gap: 8px;
+    }
+
+    .about-avatar {
+        width: 80px !important;
+        height: 80px !important;
+    }
+
+    .about-avatar span {
+        font-size: 32px !important;
+    }
+
+    .tabs-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-btn {
+        width: 150px;
+    }
+
     .contact-buttons {
         flex-direction: column;
         align-items: center;
@@ -507,5 +728,54 @@
     .contact-btn {
         width: 180px;
         justify-content: center;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .intro-card {
+        padding: 25px 15px;
+    }
+
+    .content-section {
+        padding: 50px 15px;
+    }
+
+    .skills-section {
+        padding: 50px 15px;
+    }
+
+    .contact-section {
+        padding: 50px 15px;
+    }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 320px) {
+    .about-avatar {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .about-avatar span {
+        font-size: 28px !important;
+    }
+
+    .about-title {
+        font-size: 28px;
+    }
+
+    .section-heading {
+        font-size: 24px;
+    }
+
+    .coming-soon h2 {
+        font-size: 24px;
+    }
+
+    .contact-card {
+        padding: 25px 15px;
     }
 }

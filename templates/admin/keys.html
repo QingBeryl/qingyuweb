@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "admin/base.html" %}
+
+{% block title %}密钥管理 - 清玉芳后台{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>密钥管理</h1>
+    <p>管理API密钥</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>密钥列表</h3>
+        <form method="POST" action="{{ url_for('admin.generate_key') }}" style="display: inline;">
+            <button type="submit" class="btn btn-primary">生成新密钥</button>
+        </form>
+    </div>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>密钥</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key in keys %}
+                <tr>
+                    <td>{{ key.id }}</td>
+                    <td><div class="key-display">{{ key.key }}</div></td>
+                    <td>
+                        <span class="status-badge {{ 'status-active' if key.status == '1' else 'status-inactive' }}">
+                            {{ '启用' if key.status == '1' else '禁用' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.toggle_key', key_id=key.id) }}" class="btn btn-sm btn-warning">
+                            {{ '禁用' if key.status == '1' else '启用' }}
+                        </a>
+                        <a href="{{ url_for('admin.delete_key', key_id=key.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除此密钥吗？')">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

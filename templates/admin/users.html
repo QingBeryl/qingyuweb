@@ -1,10 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "admin/base.html" %}
+
+{% block title %}用户管理 - 清玉芳后台{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>用户管理</h1>
+    <p>管理系统用户账号</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>用户列表</h3>
+    </div>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>个性签名</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.signature or '-' }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="openEditModal({{ user.id }}, '{{ user.username }}', '{{ user.signature or '' }}')">
+                            编辑
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 编辑用户模态框 -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>编辑用户</h3>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <form id="editForm" method="POST">
+            <div class="form-group">
+                <label for="edit-username">用户名</label>
+                <input type="text" id="edit-username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-signature">个性签名</label>
+                <input type="text" id="edit-signature" name="signature">
+            </div>
+            <div class="form-group">
+                <label for="edit-password">新密码 (不修改请留空)</label>
+                <input type="password" id="edit-password" name="password" placeholder="留空则不修改密码">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

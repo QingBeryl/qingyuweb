@@ -1,14 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from config import db
 from bps.index_bp.service.user_service import get_user
-from bps.admin_bp.service.login_log_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_logs_service
-
+from bps.admin_bp.service.login_log_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_logs_service, get_all_users_service
+from bps.index_bp.utils.bcrypt_util import bcrypt_verify
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
-@admin_bp.route('/users')
-def users():
-       pass
+# @admin_bp.route('/users')
+# def users():
+#        pass
 
 @admin_bp.route('/keys')
 def keys():
@@ -18,82 +17,62 @@ def keys():
 def login_logs():
        pass
 
-@admin_bp.route('/logout')
-def logout():
-       pass
-# ==================== 工具函数 ====================
-def get_client_ip():
-    """获取客户端真实IP"""
-    if request.headers.get('X-Forwarded-For'):
-        return request.headers.get('X-Forwarded-For').split(',')[0].strip()
-    return request.remote_addr
+@admin_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username:
+            if password:
+                if username == 'admin':
+                    if bcrypt_verify(password, '$2b$13$kcznma3s/yxmOKSpZdgvneh8OPTiwlcni0EsIOlZX.hLtO2rThRaK'):
+                        session['username'] = username
+                        flash('登录成功！ 相逢于此，万事顺遂', 'success')
+                        return redirect(url_for('admin.dashboard'))
+                    else:
+                        flash('心意未达，下次再见 用户名或密码错误！', 'error')
+                        return redirect(url_for('admin.login'))
+                else:
+                    flash('用户不存在！', 'error')
+            else:
+                flash('密码不能为空！', 'error')
+        else:
+            flash('用户名不能为空！', 'error')
+        return redirect(url_for('admin.login'))
+    else:
+        return render_template('bp/admin/login.html')
 
-
-def get_device_info():
-    """获取设备信息"""
-    return request.user_agent.string[:500]
-
-
-# @admin_bp.route('/logout')
-# def logout():
-#     session.clear()
-#     return redirect(url_for('admin.login'))
-#
-#
 # ==================== 仪表盘 ====================
 @admin_bp.route('/')
 def dashboard():
     if 'username' in session:
-        user = get_user(session['username'])
-        return render_template('bp/admin/dashboard.html',
-               username=session['username'],
-               user_count=get_user_count_service(),
-               key_count=get_user_secret_count_service(),
-               log_count=get_login_log_count_service(),
-               recent_logs=get_logs_service())
+        if session['username'] == 'admin':
+            return render_template('bp/admin/dashboard.html',
+                   username=session['username'],
+                   user_count=get_user_count_service(),
+                   key_count=get_user_secret_count_service(),
+                   log_count=get_login_log_count_service(),
+                   recent_logs=get_logs_service())
+        else:
+            return redirect(url_for('admin.login'))
     else:
-        return redirect(url_for('index_bp.login'))
+        return redirect(url_for('admin.login'))
 
+# ==================== 用户管理 ====================
+@admin_bp.route('/users')
+def users():
+    if 'username' in session:
+        if session['username'] == 'admin':
+            users = get_all_users_service()
+            return render_template('bp/admin/users.html',
+                   username=session['username'],
+                   users=users)
+        else:
+            return redirect(url_for('admin.login'))
+    else:
+        return redirect(url_for('admin.login'))
 
-    conn = db()
-    cursor = conn.cursor()
-
-
-
-    # 最近登录日志
-    cursor.execute("""
-                   SELECT *
-                   FROM login_log
-                   ORDER BY login_time DESC LIMIT 10
-                   """)
-    recent_logs = cursor.fetchall()
-    cursor.close()
-
-    return render_template('dashboard.html',
-                           username=session.get('admin_username'),
-                           user_count=user_count,
-                           key_count=key_count,
-                           log_count=log_count,
-                           recent_logs=recent_logs)
-#
-#
-# # ==================== 用户管理 ====================
-# @admin_bp.route('/users')
-# @login_required
-# def users():
-#     conn = db()
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT id, username, signature FROM user")
-#     users = cursor.fetchall()
-#     cursor.close()
-#
-#     return render_template('users.html',
-#                            username=session.get('admin_username'),
-#                            users=users)
-#
-#
 # @admin_bp.route('/user/edit/<int:user_id>', methods=['POST'])
-# @login_required
 # def edit_user(user_id):
 #     username = request.form.get('username')
 #     signature = request.form.get('signature')

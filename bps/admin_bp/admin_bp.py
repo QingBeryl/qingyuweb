@@ -10,30 +10,26 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin_bp.route('/')
 def dashboard():
-    return render_template('admin/dashboard.html',
+    return render_template('bp/admin/dashboard.html',
            username='xqy',
            user_count=100,
            key_count=200,
            log_count=300,
-           recent_logs=123)
+           recent_logs='')
 
-@admin_bp.route('users')
+@admin_bp.route('/users')
 def users():
        pass
 
-@admin_bp.route('keys')
+@admin_bp.route('/keys')
 def keys():
        pass
 
-@admin_bp.route('users')
-def users():
-       pass
-
-@admin_bp.route('login_logs')
+@admin_bp.route('/login_logs')
 def login_logs():
        pass
 
-@admin_bp.route('logout')
+@admin_bp.route('/logout')
 def logout():
        pass
 # ==================== 工具函数 ====================
@@ -47,19 +43,6 @@ def get_client_ip():
 def get_device_info():
     """获取设备信息"""
     return request.user_agent.string[:500]
-
-
-def login_required(f):
-    """登录验证装饰器"""
-    from functools import wraps
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'admin_user_id' not in session:
-            return redirect(url_for('admin.login'))
-        return f(*args, **kwargs)
-
-    return decorated_function
-
 
 def generate_api_key(length=32):
     """生成随机API密钥"""

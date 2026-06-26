@@ -7,6 +7,7 @@ from bps.index_bp.service.user_service import secret_key, update_status, add_use
 import os
 import datetime
 import math
+from bps.admin_bp.utils.util import get_client_ip, get_device_info
 
 index_bp = Blueprint('index_bp', __name__)
 
@@ -239,6 +240,8 @@ def login():
                     if bcrypt_verify(password, user['password']):
                         session['username'] = username
                         flash('登录成功！ 相逢于此，万事顺遂', 'success')
+                        print(get_client_ip(request))
+                        print(get_device_info(request))
                         return redirect(url_for('index_bp.index'))
                     else:
                         flash('心意未达，下次再见 用户名或密码错误！', 'error')

@@ -1,21 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-import bcrypt
-import secrets
-import string
-from datetime import datetime
 from config import db
+from bps.index_bp.service.user_service import get_user
+from bps.admin_bp.service.login_log_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_logs_service
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
-
-@admin_bp.route('/')
-def dashboard():
-    return render_template('bp/admin/dashboard.html',
-           username='xqy',
-           user_count=100,
-           key_count=200,
-           log_count=300,
-           recent_logs='')
 
 @admin_bp.route('/users')
 def users():
@@ -44,84 +33,48 @@ def get_device_info():
     """获取设备信息"""
     return request.user_agent.string[:500]
 
-def generate_api_key(length=32):
-    """生成随机API密钥"""
-    chars = string.ascii_letters + string.digits + '!@#$%^&*()_+-=[]{}|;:,.<>?'
-    return ''.join(secrets.choice(chars) for _ in range(length))
-#
-#
-# # ==================== 登录页面 ====================
-# @admin_bp.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if request.method == 'POST':
-#         username = request.form.get('username')
-#         password = request.form.get('password')
-#
-#         conn = db()
-#         cursor = conn.cursor()
-#         cursor.execute("SELECT id, username, password FROM user WHERE username = %s", (username,))
-#         user = cursor.fetchone()
-#         cursor.close()
-#
-#         if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
-#             # 记录登录日志
-#             cursor = conn.cursor()
-#             cursor.execute("""
-#                            INSERT INTO login_log (user_id, username, ip_address, device_info, login_time)
-#                            VALUES (%s, %s, %s, %s, %s)
-#                            """, (user['id'], user['username'], get_client_ip(), get_device_info(), datetime.now()))
-#             conn.commit()
-#             cursor.close()
-#
-#             session['admin_user_id'] = user['id']
-#             session['admin_username'] = user['username']
-#             session.permanent = True
-#
-#             return redirect(url_for('admin_bp.dashboard'))
-#         else:
-#             flash('用户名或密码错误', 'error')
-#
-#     # return render_template('login.html')
-#
-#
+
 # @admin_bp.route('/logout')
 # def logout():
 #     session.clear()
 #     return redirect(url_for('admin.login'))
 #
 #
-# # ==================== 仪表盘 ====================
-# @admin_bp.route('/dashboard')
-# @login_required
-# def dashboard():
-#     conn = db()
-#     cursor = conn.cursor()
-#
-#     # 统计数据
-#     cursor.execute("SELECT COUNT(*) as count FROM user")
-#     user_count = cursor.fetchone()['count']
-#
-#     cursor.execute("SELECT COUNT(*) as count FROM api_key WHERE status = '1'")
-#     key_count = cursor.fetchone()['count']
-#
-#     cursor.execute("SELECT COUNT(*) as count FROM login_log")
-#     log_count = cursor.fetchone()['count']
-#
-#     # 最近登录日志
-#     cursor.execute("""
-#                    SELECT *
-#                    FROM login_log
-#                    ORDER BY login_time DESC LIMIT 10
-#                    """)
-#     recent_logs = cursor.fetchall()
-#     cursor.close()
-#
-#     return render_template('dashboard.html',
-#                            username=session.get('admin_username'),
-#                            user_count=user_count,
-#                            key_count=key_count,
-#                            log_count=log_count,
-#                            recent_logs=recent_logs)
+# ==================== 仪表盘 ====================
+@admin_bp.route('/')
+def dashboard():
+    if 'username' in session:
+        user = get_user(session['username'])
+        return render_template('bp/admin/dashboard.html',
+               username=session['username'],
+               user_count=get_user_count_service(),
+               key_count=get_user_secret_count_service(),
+               log_count=get_login_log_count_service(),
+               recent_logs=get_logs_service())
+    else:
+        return redirect(url_for('index_bp.login'))
+
+
+    conn = db()
+    cursor = conn.cursor()
+
+
+
+    # 最近登录日志
+    cursor.execute("""
+                   SELECT *
+                   FROM login_log
+                   ORDER BY login_time DESC LIMIT 10
+                   """)
+    recent_logs = cursor.fetchall()
+    cursor.close()
+
+    return render_template('dashboard.html',
+                           username=session.get('admin_username'),
+                           user_count=user_count,
+                           key_count=key_count,
+                           log_count=log_count,
+                           recent_logs=recent_logs)
 #
 #
 # # ==================== 用户管理 ====================

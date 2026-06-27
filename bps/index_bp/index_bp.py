@@ -8,7 +8,7 @@ import os
 import datetime
 import math
 from bps.admin_bp.utils.util import get_client_ip, get_device_info
-from bps.admin_bp.service.login_log_service import insert_login_log_service
+from bps.admin_bp.service.dashboard_service import insert_login_log_service
 
 index_bp = Blueprint('index_bp', __name__)
 

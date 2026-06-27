@@ -1,6 +1,6 @@
 from config import db
 
-
+# 记录用户登录信息
 def insert_login_log_dao(user_id, username, clientip, device, datetime):
     conn = None
     try:
@@ -14,6 +14,7 @@ def insert_login_log_dao(user_id, username, clientip, device, datetime):
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
+# 获取用户数量
 def get_user_count_dao():
     conn = None
     try:
@@ -28,6 +29,7 @@ def get_user_count_dao():
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
+# 获取秘钥数量
 def get_user_secret_count_dao():
     conn = None
     try:
@@ -42,6 +44,7 @@ def get_user_secret_count_dao():
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
+# 获取登录日志数量
 def get_login_log_count_dao():
     conn = None
     try:
@@ -56,7 +59,8 @@ def get_login_log_count_dao():
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
-def get_logs_dao():
+# 获取最近日志信息
+def get_recent_logs_dao():
     conn = None
     try:
         # 从连接池中获取一个连接
@@ -70,18 +74,6 @@ def get_logs_dao():
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
-def get_all_users_dao():
-    conn = None
-    try:
-        # 从连接池中获取一个连接
-        conn = db()
-        with conn.cursor() as cursor:
-            # 执行查询语句
-            cursor.execute("SELECT id, username, signature FROM users")
-            # 获取查询结果
-            data = cursor.fetchall()
-            return data
-    except Exception as e:
-        print(f"查询数据时出现错误: {e}")
+
 
 

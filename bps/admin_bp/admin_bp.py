@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from bps.index_bp.service.user_service import get_user
-from bps.admin_bp.service.login_log_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_logs_service, get_all_users_service
+from bps.admin_bp.service.dashboard_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_recent_logs_service
+from bps.admin_bp.service.users_service import get_all_users_service
 from bps.index_bp.utils.bcrypt_util import bcrypt_verify
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -52,7 +53,7 @@ def dashboard():
                    user_count=get_user_count_service(),
                    key_count=get_user_secret_count_service(),
                    log_count=get_login_log_count_service(),
-                   recent_logs=get_logs_service())
+                   recent_logs=get_recent_logs_service())
         else:
             return redirect(url_for('admin.login'))
     else:

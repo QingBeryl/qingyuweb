@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from bps.index_bp.service.user_service import get_user
 from bps.admin_bp.service.dashboard_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_recent_logs_service
-from bps.admin_bp.service.users_service import get_all_users_service
-from bps.index_bp.utils.bcrypt_util import bcrypt_verify
+from bps.admin_bp.service.users_service import get_all_users_service, get_user_by_id, updata_user_by_id_service
+from bps.index_bp.utils.bcrypt_util import bcrypt_verify, bcrypt_hash
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
@@ -73,12 +72,162 @@ def users():
     else:
         return redirect(url_for('admin.login'))
 
-# @admin_bp.route('/user/edit/<int:user_id>', methods=['POST'])
-# def edit_user(user_id):
-#     username = request.form.get('username')
-#     signature = request.form.get('signature')
-#     new_password = request.form.get('password')
-#
+@admin_bp.route('/user/edit/<int:user_id>', methods=['POST'])
+def edit_user(user_id):
+    # 管理员权限校验
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('admin.login'))
+
+    # 获取表单数据
+    username = request.form.get('username')
+    signature = request.form.get('signature')
+    new_password = request.form.get('password')
+
+    # 空值校验
+    if not username:
+        flash('用户名不能为空！', 'error')
+        return redirect(url_for('admin.users'))
+
+    # 标记是否需要更新
+    need_update_name = False
+    need_update_pwd = False
+    need_update_sig = False
+    user = get_user_by_id(user_id)
+
+    # 校验更改内容
+    if username != user['username']:
+        need_update_name = True
+        new_name = username
+        print(username, user['username'], new_name)
+    else:
+        new_name = username
+
+    if signature:
+        need_update_sig = True
+        new_sig = signature
+    else:
+        new_sig = '他看起来很懒，什么也没有留下'
+
+    if new_password:
+        if bcrypt_hash(new_password) != user['password']:
+            need_update_pwd = True
+            new_pwd = bcrypt_hash(new_password)
+    else:
+        new_pwd = user['password']
+
+    # 执行更改操作
+    if need_update_name or need_update_pwd or need_update_sig:
+        updata_user_by_id_service(user_id, new_name, new_sig, new_pwd)
+        flash('修改成功！', 'success')
+        return redirect(url_for('admin.users'))
+    else:
+        flash('修改成功！', 'success')
+        return redirect(url_for('admin.users'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # if 'username' in session:
+    #     if session['username'] == 'admin':
+    #         username = request.form.get('username')
+    #         signature = request.form.get('signature')
+    #         new_password = request.form.get('password')
+    #         user = get_user_by_id_dao(user_id)
+    #         if username:
+    #             if username ==  user['username']:
+    #                 if new_password:
+    #                     if signature:
+    #                         if signature != user['signature']:
+    #                             if bcrypt_hash(new_password) != user['password']:
+    #                                 updata_signature_service(username, signature)
+    #                                 update_password_service(username, new_password)
+    #                                 return render_template(url_for('admin.users'))
+    #                             else:
+    #                                 flash('新密码与旧密码不能相同！', 'error')
+    #                                 return render_template(url_for('admin.users'))
+    #                         else:
+    #                             flash('新签名与旧签名不能相同！', 'error')
+    #                             return render_template(url_for('admin.users'))
+    #                     else:
+    #                         if bcrypt_verify(new_password) != user['password']:
+    #                             updata_signature_service(username, '他看起来很懒，什么也没有留下')
+    #                             update_password_service(username, new_password)
+    #                             return render_template(url_for('admin.users'))
+    #                         else:
+    #                             flash('新密码与旧密码不能相同！', 'error')
+    #                             return render_template(url_for('admin.users'))
+    #                 else:
+    #                     if signature:
+    #                         if signature != user['signature']:
+    #                             updata_signature_service(username, signature)
+    #                             return render_template(url_for('admin.users'))
+    #                         else:
+    #                             flash('新签名与旧签名不能相同！', 'error')
+    #                             return render_template(url_for('admin.users'))
+    #                     else:
+    #                         updata_signature_service(username, '他看起来很懒，什么也没有留下')
+    #                         return render_template(url_for('admin.users'))
+    #             else:
+    #                 if new_password:
+    #                     if signature:
+    #                         if signature != user['signature']:
+    #                             if bcrypt_hash(new_password) != user['password']:
+    #                                 updata_signature_service(user['username'], signature)
+    #                                 update_password_service(username, new_password)
+    #                                 update_username_service(user['username'], username)
+    #                                 return render_template(url_for('admin.users'))
+    #                             else:
+    #                                 flash('新密码与旧密码不能相同！', 'error')
+    #                                 return render_template(url_for('admin.users'))
+    #                         else:
+    #                             flash('新签名与旧签名不能相同！', 'error')
+    #                             return render_template(url_for('admin.users'))
+    #                     else:
+    #                         if bcrypt_verify(new_password) != user['password']:
+    #                             updata_signature_service(username, '他看起来很懒，什么也没有留下')
+    #                             update_password_service(username, new_password)
+    #                             update_username_service(user['username'], username)
+    #                             return render_template(url_for('admin.users'))
+    #                         else:
+    #                             flash('新密码与旧密码不能相同！', 'error')
+    #                             return render_template(url_for('admin.users'))
+    #                 else:
+    #                     if signature:
+    #                         if signature != user['signature']:
+    #                             updata_signature_service(username, signature)
+    #                             return render_template(url_for('admin.users'))
+    #                         else:
+    #                             flash('新签名与旧签名不能相同！', 'error')
+    #                             return render_template(url_for('admin.users'))
+    #                     else:
+    #                         updata_signature_service(username, '他看起来很懒，什么也没有留下')
+    #                         return render_template(url_for('admin.users'))
+    #         else:
+    #             flash('用户名不能为空！', 'error')
+    #             return render_template(url_for('admin.users'))
+    #     else:
+    #         return redirect(url_for('admin.login'))
+    # else:
+    #     return redirect(url_for('admin.login'))
+
+
+
+
+
+
+# def a():
 #     conn = db()
 #     cursor = conn.cursor()
 #

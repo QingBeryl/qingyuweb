@@ -14,7 +14,6 @@ def get_user_data(username):
     except Exception as e:
         print(f"查询数据时出现错误: {e}")
 
-
 # 查询可以秘钥
 def secret_key():
     conn = None

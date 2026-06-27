@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from bps.admin_bp.service.dashboard_service import get_user_count_service, get_user_secret_count_service, get_login_log_count_service, get_recent_logs_service
 from bps.admin_bp.service.users_service import get_all_users_service, get_user_by_id, updata_user_by_id_service
 from bps.index_bp.utils.bcrypt_util import bcrypt_verify, bcrypt_hash
+from bps.admin_bp.service.key_service import get_all_keys_service, add_key_service
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
@@ -9,9 +10,9 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 # def users():
 #        pass
 
-@admin_bp.route('/keys')
-def keys():
-       pass
+# @admin_bp.route('/keys')
+# def keys():
+#        pass
 
 @admin_bp.route('/login_logs')
 def login_logs():
@@ -254,37 +255,27 @@ def edit_user(user_id):
 #     return redirect(url_for('admin.users'))
 #
 #
-# # ==================== 密钥管理 ====================
-# @admin_bp.route('/keys')
-# @login_required
-# def keys():
-#     conn = db()
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT * FROM api_key ORDER BY id DESC")
-#     keys = cursor.fetchall()
-#     cursor.close()
-#
-#     return render_template('keys.html',
-#                            username=session.get('admin_username'),
-#                            keys=keys)
+# ==================== 密钥管理 ====================
+@admin_bp.route('/keys')
+def keys():
+    # 管理员权限校验
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('admin.login'))
+    keys = get_all_keys_service()
+
+    return render_template('bp/admin/keys.html',
+                           username=session['username'],
+                           keys=keys)
 #
 #
-# @admin_bp.route('/key/generate', methods=['POST'])
-# @login_required
-# def generate_key():
-#     new_key = generate_api_key()
-#     conn = db()
-#     cursor = conn.cursor()
-#     cursor.execute("INSERT INTO api_key (`key`, status) VALUES (%s, '1')", (new_key,))
-#     conn.commit()
-#     cursor.close()
-#     flash('新密钥生成成功', 'success')
-#     return redirect(url_for('admin.keys'))
-#
-#
+@admin_bp.route('/key/generate', methods=['POST'])
+def generate_key():
+    add_key_service()
+    return redirect(url_for('admin.keys'))
+
 # @admin_bp.route('/key/toggle/<int:key_id>')
-# @login_required
 # def toggle_key(key_id):
+#     pass
 #     conn = db()
 #     cursor = conn.cursor()
 #     cursor.execute("SELECT status FROM api_key WHERE id = %s", (key_id,))
@@ -297,8 +288,8 @@ def edit_user(user_id):
 #
 #
 # @admin_bp.route('/key/delete/<int:key_id>')
-# @login_required
 # def delete_key(key_id):
+#     pass
 #     conn = db()
 #     cursor = conn.cursor()
 #     cursor.execute("DELETE FROM api_key WHERE id = %s", (key_id,))

@@ -7,4 +7,4 @@ def generate_secure_password(length=255):
     return ''.join(secrets.choice(chars) for _ in range(length))
 
 # 测试
-print(generate_secure_password())
+# print(generate_secure_password())

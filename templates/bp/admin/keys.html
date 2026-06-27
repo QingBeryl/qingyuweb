@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "bp/admin/base.html" %}
 
 {% block title %}密钥管理 - 清玉芳后台{% endblock %}
 
@@ -22,7 +22,6 @@
                     <th>ID</th>
                     <th>密钥</th>
                     <th>状态</th>
-                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,18 +29,10 @@
                 <tr>
                     <td>{{ key.id }}</td>
                     <td><div class="key-display">{{ key.key }}</div></td>
-                    <td>
-                        <span class="status-badge {{ 'status-active' if key.status == '1' else 'status-inactive' }}">
-                            {{ '启用' if key.status == '1' else '禁用' }}
+                    <td style="text-align: center">
+                        <span class="status-badge {{ 'status-active' if key.status == '0' else 'status-inactive' }}">
+                            {{ '可用' if key.status == '0' else '已用' }}
                         </span>
-                    </td>
-                    <td>
-                        <a href="{{ url_for('admin.toggle_key', key_id=key.id) }}" class="btn btn-sm btn-warning">
-                            {{ '禁用' if key.status == '1' else '启用' }}
-                        </a>
-                        <a href="{{ url_for('admin.delete_key', key_id=key.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除此密钥吗？')">
-                            删除
-                        </a>
                     </td>
                 </tr>
                 {% endfor %}

@@ -506,6 +506,7 @@ body {
     gap: 8px;
     justify-content: center;
     flex-wrap: nowrap; /* 禁止按钮换行堆叠 */
+    align-items: center;
 }
 
 /* 密钥列自适应剩余宽度，不抢占状态、操作列空间 */
@@ -516,48 +517,73 @@ body {
 }
 
 /* 表格单元格弹性适配，不压缩固定宽度列 */
-.data-table tr {
-    display: table-row;
-}
+/*.data-table tr {*/
+/*    display: table-row;*/
+/*}*/
 
 
-/* 状态列固定最小宽度+居中 */
-.data-table th:nth-child(3),
-.data-table td:nth-child(3) {
-    min-width: 90px;
-    width: 90px;
-    text-align: center;
-}
 
-/* 操作列固定最小宽度，弹性布局实现按钮居中并排 */
-.data-table th:nth-child(4),
-.data-table td:nth-child(4) {
-    min-width: 160px;
-    width: 160px;
-}
-.data-table td:nth-child(4) {
-    display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center;     /* 垂直居中 */
-    gap: 8px;                /* 按钮之间间距 */
-    flex-wrap: nowrap;       /* 禁止按钮换行堆叠 */
-}
 
-/* 状态标签强制单行、居中不换行 */
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap; /* 文字永远单行，不会挤成两行 */
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    min-width: 50px;
-}
 
-/* 密钥列自适应剩余宽度，不挤占右侧两列 */
-.data-table th:nth-child(2),
-.data-table td:nth-child(2) {
-    flex: 1;
-}
+/*!* 状态列固定最小宽度+居中 *!*/
+/*.data-table th:nth-child(3),*/
+/*.data-table td:nth-child(3) {*/
+/*    min-width: 90px;*/
+/*    width: 90px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*!* 操作列固定最小宽度，弹性布局实现按钮居中并排 *!*/
+/*.data-table th:nth-child(4),*/
+/*.data-table td:nth-child(4) {*/
+/*    min-width: 160px;*/
+/*    width: 160px;*/
+/*}*/
+/*.data-table td:nth-child(4) {*/
+/*    display: flex;*/
+/*    justify-content: center; !* 水平居中 *!*/
+/*    align-items: center;     !* 垂直居中 *!*/
+/*    gap: 8px;                !* 按钮之间间距 *!*/
+/*    flex-wrap: nowrap;       !* 禁止按钮换行堆叠 *!*/
+/*}*/
+
+/*!* 状态标签强制单行、居中不换行 *!*/
+/*.status-badge {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    white-space: nowrap; !* 文字永远单行，不会挤成两行 *!*/
+/*    padding: 4px 10px;*/
+/*    border-radius: 20px;*/
+/*    font-size: 12px;*/
+/*    font-weight: 500;*/
+/*    min-width: 50px;*/
+/*}*/
+
+/*!* 密钥列自适应剩余宽度，不挤占右侧两列 *!*/
+/*.data-table th:nth-child(2),*/
+/*.data-table td:nth-child(2) {*/
+/*    flex: 1;*/
+/*}*/
+
+
+/*!* 全局表格单元格垂直居中 *!*/
+/*.data-table th,*/
+/*.data-table td {*/
+/*    vertical-align: middle !important;*/
+/*}*/
+
+/*!* 仪表盘登录时间列 居中+固定宽度 *!*/
+/*.data-table th:nth-child(4),*/
+/*.data-table td:nth-child(4) {*/
+/*    min-width: 170px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*!* 单独给登录时间td弹性兜底，确保垂直居中 *!*/
+/*.data-table td:nth-child(4) {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    min-height: 48px;*/
+/*}*/

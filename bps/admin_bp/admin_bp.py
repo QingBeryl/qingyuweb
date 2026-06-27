@@ -3,6 +3,7 @@ from bps.admin_bp.service.dashboard_service import get_user_count_service, get_u
 from bps.admin_bp.service.users_service import get_all_users_service, get_user_by_id, updata_user_by_id_service
 from bps.index_bp.utils.bcrypt_util import bcrypt_verify, bcrypt_hash
 from bps.admin_bp.service.key_service import get_all_keys_service, add_key_service
+from bps.admin_bp.service.login_logs_service import get_login_logs
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
@@ -14,9 +15,9 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 # def keys():
 #        pass
 
-@admin_bp.route('/login_logs')
-def login_logs():
-       pass
+# @admin_bp.route('/login_logs')
+# def login_logs():
+#        pass
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -299,16 +300,10 @@ def generate_key():
 #     return redirect(url_for('admin.keys'))
 #
 #
-# # ==================== 登录日志 ====================
-# @admin_bp.route('/login-logs')
-# @login_required
-# def login_logs():
-#     conn = db()
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT * FROM login_log ORDER BY login_time DESC")
-#     logs = cursor.fetchall()
-#     cursor.close()
-#
-#     return render_template('login_logs.html',
-#                            username=session.get('admin_username'),
-#                            logs=logs)
+#==================== 登录日志 ====================
+@admin_bp.route('/login-logs')
+def login_logs():
+    logs = get_login_logs()
+    return render_template('bp/admin/login_logs.html',
+                           username=session['username'],
+                           logs=logs)

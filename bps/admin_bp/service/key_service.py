@@ -6,5 +6,3 @@ def get_all_keys_service():
 
 def add_key_service():
     add_key_dao(generate_secure_password())
-
-add_key_service()
